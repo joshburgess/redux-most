@@ -1,0 +1,54 @@
+{
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+
+  "parserOptions": {
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true,
+      "jsx": true
+    }
+  },
+
+  "plugins": [
+    "react",
+    "better",
+    "fp",
+    "import",
+    "promise",
+    "standard"
+  ],
+
+  "extends": ["standard-pure-fp", "standard-react"],
+
+  "rules": {
+    // Allow dangling commas for better clarity in diffs
+    "comma-dangle": [2, "always-multiline"],
+
+    // ES6 Rules
+    "arrow-parens": [2, "as-needed"],
+    "prefer-arrow-callback": 2,
+
+    // Relax fp rules for library internals & more common react code in example
+    "better/explicit-return": 0,
+    "better/no-ifs": 0,
+    "fp/no-rest-parameters": 0,
+    "better/no-new": 0,
+    "fp/no-throw": 0,
+    "fp/no-let": 0,
+    "fp/no-this": 0,
+    "fp/no-class": 0,
+    "fp/no-mutation": 0,
+    "fp/no-nil": 0,
+    "fp/no-unused-expression": 0,
+    "fp/no-mutating-methods": [2, { "allowedObjects": ["_", "fp", "R"] }],
+
+    // Extra React rules not provided by standard-react
+    "react/react-in-jsx-scope": 2,
+    "jsx-quotes": [2, "prefer-single"],
+    // Disable propTypes validation
+    "react/prop-types": 0
+  }
+}
