@@ -170,3 +170,33 @@ A helper function for filtering the stream of actions by ActionType
 
 The `select` method is curried, allowing you to use a `fluent` or `functional`
 style.
+
+#### Example: fluent style
+
+```js
+import * as ActionTypes from '../ActionTypes'
+import { clearSearchResults } from '../actions'
+import { select } from 'redux-most'
+
+const clear = action$ =>
+  action$.thru(select(ActionTypes.SEARCHED_USERS))
+    .filter(action => !action.payload.query)
+    .map(clearSearchResults)
+
+export default clear
+```
+
+#### Example: functional style
+
+```js
+import * as ActionTypes from '../ActionTypes'
+import { clearSearchResults } from '../actions'
+import { select } from 'redux-most'
+
+const clear = action$ =>
+  select(ActionTypes.SEARCHED_USERS, action$)
+    .filter(action => !action.payload.query)
+    .map(clearSearchResults)
+
+export default clear
+```
