@@ -51,13 +51,13 @@ a fluent style or a more functional style.
 To use the fluent style, just use most's `thru` operator to pass the stream
 through to `select` as the 2nd argument.
 
-```
+```js
 action$.thru(select(ActionTypes.SEARCHED_USERS))
 ```
 
 Otherwise, simply directly pass the stream as the 2nd argument.
 
-```
+```js
 select(ActionTypes.SEARCHED_USERS, action$)
 ```
 
@@ -168,7 +168,7 @@ A helper function for filtering the stream of actions by ActionType
 
 2. `stream` The stream of actions you are filtering. Ex: `actions$`
 
-The `select` method is curried, allowing you to use a `fluent` or `functional`
+The `select` operator is curried, allowing you to use a `fluent` or `functional`
 style.
 
 #### Example: fluent style
