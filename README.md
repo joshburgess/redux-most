@@ -33,7 +33,7 @@ programming.
 ### Differences between `redux-most` & `redux-observable`
 
 I chose not to extend the Observable/Stream type with a custom ActionsObservable
-type. So, when working with most-redux, you will be working with normal most
+type. So, when working with `redux-most`, you will be working with normal most
 streams without any special extension methods. However, I have offered something
 similar to `redux-observable`'s `ofType` operator in `redux-most` with the
 `select` helper function.
