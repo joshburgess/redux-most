@@ -39,7 +39,7 @@ similar to `redux-observable`'s `ofType` operator in `redux-most` with the
 `select` helper function.
 
 Like `ofType`, `select` is a convenience utility for filtering
-actions by a specific type. However, 'ofType' can optionally take multiple
+actions by a specific type. However, `ofType` can optionally take multiple
 action types to filter on, whereas `select` only takes a single type. I am not
 yet convinced of a great use case for filtering on multiple types. If you have
 one, please open an issue and describe it to me.
