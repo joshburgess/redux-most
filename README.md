@@ -150,7 +150,7 @@ To create it, pass your root Epic to [`createEpicMiddleware`](#createepicmiddlew
 
 Replaces the epic currently used by the middleware.
 
-It is an advanced API. You might need this if your app implements code splitting, and you want to load some of the epics dynamically or if you use hot reloading.
+It is an advanced API. You might need this if your app implements code splitting and you want to load some of the epics dynamically or you're using hot reloading.
 
 #### Arguments
 
