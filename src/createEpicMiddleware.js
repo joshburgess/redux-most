@@ -23,8 +23,9 @@ export const createEpicMiddleware = epic => {
       epic$.next(epic)
 
       return action => {
+        const result = next(action)
         input$.next(action)
-        return next(action)
+        return result
       }
     }
   }
