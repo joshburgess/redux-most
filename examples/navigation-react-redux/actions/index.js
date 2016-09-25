@@ -1,6 +1,13 @@
 import * as ActionTypes from '../ActionTypes'
 
-export const searchUsers = query => ({
+export const searchedUsersDebounced = query => ({
+  type: ActionTypes.SEARCHED_USERS_DEBOUNCED,
+  payload: {
+    query,
+  },
+})
+
+export const searchedUsers = query => ({
   type: ActionTypes.SEARCHED_USERS,
   payload: {
     query,

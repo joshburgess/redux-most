@@ -52,13 +52,13 @@ To use the fluent style, just use most's `thru` operator to pass the stream
 through to `select` as the 2nd argument.
 
 ```js
-action$.thru(select(ActionTypes.SEARCHED_USERS))
+action$.thru(select(ActionTypes.SEARCHED_USERS_DEBOUNCED))
 ```
 
 Otherwise, simply directly pass the stream as the 2nd argument.
 
 ```js
-select(ActionTypes.SEARCHED_USERS, action$)
+select(ActionTypes.SEARCHED_USERS_DEBOUNCED, action$)
 ```
 
 # API Reference
@@ -179,7 +179,7 @@ import { clearSearchResults } from '../actions'
 import { select } from 'redux-most'
 
 const clear = action$ =>
-  action$.thru(select(ActionTypes.SEARCHED_USERS))
+  action$.thru(select(ActionTypes.SEARCHED_USERS_DEBOUNCED))
     .filter(action => !action.payload.query)
     .map(clearSearchResults)
 
@@ -194,7 +194,7 @@ import { clearSearchResults } from '../actions'
 import { select } from 'redux-most'
 
 const clear = action$ =>
-  select(ActionTypes.SEARCHED_USERS, action$)
+  select(ActionTypes.SEARCHED_USERS_DEBOUNCED, action$)
     .filter(action => !action.payload.query)
     .map(clearSearchResults)
 

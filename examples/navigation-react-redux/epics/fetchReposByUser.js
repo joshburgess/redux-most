@@ -9,7 +9,7 @@ const receiveReposForUser = curry(receiveUserRepos)
 const fetchReposByUser = action$ =>
   // action$.thru(select(ActionTypes.REQUESTED_USER_REPOS))
   select(ActionTypes.REQUESTED_USER_REPOS, action$)
-    .map(action => action.payload.user)
+    .map(({ payload }) => payload.user)
     .map(user =>
       fromPromise(
         fetch(`https://api.github.com/users/${user}/repos`)

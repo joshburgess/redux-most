@@ -7,9 +7,8 @@ import { select } from 'redux-most'
 const searchUsers = action$ =>
   // action$.thru(select(ActionTypes.SEARCHED_USERS))
   select(ActionTypes.SEARCHED_USERS, action$)
-    .map(action => action.payload.query)
+    .map(({ payload }) => payload.query)
     .filter(q => !!q)
-    .debounce(800)
     .map(q =>
       just()
       // .until(action$.thru(select(ActionTypes.CLEARED_SEARCH_RESULTS)))
@@ -21,7 +20,7 @@ const searchUsers = action$ =>
             fetch(`https://api.github.com/search/users?q=${q}`)
             .then(response => response.json())
           )
-          .map(json => json.items)
+          .map(({ items }) => items)
           .map(receiveUsers)
         )
       )

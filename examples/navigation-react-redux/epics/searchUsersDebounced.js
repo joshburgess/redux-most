@@ -1,11 +1,11 @@
 import * as ActionTypes from '../ActionTypes'
-import { clearSearchResults } from '../actions'
+import { searchedUsers } from '../actions'
 import { select } from 'redux-most'
 
-const clear = action$ =>
+const searchUsersDebounced = action$ =>
   // action$.thru(select(ActionTypes.SEARCHED_USERS_DEBOUNCED))
   select(ActionTypes.SEARCHED_USERS_DEBOUNCED, action$)
-    .filter(({ payload }) => !payload.query)
-    .map(clearSearchResults)
+    .debounce(800)
+    .map(({ payload }) => searchedUsers(payload.query))
 
-export default clear
+export default searchUsersDebounced
