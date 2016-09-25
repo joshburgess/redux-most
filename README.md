@@ -49,7 +49,7 @@ a fluent style or a more functional style.
 
 
 To use the fluent style, just use most's `thru` operator to pass the stream
-through to `select` in as the 2nd argument.
+through to `select` as the 2nd argument.
 
 ```
 action$.thru(select(ActionTypes.SEARCHED_USERS))
