@@ -63,7 +63,7 @@ select(ActionTypes.SEARCHED_USERS, action$)
 
 # API Reference
 
-* [createEpicMiddleware](#createepicmiddlewarerootepic)
+* [createEpicMiddleware](#createepicmiddleware-rootepic)
 * [combineEpics](#combineepics-epics)
 * [EpicMiddleware](#epicmiddleware)
 * [select](#select-actiontype-stream)
@@ -138,7 +138,7 @@ export default combineEpics(
 
 An instance of the redux-most middleware.
 
-To create it, pass your root Epic to [`createEpicMiddleware`](#createepicmiddlewarerootepic).
+To create it, pass your root Epic to [`createEpicMiddleware`](#createepicmiddleware-rootepic).
 
 ### EpicMiddleware Methods
 
