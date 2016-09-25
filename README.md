@@ -63,16 +63,16 @@ select(ActionTypes.SEARCHED_USERS, action$)
 
 # API Reference
 
-* [createEpicMiddleware](#createEpicMiddleware)
-* [combineEpics](combineEpics)
-* [EpicMiddleware](EpicMiddleware)
-* [select](#select)
+* [createEpicMiddleware](#createepicmiddlewarerootepic)
+* [combineEpics](#combineepics-epics)
+* [EpicMiddleware](#epicmiddleware)
+* [select](#select-actiontype-stream)
 
 <hr>
 
-# `createEpicMiddleware(rootEpic)`
+# `createEpicMiddleware (rootEpic)`
 
-`createEpicMiddleware ()` is used to create an instance of the actual redux-most middleware. You provide a single, root Epic.
+`createEpicMiddleware(rootEpic)` is used to create an instance of the actual redux-most middleware. You provide a single, root Epic.
 
 #### Arguments
 
@@ -138,7 +138,7 @@ export default combineEpics(
 
 An instance of the redux-most middleware.
 
-To create it, pass your root Epic to [`createEpicMiddleware`](#createEpicMiddleware).
+To create it, pass your root Epic to [`createEpicMiddleware`](#createepicmiddlewarerootepic).
 
 ### EpicMiddleware Methods
 
