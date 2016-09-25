@@ -60,3 +60,113 @@ Otherwise, simply directly pass the stream as the 2nd argument.
 ```
 select(ActionTypes.SEARCHED_USERS, action$)
 ```
+
+# API Reference
+
+* [createEpicMiddleware](#createEpicMiddleware)
+* [combineEpics](combineEpics)
+* [EpicMiddleware](EpicMiddleware)
+* [select](#select)
+
+<hr>
+
+# `createEpicMiddleware(rootEpic)`
+
+`createEpicMiddleware ()` is used to create an instance of the actual redux-most middleware. You provide a single, root Epic.
+
+#### Arguments
+
+1. *`rootEpic: Epic`*: The root Epic
+
+#### Returns
+
+(*`MiddlewareAPI`*): An instance of the redux-most middleware.
+
+#### Example
+
+### redux/configureStore.js
+
+```js
+import { createStore, applyMiddleware, compose } from 'redux'
+import { createEpicMiddleware } from 'redux-most'
+import { rootEpic, rootReducer } from './modules/root'
+
+const epicMiddleware = createEpicMiddleware(rootEpic)
+
+export default function configureStore() {
+  const store = createStore(
+    rootReducer,
+	applyMiddleware(epicMiddleware)
+  )
+
+  return store
+}
+```
+
+<hr>
+
+## `combineEpics (...epics)`
+
+`combineEpics()`, as the name suggests, allows you to take multiple epics and combine them into a single one.
+
+#### Arguments
+
+1. *`...epics: Epic[]`*: The [epics](../basics/Epics.md) to combine.
+
+#### Returns
+
+(*`Epic`*): An Epic that merges the output of every Epic provided and passes along the `ActionsObservable` and redux store as arguments.
+
+#### Example
+
+#### `epics/index.js`
+
+```js
+import { combineEpics } from 'redux-most'
+import pingEpic from './ping'
+import fetchUserEpic from './fetchUser'
+
+export default combineEpics(
+  pingEpic,
+  fetchUserEpic
+)
+```
+
+<hr>
+
+## EpicMiddleware
+
+An instance of the redux-most middleware.
+
+To create it, pass your root Epic to [`createEpicMiddleware`](#createEpicMiddleware).
+
+### EpicMiddleware Methods
+
+- [`replaceEpic (nextEpic)`](#replaceEpic)
+
+<hr>
+
+### <a id='replaceEpic'></a>[`replaceEpic(nextEpic)`](#replaceEpic)
+
+Replaces the epic currently used by the middleware.
+
+It is an advanced API. You might need this if your app implements code splitting, and you want to load some of the epics dynamically or if you use hot reloading.
+
+#### Arguments
+
+1. `epic` (*Epic*) The next epic for the middleware to use.
+
+<hr>
+
+## select (actionType, stream)
+
+A helper function for filtering the stream of actions by ActionType
+
+#### Arguments
+
+1. `actionType` The type of action you want to filter by.
+
+2. `stream` The stream of actions you are filtering. Ex: `actions$`
+
+The `select` method is curried, allowing you to use a `fluent` or `functional`
+style.
