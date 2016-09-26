@@ -4,12 +4,23 @@
 
 Handle async actions with monadic streams & reactive programming.
 
+### Instructions
+
+Install `redux-most` and its peer dependencies, `redux` & `most`.
+
+```
+npm i -S redux-most redux most
+```
+
 ### Background
 
 `redux-most` is based on [redux-observable](https://github.com/redux-observable/redux-observable).
 It uses the same pattern/concept of "epics" without requiring RxJS as a peer
-dependency. Most is my preferred library for working with observables. So, I
-wrote this middleware primarily for my own use.
+dependency. Although `redux-observable` does provide capability for using other
+stream libraries via adapters, `redux-most` allows you to bypass needing to
+install both RxJS 5 and most. I prefer most for working with observables and
+would rather have minimal dependencies. So, I wrote this middleware primarily
+for my own use.
 
 Please, see `redux-observable`'s [documentation](https://github.com/redux-observable/redux-observable/blob/master/README.md)
 for details on usage.
@@ -21,6 +32,18 @@ very useful tool which happens to exist across many different languages.
 Learning it is definitely a good idea. However, most is significantly smaller,
 less complicated, and faster than RxJS 5. I prefer its more minimal API and
 focus on performance for my own JS projects using reactive streams.
+
+### Why integrate most/RxJS with redux instead of recreating it with streams?
+
+It's true that it's quite easy to implement the core ideas of Redux with
+observables using the `scan` operator. (See my [inferno-most-counter-demo](https://github.com/joshburgess/inferno-most-counter-demo)
+for an example.) However, the Redux DevTools provide what is arguably the nicest
+developer tooling experience currently available in the JavaScript ecosystem.
+Therefore, it is huge to be able to maintain it as an asset while still reaping
+the benefits of reactive programming with streams. Purists, those who are very
+experienced with working observables, and those working on smaller apps may not
+care as much about taking advantage of that tooling as using an elegant streams-
+only based solution, and that's fine. The important thing is having a choice.
 
 ### Why `redux-most` or `redux-observable` over `redux-saga`?
 
