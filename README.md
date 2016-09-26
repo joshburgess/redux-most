@@ -41,9 +41,10 @@ for an example.) However, the Redux DevTools provide what is arguably the nicest
 developer tooling experience currently available in the JavaScript ecosystem.
 Therefore, it is huge to be able to maintain it as an asset while still reaping
 the benefits of reactive programming with streams. Purists, those who are very
-experienced with working observables, and those working on smaller apps may not
-care as much about taking advantage of that tooling as using an elegant streams-
-only based solution, and that's fine. The important thing is having a choice.
+experienced with working with observables, and those working on smaller apps may
+not care as much about taking advantage of that tooling as using an elegant
+streams-only based solution, and that's fine. The important thing is having a
+choice.
 
 ### Why `redux-most` or `redux-observable` over `redux-saga`?
 
