@@ -15,12 +15,12 @@ npm i -S redux-most redux most
 ### Background
 
 `redux-most` is based on [redux-observable](https://github.com/redux-observable/redux-observable).
-It uses the same pattern/concept of "epics" without requiring RxJS as a peer
-dependency. Although `redux-observable` does provide capability for using other
-stream libraries via adapters, `redux-most` allows you to bypass needing to
-install both RxJS 5 and most. I prefer most for working with observables and
-would rather have minimal dependencies. So, I wrote this middleware primarily
-for my own use.
+It uses the same pattern/concept of "[epics](https://github.com/redux-observable/redux-observable/blob/master/docs/basics/Epics.md)"
+without requiring RxJS as a peer dependency. Although `redux-observable` does
+provide capability for using other stream libraries via adapters, `redux-most`
+allows you to bypass needing to install both RxJS 5 and most. I prefer most for
+working with observables and would rather have minimal dependencies. So, I wrote
+this middleware primarily for my own use.
 
 Please, see `redux-observable`'s [documentation](https://github.com/redux-observable/redux-observable/blob/master/README.md)
 for details on usage.
