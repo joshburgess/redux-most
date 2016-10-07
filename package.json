@@ -1,6 +1,6 @@
 {
   "name": "redux-most",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Most.js based middleware for Redux. Handle async actions with monadic streams and reactive programming.",
   "main": "lib/index.js",
   "jsnext:main": "es/index.js",
@@ -81,7 +81,8 @@
     "webpack": "^1.13.1"
   },
   "dependencies": {
-    "most-subject": "^4.1.3"
+    "most-subject": "^4.1.3",
+    "ramda": "^0.22.1"
   },
   "files": [
     "dist",

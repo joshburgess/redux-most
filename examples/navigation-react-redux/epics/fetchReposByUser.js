@@ -2,7 +2,7 @@ import * as ActionTypes from '../ActionTypes'
 import { receiveUserRepos } from '../actions'
 import { fromPromise, map, switchLatest } from 'most'
 import { select } from 'redux-most'
-import curry from 'lodash/fp/curry'
+import curry from 'ramda/src/curry'
 
 const receiveReposForUser = curry(receiveUserRepos)
 

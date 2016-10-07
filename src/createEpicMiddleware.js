@@ -1,4 +1,4 @@
-import { Stream } from 'most'
+import { map, observe, Stream, switchLatest } from 'most'
 import { subject } from 'most-subject'
 import { EPIC_END } from './EPIC_END'
 
@@ -11,18 +11,20 @@ export const createEpicMiddleware = epic => {
   const action$ = new Stream(input$.source)
   const epic$ = subject()
 
-  let store
+  let store // eslint-disable-line fp/no-let
 
-  const epicMiddleware = _store => {
-    store = _store
+  const epicMiddleware = storeToCapture => {
+    store = storeToCapture
 
     return next => {
-      epic$.map(epic => epic(action$, store)).switch().observe(store.dispatch)
+      const dispatch$ = switchLatest(map(epic => epic(action$, store), epic$))
+      observe(store.dispatch, dispatch$)
 
-      // Setup initial root epic
+      // Emit combined epics
       epic$.next(epic)
 
       return action => {
+        // IMPORTANT: Allow reducers to receive actions before epics
         const result = next(action)
         input$.next(action)
         return result
