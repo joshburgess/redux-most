@@ -1,7 +1,8 @@
 {
   "name": "redux-most",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Most.js based middleware for Redux. Handle async actions with monadic streams and reactive programming.",
+  "typings": "type-definitions/redux-most.d.ts",
   "main": "lib/index.js",
   "jsnext:main": "es/index.js",
   "scripts": {
@@ -22,9 +23,10 @@
   "keywords": [
     "action",
     "async",
-    "cancel",
-    "ducks",
+    "fluent",
+    "functional",
     "middleware",
+    "monad",
     "monadic",
     "most",
     "most.js",
@@ -32,14 +34,17 @@
     "observable",
     "reactive",
     "reactive extensions",
-    "reducks",
-    "red ducks",
+    "reactive programming",
+    "reactive streams",
     "redux",
+    "redux-observable",
+    "redux-saga",
     "rx",
     "rxjs",
+    "saga",
+    "sagas",
     "stream",
     "streams",
-    "three ducks",
     "thunk"
   ],
   "author": {
@@ -78,6 +83,8 @@
     "eslint-plugin-react": "6.2.2",
     "eslint-plugin-standard": "2.0.0",
     "rimraf": "^2.5.4",
+    "typescript": "^2.0.3",
+    "typings": "^1.4.0",
     "webpack": "^1.13.1"
   },
   "dependencies": {
@@ -86,6 +93,7 @@
   },
   "files": [
     "dist",
+    "type-definitions",
     "es",
     "lib",
     "README.md",
