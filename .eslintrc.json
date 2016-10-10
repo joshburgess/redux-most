@@ -42,7 +42,7 @@
     "fp/no-mutation": 0,
     "fp/no-nil": 0,
     "fp/no-unused-expression": 0,
-    "fp/no-mutating-methods": [2, { "allowedObjects": ["_", "fp", "R"] }],
+    "fp/no-mutating-methods": 0,
 
     // Extra React rules not provided by standard-react
     "react/react-in-jsx-scope": 2,

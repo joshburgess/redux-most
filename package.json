@@ -1,24 +1,34 @@
 {
   "name": "redux-most",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Most.js based middleware for Redux. Handle async actions with monadic streams and reactive programming.",
-  "typings": "type-definitions/redux-most.d.ts",
   "main": "lib/index.js",
+  "module": "es/index.js",
   "jsnext:main": "es/index.js",
+  "typings": "./index.d.ts",
+  "files": [
+    "dist",
+    "lib",
+    "es",
+    "src",
+    "index.d.ts"
+  ],
   "scripts": {
     "lint": "eslint src",
-    "test": "cross-env BABEL_ENV=cjs babel-node test/index.js | tap-spec",
+    "test": "ava --tap | tap-diff",
+    "tdd": "ava --watch --tap | tap-diff",
     "check": "npm run lint && npm run test",
-    "compile": "rimraf lib && cross-env BABEL_ENV=cjs babel -d lib/ src/",
+    "build:cjs": "rimraf lib && cross-env BABEL_ENV=cjs babel src --out-dir lib",
+    "build:es": "rimraf es && cross-env BABEL_ENV=es babel src --out-dir es",
     "build:umd:dev": "cross-env BABEL_ENV=cjs webpack src/index.js dist/redux-most.js --config webpack.config.dev.js",
     "build:umd:prod": "cross-env BABEL_ENV=cjs webpack src/index.js dist/redux-most.min.js --config webpack.config.prod.js",
-    "build:es": "cross-env BABEL_ENV=es babel src --out-dir es",
-    "build": "rimraf dist es && npm run build:umd:dev && npm run build:umd:prod && npm run build:es",
-    "prepublish": "npm run lint && npm run compile && npm run build"
+    "build:umd": "rimraf dist && npm run build:umd:dev && npm run build:umd:prod",
+    "build": "npm run build:cjs && npm run build:es && npm run build:umd",
+    "prepublish": "npm run lint && npm run build"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/joshburgess/redux-most.git"
+    "url": "https://github.com/joshburgess/redux-most.git"
   },
   "keywords": [
     "action",
@@ -56,9 +66,23 @@
     "url": "https://github.com/joshburgess/redux-most/issues"
   },
   "homepage": "https://github.com/joshburgess/redux-most#README.md",
+  "ava": {
+    "files": [
+      "src/*.test.js"
+    ],
+    "failFast": true,
+    "require": [
+      "babel-register"
+    ],
+    "babel": "inherit"
+  },
   "peerDependencies": {
     "redux": "3.*",
     "most": "^1.0.3"
+  },
+  "dependencies": {
+    "most-subject": "^4.1.3",
+    "ramda": "^0.22.1"
   },
   "devDependencies": {
     "ava": "^0.16.0",
@@ -81,23 +105,14 @@
     "eslint-plugin-promise": "2.0.1",
     "eslint-plugin-react": "6.2.2",
     "eslint-plugin-standard": "2.0.0",
+    "nyc": "^8.3.1",
     "rimraf": "^2.5.4",
+    "sinon": "^1.17.6",
+    "tap-diff": "^0.1.1",
     "typescript": "^2.0.3",
     "typings": "^1.4.0",
     "webpack": "^1.13.1"
   },
-  "dependencies": {
-    "most-subject": "^4.1.3",
-    "ramda": "^0.22.1"
-  },
-  "files": [
-    "dist",
-    "type-definitions",
-    "es",
-    "lib",
-    "README.md",
-    "LICENSE"
-  ],
   "npmName": "redux-most",
   "npmFileMap": [
     {
