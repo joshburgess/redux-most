@@ -1,6 +1,6 @@
 {
   "name": "redux-most",
-  "version": "0.1.8",
+  "version": "0.2.0",
   "description": "Most.js based middleware for Redux. Handle async actions with monadic streams and reactive programming.",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -17,14 +17,14 @@
     "lint": "eslint src",
     "test": "ava --tap | tap-diff",
     "tdd": "ava --watch --tap | tap-diff",
-    "check": "npm run lint && npm run test",
+    "check": "yarn run lint && yarn run test",
     "build:cjs": "rimraf lib && cross-env BABEL_ENV=cjs babel src --out-dir lib",
     "build:es": "rimraf es && cross-env BABEL_ENV=es babel src --out-dir es",
     "build:umd:dev": "cross-env BABEL_ENV=cjs webpack src/index.js dist/redux-most.js --config webpack.config.dev.js",
     "build:umd:prod": "cross-env BABEL_ENV=cjs webpack src/index.js dist/redux-most.min.js --config webpack.config.prod.js",
-    "build:umd": "rimraf dist && npm run build:umd:dev && npm run build:umd:prod",
-    "build": "npm run build:cjs && npm run build:es && npm run build:umd",
-    "prepublish": "npm run lint && npm run build"
+    "build:umd": "rimraf dist && yarn run build:umd:dev && yarn run build:umd:prod",
+    "build": "yarn run build:cjs && yarn run build:es && yarn run build:umd",
+    "prepublish": "yarn run lint && yarn run build"
   },
   "repository": {
     "type": "git",
@@ -33,6 +33,7 @@
   "keywords": [
     "action",
     "async",
+    "asynchronous",
     "fluent",
     "functional",
     "middleware",
@@ -68,7 +69,7 @@
   "homepage": "https://github.com/joshburgess/redux-most#README.md",
   "ava": {
     "files": [
-      "src/*.test.js"
+      "tests/*.test.js"
     ],
     "failFast": true,
     "require": [
@@ -77,17 +78,17 @@
     "babel": "inherit"
   },
   "peerDependencies": {
-    "redux": "3.*",
-    "most": "^1.0.3"
+    "most": "^1.0.3",
+    "redux": "3.*"
   },
   "dependencies": {
-    "most-subject": "^4.1.3",
-    "ramda": "^0.22.1"
+    "most-subject": "^5.3.0",
+    "ramda": "^0.23.0"
   },
   "devDependencies": {
-    "ava": "^0.16.0",
+    "ava": "^0.18.2",
     "babel-cli": "^6.11.4",
-    "babel-eslint": "^6.1.2",
+    "babel-eslint": "^7.1.1",
     "babel-loader": "^6.2.4",
     "babel-plugin-transform-object-rest-spread": "^6.8.0",
     "babel-polyfill": "^6.13.0",
@@ -95,23 +96,23 @@
     "babel-preset-react": "^6.11.1",
     "babel-preset-stage-2": "^6.13.0",
     "babel-register": "^6.11.6",
-    "cross-env": "2.0.1",
-    "eslint": "3.5.0",
-    "eslint-config-standard-pure-fp": "1.0.3",
-    "eslint-config-standard-react": "4.0.1",
+    "cross-env": "^3.2.3",
+    "eslint": "^3.17.1",
+    "eslint-config-standard-pure-fp": "^2.0.1",
+    "eslint-config-standard-react": "^4.3.0",
     "eslint-plugin-better": "0.1.5",
-    "eslint-plugin-fp": "2.2.0",
-    "eslint-plugin-import": "1.15.0",
-    "eslint-plugin-promise": "2.0.1",
-    "eslint-plugin-react": "6.2.2",
-    "eslint-plugin-standard": "2.0.0",
-    "nyc": "^8.3.1",
+    "eslint-plugin-fp": "^2.3.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-react": "^6.10.0",
+    "eslint-plugin-standard": "^2.1.1",
+    "nyc": "^10.1.2",
     "rimraf": "^2.5.4",
     "sinon": "^1.17.6",
     "tap-diff": "^0.1.1",
     "typescript": "^2.0.3",
-    "typings": "^1.4.0",
-    "webpack": "^1.13.1"
+    "typings": "^2.1.0",
+    "webpack": "^2.2.1"
   },
   "npmName": "redux-most",
   "npmFileMap": [
