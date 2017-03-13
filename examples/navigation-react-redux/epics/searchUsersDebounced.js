@@ -1,6 +1,7 @@
 import * as ActionTypes from '../ActionTypes'
 import { searchedUsers } from '../actions'
 import { select } from 'redux-most'
+// import { select } from '../../../src/index'
 import { map, debounce } from 'most'
 
 // Fluent style

@@ -1,5 +1,6 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import { createEpicMiddleware } from 'redux-most'
+// import { createEpicMiddleware } from '../../src'
 import { browserHistory } from 'react-router'
 import { routerMiddleware } from 'react-router-redux'
 import rootReducer from './reducers'
