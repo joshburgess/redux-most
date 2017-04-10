@@ -36,7 +36,7 @@ focus on performance for my own JS projects using reactive streams.
 ### Why integrate most/RxJS with redux instead of recreating it with streams?
 
 It's true that it's quite easy to implement the core ideas of Redux with
-observables using the `scan` operator. (See my [inferno-most-counter-demo](https://github.com/joshburgess/inferno-most-counter-demo)
+observables using the `scan` operator. (See my [inferno-most-fp-demo](https://github.com/joshburgess/inferno-most-fp-demo)
 for an example.) However, the Redux DevTools provide what is arguably the nicest
 developer tooling experience currently available in the JavaScript ecosystem.
 Therefore, it is huge to be able to maintain it as an asset while still reaping
