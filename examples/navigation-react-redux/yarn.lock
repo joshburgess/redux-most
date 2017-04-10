@@ -1666,12 +1666,6 @@ minimist@^1.2.0:
   dependencies:
     minimist "0.0.8"
 
-most-subject@^4.1.3:
-  version "4.1.3"
-  resolved "https://registry.yarnpkg.com/most-subject/-/most-subject-4.1.3.tgz#ccb846bb8c3639cb60793641fbef09dd2f9529c1"
-  dependencies:
-    most "^1.0.0"
-
 most-subject@^5.3.0:
   version "5.3.0"
   resolved "https://registry.yarnpkg.com/most-subject/-/most-subject-5.3.0.tgz#3a6e3efd436fa93bd8b33c2a239c9088230a6102"
@@ -1680,7 +1674,7 @@ most-subject@^5.3.0:
     "@most/prelude" "^1.4.1"
     most "^1.1.0"
 
-most@^1.0.0, most@^1.0.1, most@^1.1.0:
+most@^1.0.1, most@^1.1.0:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/most/-/most-1.2.2.tgz#8f12e434ad6195ed2e1efb3ec217e0cbcf3e1de8"
   dependencies:
@@ -1975,10 +1969,6 @@ querystringify@0.0.x:
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/querystringify/-/querystringify-0.0.4.tgz#0cf7f84f9463ff0ae51c4c4b142d95be37724d9c"
 
-ramda@^0.22.1:
-  version "0.22.1"
-  resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.22.1.tgz#031da0c3df417c5b33c96234757eb37033f36a0e"
-
 ramda@^0.23.0:
   version "0.23.0"
   resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.23.0.tgz#ccd13fff73497a93974e3e86327bfd87bd6e8e2b"
@@ -2070,12 +2060,12 @@ readdirp@^2.0.0:
     readable-stream "^2.0.2"
     set-immediate-shim "^1.0.1"
 
-redux-most@^0.1.2:
-  version "0.1.8"
-  resolved "https://registry.yarnpkg.com/redux-most/-/redux-most-0.1.8.tgz#9b00425bf97e63c497d09f3807d0c6e84023aa81"
+redux-most@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/redux-most/-/redux-most-0.2.0.tgz#313b4e5fcb6e6b873827063f1acf510353784902"
   dependencies:
-    most-subject "^4.1.3"
-    ramda "^0.22.1"
+    most-subject "^5.3.0"
+    ramda "^0.23.0"
 
 redux@^3.5.2:
   version "3.6.0"
