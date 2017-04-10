@@ -1,11 +1,9 @@
-'use strict'
-
-module.exports = {
+const config = {
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
-        loaders: ['babel-loader'],
+        use: ['babel-loader'],
         exclude: /node_modules/
       }
     ]
@@ -29,6 +27,8 @@ module.exports = {
     }
   },
   resolve: {
-    extensions: ['', '.js']
+    extensions: ['.js']
   }
 }
+
+module.exports = config

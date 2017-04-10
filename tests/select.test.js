@@ -1,10 +1,10 @@
 import test from 'ava'
 import { observe } from 'most'
-import { subject } from 'most-subject'
-import { select } from './'
+import { sync } from 'most-subject'
+import { select } from '../src/'
 
 test('select should filter by action type', t => {
-  const actions$ = subject()
+  const actions$ = sync()
   const lulz = []
   const haha = []
 

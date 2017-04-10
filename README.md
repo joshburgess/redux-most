@@ -9,7 +9,7 @@ Handle async actions with monadic streams & reactive programming.
 Install `redux-most` and its peer dependencies, `redux` & `most`.
 
 ```
-npm i -S redux-most redux most
+yarn add redux-most redux most
 ```
 
 ### Background
@@ -170,7 +170,7 @@ To create it, pass your root Epic to [`createEpicMiddleware`](#createepicmiddlew
 
 <hr>
 
-### <a id='replaceEpic'></a>[`replaceEpic(nextEpic)`](#replaceEpic)
+### <a id='replaceEpic'></a>[`replaceEpic (nextEpic)`](#replaceEpic)
 
 Replaces the epic currently used by the middleware.
 

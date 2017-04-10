@@ -1,7 +1,7 @@
 import test from 'ava'
 import { map, observe } from 'most'
-import { subject } from 'most-subject'
-import { combineEpics, select } from './'
+import { sync } from 'most-subject'
+import { combineEpics, select } from '../src/'
 
 test('combineEpics should combine epics', t => {
   const epic1 = (actions$, store) =>
@@ -19,7 +19,7 @@ test('combineEpics should combine epics', t => {
     epic2
   )
   const store = { I: 'am', a: 'store' }
-  const actions$ = subject()
+  const actions$ = sync()
   const result$ = epic(actions$, store)
   const emittedActions = []
   observe(emittedAction => emittedActions.push(emittedAction), result$)
