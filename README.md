@@ -29,13 +29,14 @@ for details on usage.
 
 RxJS 5 is great. It's quite a bit faster than RxJS 4, and Rx, in general, is a
 very useful tool which happens to exist across many different languages.
-Learning it is definitely a good idea. However, most is significantly smaller,
-less complicated, and faster than RxJS 5. I prefer its more minimal API and
-focus on performance for my own JS projects using reactive streams. Also, like 
-Ramda or Lodash/fp, it supports a functional API where the data (a stream, in 
-this case) is passed in last. This is important, because it allows you to use 
-functional programming techniques like currying & partial application, which 
-you can't do with RxJS, because it only features an OOP/fluent style API.
+Learning it is definitely a good idea. However, Most is significantly smaller,
+less complicated, and faster than RxJS 5. I prefer its more minimal set of 
+operators and its focus on performance. Also, like Ramda or Lodash/fp, Most 
+supports a functional API in which the data collection (a stream, rather than 
+an array, in this case) gets passed in last. This is important, because it 
+allows you to use functional programming techniques like currying & partial 
+application, which you can't do with RxJS without writing your own wrapper 
+functions, because it only offers an OOP/fluent/chaining style API.
 
 ### Why integrate most/RxJS with redux instead of recreating it with streams?
 
