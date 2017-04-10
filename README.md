@@ -53,7 +53,7 @@ choice.
 
 ### Why `redux-most` or `redux-observable` over `redux-saga`?
 
-`redux-saga` is great. It's a sophisticated approach to handling asynchronous
+`redux-saga` is nice. It's a sophisticated approach to handling asynchronous
 actions with Redux and can handle very complicated tasks with ease. However,
 due to generators being pull-based, it is much more imperative in nature. I
 simply prefer the more declarative style of push-based streams & reactive
