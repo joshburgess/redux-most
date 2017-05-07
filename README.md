@@ -16,7 +16,7 @@ or with npm:
 npm install --save redux-most
 ```
 
-You will also need peer dependencies, `redux` and `most`.
+Additionally, make sure the peer dependencies, `redux` and `most`, are also installed.
 
 ### Background
 
