@@ -6,8 +6,14 @@ redux-most
 Handle async actions with monadic streams & reactive programming.
 
 ### Install
+With yarn (recommended):
 ```bash
 yarn add redux-most
+```
+
+or with npm:
+```bash
+npm install --save redux-most
 ```
 
 You will also need peer dependencies, `redux` and `most`.
