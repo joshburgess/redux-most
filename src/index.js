@@ -1,4 +1,5 @@
 export { createEpicMiddleware } from './createEpicMiddleware'
 export { select } from './select'
+export { selectAny } from './selectAny'
 export { combineEpics } from './combineEpics'
 export { EPIC_END } from './EPIC_END'
