@@ -75,7 +75,7 @@ similar to `redux-observable`'s `ofType` operator in `redux-most` with the
 
 Like `ofType`, `select` and `selectAny` are convenience utilities for filtering
 actions by a specific type or types. In `redux-observable`, `ofType` can optionally take multiple
-action types to filter on. In redux-most, we want to be more explicit, as it is generally a good 
+action types to filter on. In `redux-most`, we want to be more explicit, as it is generally a good 
 practice in functional programming to prefer a known number of arguments over a variable amount
 of arguments. Therefore, `select` is used when we want to filter by a single action type, and
 `selectAny` is used when we want to filter by multiple action types (via an array) simultaneously.
