@@ -82,8 +82,8 @@ of arguments. Therefore, `select` is used when we want to filter by a single act
 
 Additionally, to better align with the `most` API, and because these fucntions take a known number
 of arguments, `select` & `selectAny` are curried, which allows them be used in either a
-fluent style or a more functional style supporting which enables the use of further currying,
-partial application, & functional composition.
+fluent style or a more functional style which enables the use of further currying, partial
+application, & functional composition.
 
 To use the fluent style, just use most's `thru` operator to pass the stream
 through to `select`/`selectAny` as the 2nd argument.
