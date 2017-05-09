@@ -71,7 +71,7 @@ I chose not to extend the `Observable`/`Stream` type with a custom `ActionsObser
 type. So, when working with `redux-most`, you will be working with normal `most`
 streams without any special extension methods. However, I have offered something
 similar to `redux-observable`'s `ofType` operator in `redux-most` with the
-`select` and `selectAny` helper function.
+`select` and `selectAny` helper functions.
 
 Like `ofType`, `select` and `selectAny` are convenience utilities for filtering
 actions by a specific type or types. In `redux-observable`, `ofType` can optionally take multiple
@@ -90,14 +90,14 @@ through to `select`/`selectAny` as the 2nd argument.
 
 ```js
 action$.thru(select(ActionTypes.SOME_ACTION_TYPE))
-action$.thru(selectAny(someArrayOfActionTypes))
+action$.thru(selectAny([ActionTypes.SOME_ACTION_TYPE, ActionTypes.SOME_OTHER_ACTION_TYPE]))
 ```
 
 Otherwise, simply directly pass the stream as the 2nd argument.
 
 ```js
-select(ActionTypes.MY_ACTION_TYPE, action$)
-selectAny(someArrayOfActionTypes, action$)
+select(ActionTypes.SOME_ACTION_TYPE, action$)
+selectAny([ActionTypes.SOME_ACTION_TYPE, ActionTypes.SOME_OTHER_ACTION_TYPE], action$)
 ```
 
 ## API Reference
