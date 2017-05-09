@@ -14,3 +14,5 @@ export declare function createEpicMiddleware<T> (rootEpic: Epic<T>): EpicMiddlew
 export declare function combineEpics<T> (...epics: Epic<T>[]): Epic<T>;
 
 export declare function select<T> (actionType: string, stream: Stream<T>): Stream<T>;
+
+export declare function selectAny<T> (actionType: Array<string>, stream: Stream<T>): Stream<T>;
