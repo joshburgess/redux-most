@@ -71,28 +71,33 @@ I chose not to extend the `Observable`/`Stream` type with a custom `ActionsObser
 type. So, when working with `redux-most`, you will be working with normal `most`
 streams without any special extension methods. However, I have offered something
 similar to `redux-observable`'s `ofType` operator in `redux-most` with the
-`select` helper function.
+`select` and `selectAny` helper functions.
 
-Like `ofType`, `select` is a convenience utility for filtering
-actions by a specific type. However, `ofType` can optionally take multiple
-action types to filter on, whereas `select` only takes a single type. I am not
-yet convinced of a great use case for filtering on multiple types. If you have
-one, please open an issue and describe it to me.
+Like `ofType`, `select` and `selectAny` are convenience utilities for filtering
+actions by a specific type or types. In `redux-observable`, `ofType` can optionally take multiple
+action types to filter on. In `redux-most`, we want to be more explicit, as it is generally a good 
+practice in functional programming to prefer a known number of arguments over a variable amount
+of arguments. Therefore, `select` is used when we want to filter by a single action type, and
+`selectAny` is used when we want to filter by multiple action types (via an array) simultaneously.
 
-Additionally, to better align with the `most` API, `select` can be used in either
-a fluent style or a more functional style.
+Additionally, to better align with the `most` API, and because these fucntions take a known number
+of arguments, `select` & `selectAny` are curried, which allows them be used in either a
+fluent style or a more functional style which enables the use of further currying, partial
+application, & functional composition.
 
 To use the fluent style, just use most's `thru` operator to pass the stream
-through to `select` as the 2nd argument.
+through to `select`/`selectAny` as the 2nd argument.
 
 ```js
-action$.thru(select(ActionTypes.SEARCHED_USERS_DEBOUNCED))
+action$.thru(select(ActionTypes.SOME_ACTION_TYPE))
+action$.thru(selectAny([ActionTypes.SOME_ACTION_TYPE, ActionTypes.SOME_OTHER_ACTION_TYPE]))
 ```
 
 Otherwise, simply directly pass the stream as the 2nd argument.
 
 ```js
-select(ActionTypes.SEARCHED_USERS_DEBOUNCED, action$)
+select(ActionTypes.SOME_ACTION_TYPE, action$)
+selectAny([ActionTypes.SOME_ACTION_TYPE, ActionTypes.SOME_OTHER_ACTION_TYPE], action$)
 ```
 
 ## API Reference
@@ -192,11 +197,11 @@ __Arguments__
 
 ### `select (actionType, stream)`
 
-A helper function for filtering the stream of actions by type.
+A helper function for filtering the stream of actions by a  single action type.
 
 __Arguments__
 
-1. `actionType` _(`String`)_: The type of action you want to filter by.
+1. `actionType` _(`String`)_: The type of action to filter by.
 2. `stream` _(`Stream`)_: The stream of actions you are filtering. Ex: `actions$`.
 
 The `select` operator is curried, allowing you to use a fluent or functional style.
@@ -226,6 +231,50 @@ import { select } from 'redux-most'
 
 const clear = action$ => {
   const search$ = select(ActionTypes.SEARCHED_USERS_DEBOUNCED, action$)
+  const emptySearch$ = filter(action => !action.payload.query, search$)
+  return map(clearSearchResults, emptySearch$)
+}
+
+export default clear
+```
+---
+
+### `selectAny (actionTypes, stream)`
+
+A helper function for filtering the stream of actions by an array of action types.
+
+__Arguments__
+
+1. `actionTypes` _(`Array`)_: An array of action types to filter by.
+2. `stream` _(`Stream`)_: The stream of actions you are filtering. Ex: `actions$`.
+
+The `selectAny` operator is curried, allowing you to use a fluent or functional style.
+
+__Examples__
+```js
+// fluent style
+
+import * as ActionTypes from '../ActionTypes'
+import { clearSearchResults } from '../actions'
+import { selectAny } from 'redux-most'
+
+const clear = action$ =>
+  action$.thru(selectAny([ActionTypes.SEARCHED_USERS, ActionTypes.SEARCHED_USERS_DEBOUNCED]))
+    .filter(action => !action.payload.query)
+    .map(clearSearchResults)
+
+export default clear
+```
+
+```js
+// functional style
+
+import * as ActionTypes from '../ActionTypes'
+import { clearSearchResults } from '../actions'
+import { selectAny } from 'redux-most'
+
+const clear = action$ => {
+  const search$ = selectAny([ActionTypes.SEARCHED_USERS, ActionTypes.SEARCHED_USERS_DEBOUNCED], action$)
   const emptySearch$ = filter(action => !action.payload.query, search$)
   return map(clearSearchResults, emptySearch$)
 }
