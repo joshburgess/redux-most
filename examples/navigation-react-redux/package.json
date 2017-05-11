@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/joshburgess/redux-most#readme",
   "dependencies": {
+    "babel-polyfill": "6.13.0",
     "creed": "^1.0.3",
     "history": "^4.5.1",
     "isomorphic-fetch": "^2.2.1",

@@ -26,10 +26,7 @@
     "build": "yarn run build:cjs && yarn run build:es && yarn run build:umd",
     "prepublish": "yarn run lint && yarn run build"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/joshburgess/redux-most.git"
-  },
+  "repository": "joshburgess/redux-most",
   "keywords": [
     "action",
     "async",
@@ -82,7 +79,6 @@
     "redux": "3.*"
   },
   "dependencies": {
-    "babel-preset-react": "^6.24.1",
     "most-subject": "^5.3.0",
     "ramda": "^0.23.0"
   },
@@ -91,8 +87,8 @@
     "babel-cli": "^6.11.4",
     "babel-eslint": "^7.1.1",
     "babel-loader": "^7.0.0",
-    "babel-polyfill": "^6.13.0",
     "babel-preset-latest": "^6.24.0",
+    "babel-preset-react": "^6.24.1",
     "babel-preset-stage-3": "^6.22.0",
     "babel-register": "^6.24.1",
     "cross-env": "^4.0.0",
