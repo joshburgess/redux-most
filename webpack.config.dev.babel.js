@@ -1,7 +1,8 @@
-const webpack = require('webpack')
-const baseConfig = require('./webpack.config.base')
+import webpack from 'webpack'
+import baseConfig from './webpack.config.base.babel'
 
-const config = Object.assign({}, baseConfig, {
+const config = {
+  ...baseConfig,
   plugins: [
     new webpack.DefinePlugin({
       process: {
@@ -11,6 +12,6 @@ const config = Object.assign({}, baseConfig, {
       },
     }),
   ],
-})
+}
 
-module.exports = config
+export default config

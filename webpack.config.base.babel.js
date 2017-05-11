@@ -4,31 +4,31 @@ const config = {
       {
         test: /\.js$/,
         use: ['babel-loader'],
-        exclude: /node_modules/
-      }
-    ]
+        exclude: /node_modules/,
+      },
+    ],
   },
   output: {
     library: 'ReduxMost',
-    libraryTarget: 'umd'
+    libraryTarget: 'umd',
   },
   externals: {
     most: {
       root: 'Most',
       commonjs2: 'most',
       commonjs: 'most',
-      amd: 'most'
+      amd: 'most',
     },
     redux: {
       root: 'Redux',
       commonjs2: 'redux',
       commonjs: 'redux',
-      amd: 'redux'
-    }
+      amd: 'redux',
+    },
   },
   resolve: {
-    extensions: ['.js']
-  }
+    extensions: ['.js'],
+  },
 }
 
-module.exports = config
+export default config
