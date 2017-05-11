@@ -106,6 +106,7 @@ selectAny([ActionTypes.SOME_ACTION_TYPE, ActionTypes.SOME_OTHER_ACTION_TYPE], ac
 - [combineEpics](#combineepics-epics)
 - [EpicMiddleware](#epicmiddleware)
 - [select](#select-actiontype-stream)
+- [selectAny](#selectany-actiontypes-stream)
 
 ---
 
