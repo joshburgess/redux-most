@@ -560,7 +560,7 @@ babel-preset-flow@^6.23.0:
   dependencies:
     babel-plugin-transform-flow-strip-types "^6.22.0"
 
-babel-preset-react@^6.11.1, babel-preset-react@^6.24.1:
+babel-preset-react@^6.11.1:
   version "6.24.1"
   resolved "https://registry.yarnpkg.com/babel-preset-react/-/babel-preset-react-6.24.1.tgz#ba69dfaea45fc3ec639b6a4ecea6e17702c91380"
   dependencies:
@@ -2089,11 +2089,10 @@ readdirp@^2.0.0:
     readable-stream "^2.0.2"
     set-immediate-shim "^1.0.1"
 
-redux-most@0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/redux-most/-/redux-most-0.3.0.tgz#fd9b7f7415517ed1aec5ade43af7dde7da8af5b1"
+redux-most@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/redux-most/-/redux-most-0.3.1.tgz#a8138a5c1a1467dfcfb52cd533bb343cb7b12ab1"
   dependencies:
-    babel-preset-react "^6.24.1"
     most-subject "^5.3.0"
     ramda "^0.23.0"
 
