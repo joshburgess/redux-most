@@ -4,19 +4,16 @@
   "description": "redux-most react & redux navigation example",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --port 3000 --inline --history-api-fallback --open",
-    "build": "webpack"
+    "start": "webpack-dev-server --config webpack.config.dev.babel.js",
+    "build": "webpack --config webpack.config.prod.babel.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/joshburgess/redux-most.git"
-  },
+  "repository": "joshburgess/redux-most",
   "author": "Josh Burgess",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/joshburgess/redux-most/issues"
   },
-  "homepage": "https://github.com/joshburgess/redux-most#readme",
+  "homepage": "https://github.com/joshburgess/redux-most#README.md",
   "dependencies": {
     "babel-polyfill": "^6.23.0",
     "creed": "^1.0.3",
@@ -34,11 +31,15 @@
     "redux-most": "^0.4.0"
   },
   "devDependencies": {
+    "babel-cli": "^6.11.4",
     "babel-core": "^6.11.4",
+    "babel-eslint": "^7.1.1",
     "babel-loader": "^7.0.0",
-    "babel-preset-es2015": "^6.9.0",
-    "babel-preset-react": "^6.11.1",
-    "webpack": "^1.13.1",
-    "webpack-dev-server": "^1.14.1"
+    "babel-preset-latest": "^6.24.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-3": "^6.22.0",
+    "babel-register": "^6.24.1",
+    "webpack": "^2.5.1",
+    "webpack-dev-server": "^2.4.5"
   }
 }
