@@ -91,7 +91,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-3": "^6.22.0",
     "babel-register": "^6.24.1",
-    "cross-env": "^4.0.0",
+    "cross-env": "^5.0.0",
     "eslint": "^3.17.1",
     "eslint-config-standard-pure-fp": "^2.0.1",
     "eslint-config-standard-react": "^5.0.0",
@@ -99,7 +99,7 @@
     "eslint-plugin-fp": "^2.3.0",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-promise": "^3.5.0",
-    "eslint-plugin-react": "^7.0.0",
+    "eslint-plugin-react": "^7.0.1",
     "eslint-plugin-standard": "^3.0.1",
     "nyc": "^10.1.2",
     "rimraf": "^2.5.4",
@@ -107,7 +107,7 @@
     "tap-diff": "^0.1.1",
     "typescript": "^2.0.3",
     "typings": "^2.1.0",
-    "webpack": "^2.2.1"
+    "webpack": "^2.5.1"
   },
   "npmName": "redux-most",
   "npmFileMap": [
