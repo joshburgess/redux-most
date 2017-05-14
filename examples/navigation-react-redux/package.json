@@ -4,7 +4,7 @@
   "description": "redux-most react & redux navigation example",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --port 3000 --inline --history-api-fallback",
+    "start": "webpack-dev-server --port 3000 --inline --history-api-fallback --open",
     "build": "webpack"
   },
   "repository": {
