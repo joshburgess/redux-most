@@ -2,8 +2,8 @@ import { delay, just, map, merge, chain } from 'most'
 import { push } from 'react-router-redux'
 import * as ActionTypes from '../ActionTypes'
 import { accessDenied } from '../actions'
-// import { select } from 'redux-most'
-import { select } from '../../../src/index'
+import { select } from 'redux-most'
+// import { select } from '../../../src/index'
 
 // Fluent style
 // const adminAccess = action$ =>

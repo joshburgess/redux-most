@@ -4,8 +4,8 @@ import { receiveUsers } from '../actions'
 import {
   chain, filter, fromPromise, just, map, merge, until, switchLatest,
 } from 'most'
-// import { select } from 'redux-most'
-import { select } from '../../../src/index'
+import { select } from 'redux-most'
+// import { select } from '../../../src/index'
 
 // Fluent style
 // const searchUsers = action$ =>
