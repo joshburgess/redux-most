@@ -1,8 +1,9 @@
 import { map, observe, Stream, switchLatest } from 'most'
 import { async } from 'most-subject'
 import { EPIC_END } from './EPIC_END'
-import compose from 'ramda/src/compose'
-const switchMap = compose(switchLatest, map)
+
+const compose2 = (f, g) => (...args) => f(g(...args))
+const switchMap = compose2(switchLatest, map)
 
 export const createEpicMiddleware = epic => {
   if (typeof epic !== 'function') {

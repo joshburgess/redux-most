@@ -79,8 +79,8 @@
     "redux": "3.*"
   },
   "dependencies": {
-    "most-subject": "^5.3.0",
-    "ramda": "^0.23.0"
+    "@most/prelude": "^1.6.0",
+    "most-subject": "^5.3.0"
   },
   "devDependencies": {
     "ava": "^0.19.1",
