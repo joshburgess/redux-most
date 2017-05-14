@@ -2089,9 +2089,9 @@ readdirp@^2.0.0:
     readable-stream "^2.0.2"
     set-immediate-shim "^1.0.1"
 
-redux-most@^0.3.1:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/redux-most/-/redux-most-0.3.1.tgz#a8138a5c1a1467dfcfb52cd533bb343cb7b12ab1"
+redux-most@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/redux-most/-/redux-most-0.4.0.tgz#c9bcaaf714c39832c7c00f5cdb397c3b5ae0f108"
   dependencies:
     most-subject "^5.3.0"
     ramda "^0.23.0"
