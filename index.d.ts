@@ -15,4 +15,4 @@ export declare function combineEpics<T> (...epics: Epic<T>[]): Epic<T>;
 
 export declare function select<T> (actionType: string, stream: Stream<T>): Stream<T>;
 
-export declare function selectAny<T> (actionTypes: Array<string>, stream: Stream<T>): Stream<T>;
+export declare function selectArray<T> (actionTypes: Array<string>, stream: Stream<T>): Stream<T>;

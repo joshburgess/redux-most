@@ -1,15 +1,15 @@
 import test from 'ava'
 import { observe } from 'most'
 import { sync } from 'most-subject'
-import { selectAny } from '../src/'
+import { selectArray } from '../src/'
 
-test('selectAny should filter by multiple action types', t => {
+test('selectArray should filter by multiple action types', t => {
   const actions$ = sync()
   const lulz = []
   const haha = []
 
-  observe(x => lulz.push(x), selectAny(['LULZ', 'LMFAO'], actions$))
-  observe(x => haha.push(x), selectAny(['HAHA'], actions$))
+  observe(x => lulz.push(x), selectArray(['LULZ', 'LMFAO'], actions$))
+  observe(x => haha.push(x), selectArray(['HAHA'], actions$))
 
   actions$.next({ type: 'LULZ', i: 0 })
 
