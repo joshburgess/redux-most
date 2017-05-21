@@ -43,3 +43,10 @@ export const createEpicMiddleware = epic => {
 
   return epicMiddleware
 }
+
+// const createEpicMiddleware = epic => store => next => action => {
+//     just(action)
+//       .map(ac => epic(just(ac), store))
+//       .switchLatest()
+//       .observe(store.dispatch)
+//     return next(action)
