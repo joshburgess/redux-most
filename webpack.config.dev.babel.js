@@ -1,5 +1,7 @@
-import webpack from 'webpack'
-import baseConfig from './webpack.config.base.babel'
+/* eslint-disable import/no-commonjs */
+
+const webpack = require('webpack')
+const baseConfig = require('./webpack.config.base.babel')
 
 const config = {
   ...baseConfig,
@@ -14,4 +16,4 @@ const config = {
   ],
 }
 
-export default config
+module.exports = config

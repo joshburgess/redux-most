@@ -1,17 +1,11 @@
+/* eslint-disable import/no-commonjs */
+
 const config = {
   module: {
     rules: [
       {
         test: /\.js$/,
-        loader: 'babel-loader',
-        options: {
-          babelrc: false,
-          presets: [
-            ['env', { modules: false }],
-            'stage-3',
-            'react',
-          ],
-        },
+        use: ['babel-loader'],
         exclude: /node_modules/,
       },
     ],
@@ -40,4 +34,4 @@ const config = {
   },
 }
 
-export default config
+module.exports = config

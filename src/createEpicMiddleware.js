@@ -1,4 +1,8 @@
-import { observe, Stream } from 'most'
+import {
+  // just,
+  observe,
+  Stream,
+} from 'most'
 import { async } from 'most-subject'
 import { EPIC_END } from './EPIC_END'
 import { switchMap } from './utils'
@@ -45,9 +49,10 @@ export const createEpicMiddleware = epic => {
 }
 
 // Consider switching to this and eliminating Subjects & replaceEpic
-// const createEpicMiddleware = epic => store => next => action => {
-//     just(action)
-//       .map(ac => epic(just(ac), store))
-//       .switchLatest()
-//       .observe(store.dispatch)
-//     return next(action)
+// export const createEpicMiddleware = epic => store => next => action => {
+//   just(action)
+//     .map(ac => epic(just(ac), store))
+//     .switchLatest()
+//     .observe(store.dispatch)
+//   return next(action)
+// }
