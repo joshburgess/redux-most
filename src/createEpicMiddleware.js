@@ -44,6 +44,7 @@ export const createEpicMiddleware = epic => {
   return epicMiddleware
 }
 
+// Consider switching to this and eliminating Subjects & replaceEpic
 // const createEpicMiddleware = epic => store => next => action => {
 //     just(action)
 //       .map(ac => epic(just(ac), store))
