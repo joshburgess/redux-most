@@ -1,3 +1,5 @@
+/* eslint-disable import/no-commonjs */
+
 const config = {
   module: {
     rules: [
@@ -28,7 +30,8 @@ const config = {
   },
   resolve: {
     extensions: ['.js'],
+    mainFields: ['module', 'main', 'jsnext:main'],
   },
 }
 
-export default config
+module.exports = config

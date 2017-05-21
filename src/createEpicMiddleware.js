@@ -1,9 +1,7 @@
-import { map, observe, Stream, switchLatest } from 'most'
+import { observe, Stream } from 'most'
 import { async } from 'most-subject'
 import { EPIC_END } from './EPIC_END'
-
-const compose2 = (f, g) => (...args) => f(g(...args))
-const switchMap = compose2(switchLatest, map)
+import { switchMap } from './utils'
 
 export const createEpicMiddleware = epic => {
   if (typeof epic !== 'function') {
@@ -11,17 +9,19 @@ export const createEpicMiddleware = epic => {
   }
 
   const input$ = async()
-  const action$ = new Stream(input$.source)
-  const epic$ = async()
+  const actionsIn$ = new Stream(input$.source)
 
+  // epic$ is a Subject, because it facilitates defining replaceEpic
+  const epic$ = async()
+  // store is mutable in order to capture a reference to the store for replaceEpic
   let store // eslint-disable-line fp/no-let
 
   const epicMiddleware = storeToCapture => {
     store = storeToCapture
 
     return next => {
-      const dispatch$ = switchMap(epic => epic(action$, store), epic$)
-      observe(store.dispatch, dispatch$)
+      const actionsOut$ = switchMap(epic => epic(actionsIn$, store), epic$)
+      observe(store.dispatch, actionsOut$)
 
       // Emit combined epics
       epic$.next(epic)
@@ -35,6 +35,7 @@ export const createEpicMiddleware = epic => {
     }
   }
 
+  // can be used for hot reloading, code splitting, etc.
   epicMiddleware.replaceEpic = epic => {
     store.dispatch({ type: EPIC_END })
     epic$.next(epic)

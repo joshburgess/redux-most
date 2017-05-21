@@ -1,5 +1,7 @@
-import path from 'path'
-import webpack from 'webpack'
+/* eslint-disable import/no-commonjs */
+
+const path = require('path')
+const webpack = require('webpack')
 
 const PATH_SRC = path.join(__dirname)
 const PATH_DIST = path.join(__dirname, 'dist')
@@ -47,4 +49,4 @@ const config = {
   },
 }
 
-export default config
+module.exports = config
