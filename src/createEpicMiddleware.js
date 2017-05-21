@@ -50,9 +50,9 @@ export const createEpicMiddleware = epic => {
 
 // Consider switching to this and eliminating Subjects & replaceEpic
 // export const createEpicMiddleware = epic => store => next => action => {
-//   just(action)
-//     .map(ac => epic(just(ac), store))
-//     .switchLatest()
-//     .observe(store.dispatch)
+//   const actionsIn$ = just(action)
+//   const actionsOut$ = switchMap(actionIn => epic(just(actionIn), store), actionsIn$)
+//   observe(store.dispatch, actionsOut$)
+
 //   return next(action)
 // }
