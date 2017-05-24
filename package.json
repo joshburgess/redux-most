@@ -1,6 +1,6 @@
 {
   "name": "redux-most",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "Most.js based middleware for Redux. Handle async actions with monadic streams and reactive programming.",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -20,8 +20,8 @@
     "check": "yarn run lint && yarn run test",
     "build:cjs": "rimraf lib && cross-env BABEL_ENV=cjs babel src --out-dir lib",
     "build:es": "rimraf es && cross-env BABEL_ENV=es babel src --out-dir es",
-    "build:umd:dev": "cross-env BABEL_ENV=cjs webpack src/index.js dist/redux-most.js --config webpack.config.dev.babel.js",
-    "build:umd:prod": "cross-env BABEL_ENV=cjs webpack src/index.js dist/redux-most.min.js --config webpack.config.prod.babel.js",
+    "build:umd:dev": "cross-env BABEL_ENV=umd webpack src/index.js dist/redux-most.js --config webpack.config.dev.babel.js",
+    "build:umd:prod": "cross-env BABEL_ENV=umd webpack src/index.js dist/redux-most.min.js --config webpack.config.prod.babel.js",
     "build:umd": "rimraf dist && yarn run build:umd:dev && yarn run build:umd:prod",
     "build": "yarn run build:cjs && yarn run build:es && yarn run build:umd",
     "prepublish": "yarn run lint && yarn run build"

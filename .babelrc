@@ -2,19 +2,33 @@
   "env": {
     "cjs": {
       "presets": [
-        "env",
+        ["env", {
+          "modules": "commonjs"
+        }],
+        "stage-3",
+        "react"
+      ],
+      "plugins": []
+    },
+    "es": {
+      "presets": [
+        ["env", {
+          "modules": false
+        }],
+        "stage-3",
+        "react"
+      ],
+      "plugins": []
+    },
+    "umd": {
+      "presets": [
+        ["env", {
+          "modules": false
+        }],
         "stage-3",
         "react"
       ],
       "plugins": []
     }
-  },
-  "presets": [
-    ["env", {
-      "modules": false
-    }],
-    "stage-3",
-    "react"
-  ],
-  "plugins": []
+  }
 }

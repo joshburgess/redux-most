@@ -1,8 +1,4 @@
-import {
-  // just,
-  observe,
-  Stream,
-} from 'most'
+import { observe, Stream } from 'most'
 import { async } from 'most-subject'
 import { EPIC_END } from './EPIC_END'
 import { switchMap } from './utils'
@@ -12,6 +8,10 @@ export const createEpicMiddleware = epic => {
     throw new TypeError('You must provide a root Epic to createEpicMiddleware')
   }
 
+  // it is important that this stream is created here and passed in to each
+  // epic so that all epics act on the same  action$, because this is what
+  // allows debouncing, throttling, etc. to work correctly on  subsequent
+  // dispatched actions of the same type
   const input$ = async()
   const actionsIn$ = new Stream(input$.source)
 
@@ -47,12 +47,3 @@ export const createEpicMiddleware = epic => {
 
   return epicMiddleware
 }
-
-// Consider switching to this and eliminating Subjects & replaceEpic
-// export const createEpicMiddleware = epic => store => next => action => {
-//   const actionsIn$ = just(action)
-//   const actionsOut$ = switchMap(actionIn => epic(just(actionIn), store), actionsIn$)
-//   observe(store.dispatch, actionsOut$)
-
-//   return next(action)
-// }
