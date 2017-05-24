@@ -1,4 +1,14 @@
 {
+  "env": {
+    "cjs": {
+      "presets": [
+        "env",
+        "stage-3",
+        "react"
+      ],
+      "plugins": []
+    }
+  },
   "presets": [
     ["env", {
       "modules": false
