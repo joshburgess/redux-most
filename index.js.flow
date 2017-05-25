@@ -1,7 +1,7 @@
 // @flow
 
-import { Middleware, MiddlewareAPI } from 'redux'
-import { Stream } from 'most'
+import type { Middleware, MiddlewareAPI } from 'redux'
+import type { Stream } from 'most'
 
 export interface Epic<T> {
   (action$: Stream<T>, store: MiddlewareAPI<any>): Stream<T>
