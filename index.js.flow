@@ -1,0 +1,20 @@
+// @flow
+
+import { Middleware, MiddlewareAPI } from 'redux'
+import { Stream } from 'most'
+
+export interface Epic<T> {
+  (action$: Stream<T>, store: MiddlewareAPI<any>): Stream<T>
+}
+
+export interface EpicMiddleware<T> extends Middleware {
+  replaceEpic (nextEpic: Epic<T>): void
+}
+
+declare export function createEpicMiddleware<T> (rootEpic: Epic<T>): EpicMiddleware<T>
+
+declare export function combineEpics<T> (...epics: Epic<T>[]): Epic<T>
+
+declare export function select<T> (actionType: string, stream: Stream<T>): Stream<T>
+
+declare export function selectArray<T> (actionTypes: Array<string>, stream: Stream<T>): Stream<T>

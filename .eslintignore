@@ -1,3 +1,5 @@
 # /node_modules and /bower_components ignored by default
 
 dist/
+index.d.ts
+index.js.flow
