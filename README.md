@@ -5,6 +5,8 @@ redux-most
 
 Handle async actions with monadic streams & reactive programming.
 
+### [Jump to API Reference](https://github.com/joshburgess/redux-most#api-reference)
+
 ### Install
 With yarn (recommended):
 ```bash
@@ -17,6 +19,7 @@ npm install --save redux-most
 ```
 
 Additionally, make sure the peer dependencies, `redux` and `most`, are also installed.
+
 
 ### Background
 
@@ -102,11 +105,12 @@ selectArray([ActionTypes.SOME_ACTION_TYPE, ActionTypes.SOME_OTHER_ACTION_TYPE], 
 
 ## API Reference
 
-- [createEpicMiddleware](#createepicmiddleware-rootepic)
-- [combineEpics](#combineepics-epics)
-- [EpicMiddleware](#epicmiddleware)
-- [select](#select-actiontype-stream)
-- [selectArray](#selectArray-actiontypes-stream)
+- [createEpicMiddleware](https://github.com/joshburgess/redux-most#createepicmiddleware-rootepic)
+- [combineEpics](https://github.com/joshburgess/redux-most#combineepics-epics)
+- [EpicMiddleware](https://github.com/joshburgess/redux-most#epicmiddleware)
+- [replaceEpic](https://github.com/joshburgess/redux-most#replaceEpic)
+- [select](https://github.com/joshburgess/redux-most#select-actiontype-stream)
+- [selectArray](https://github.com/joshburgess/redux-most#selectArray-actiontypes-stream)
 
 ---
 
@@ -177,11 +181,11 @@ export default combineEpics(
 
 An instance of the `redux-most` middleware.
 
-To create it, pass your root Epic to [`createEpicMiddleware`](#createepicmiddleware-rootepic).
+To create it, pass your root Epic to [`createEpicMiddleware`](https://github.com/joshburgess/redux-most#createepicmiddleware-rootepic).
 
 __Methods__
 
-- [`replaceEpic (nextEpic)`](#replaceEpic)
+- [`replaceEpic (nextEpic)`](https://github.com/joshburgess/redux-most#replaceEpic)
 
 #### <a id='replaceEpic'></a>`replaceEpic (nextEpic)`
 
@@ -189,6 +193,31 @@ Replaces the epic currently used by the middleware.
 
 It is an advanced API. You might need this if your app implements code splitting and you
 want to load some of the epics dynamically or you're using hot reloading.
+
+__Example__
+
+```js
+
+import {createEpicMiddleware} from 'redux-most'
+import rootEpic from '../epics'
+
+...
+
+const epicMiddleware = createEpicMiddleware(rootEpic)
+
+...
+
+// hot reload epics
+const replaceRootEpic = () => {
+  import('../epics').then(
+    ({ default: nextRootEpic }) => { epicMiddleware.replaceEpic(nextRootEpic) }
+  )
+}
+
+if (module.hot) {
+  module.hot.accept('../epics', replaceRootEpic)
+}
+```
 
 __Arguments__
 
