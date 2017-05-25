@@ -17,7 +17,7 @@
     "lint": "eslint src",
     "test": "ava --tap | tap-diff",
     "tdd": "ava --watch --tap | tap-diff",
-    "check": "yarn run lint && yarn run test",
+    "safety-check": "yarn run lint && yarn run test",
     "build:cjs": "rimraf lib && cross-env BABEL_ENV=cjs babel src --out-dir lib",
     "build:es": "rimraf es && cross-env BABEL_ENV=es babel src --out-dir es",
     "build:umd:dev": "cross-env BABEL_ENV=umd webpack src/index.js dist/redux-most.js --config webpack.config.dev.babel.js",
