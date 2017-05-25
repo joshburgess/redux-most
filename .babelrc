@@ -29,6 +29,16 @@
         "react"
       ],
       "plugins": []
+    },
+    "test": {
+      "presets": [
+        ["env", {
+          "modules": "commonjs"
+        }],
+        "stage-3",
+        "react"
+      ],
+      "plugins": []
     }
   }
 }
