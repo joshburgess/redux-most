@@ -15,8 +15,8 @@
   ],
   "scripts": {
     "lint": "eslint src",
-    "test": "ava --tap | tap-diff",
-    "tdd": "ava --watch --tap | tap-diff",
+    "test": "cross-env BABEL_ENV=test ava --tap | tap-diff",
+    "tdd": "cross-env BABEL_ENV=test ava --watch --tap | tap-diff",
     "safety-check": "yarn run lint && yarn run test",
     "build:cjs": "rimraf lib && cross-env BABEL_ENV=cjs babel src --out-dir lib",
     "build:es": "rimraf es && cross-env BABEL_ENV=es babel src --out-dir es",
