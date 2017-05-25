@@ -76,8 +76,8 @@
     "babel": "inherit"
   },
   "peerDependencies": {
-    "most": "1.*",
-    "redux": "3.*"
+    "most": "^1.3.0",
+    "redux": "^3.6.0"
   },
   "dependencies": {
     "flow-typed": "^2.1.2",
