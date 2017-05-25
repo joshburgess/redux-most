@@ -28,7 +28,7 @@
     "react-router": "^3.0.2",
     "react-router-redux": "^4.0.5",
     "redux": "^3.5.2",
-    "redux-most": "0.4.5"
+    "redux-most": "^0.4.6"
   },
   "devDependencies": {
     "babel-cli": "^6.11.4",
