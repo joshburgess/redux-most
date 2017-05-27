@@ -1,7 +1,6 @@
-import { observe } from 'most'
+import { map, observe, switchLatest } from 'most'
 import { async } from 'most-subject'
 import { epicBegin, epicEnd } from './actions'
-import { switchMap } from './utils'
 
 export const createEpicMiddleware = epic => {
   if (typeof epic !== 'function') {
@@ -30,7 +29,7 @@ export const createEpicMiddleware = epic => {
         return nextEpic(actionsIn$, storeRef)
       }
 
-      const actionsOut$ = switchMap(callNextEpic, epic$)
+      const actionsOut$ = switchLatest(map(callNextEpic, epic$))
       observe(storeRef.dispatch, actionsOut$)
 
       // Emit combined epics

@@ -3,7 +3,7 @@ import { map, observe } from 'most'
 import { sync } from 'most-subject'
 import { combineEpics, select } from '../src/'
 
-test('combineEpics should combine epics', t => {
+test('combineEpics should combine an array of epics', t => {
   const epic1 = (actions$, store) =>
     map(
       action => ({ type: 'DELEGATED1', action, store }),
@@ -14,10 +14,10 @@ test('combineEpics should combine epics', t => {
       action => ({ type: 'DELEGATED2', action, store }),
       select('ACTION2', actions$)
     )
-  const epic = combineEpics(
+  const epic = combineEpics([
     epic1,
-    epic2
-  )
+    epic2,
+  ])
   const store = { I: 'am', a: 'store' }
   const actions$ = sync()
   const result$ = epic(actions$, store)
