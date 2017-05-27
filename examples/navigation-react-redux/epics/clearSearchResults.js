@@ -3,7 +3,10 @@ import { clearSearchResults } from '../actions'
 import { select } from 'redux-most'
 // import { select } from '../../../src/index'
 // import { map, filter } from 'most'
-import { curriedMap as map, curriedFilter as filter } from '../utils'
+import {
+  curriedFilter as filter,
+  curriedMap as map,
+} from '../utils'
 import { compose } from 'ramda'
 
 const emptySearch = ({ payload: { query } }) => !query

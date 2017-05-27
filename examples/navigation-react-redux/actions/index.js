@@ -1,4 +1,6 @@
 import * as ActionTypes from '../ActionTypes'
+import curry from 'ramda/src/curry'
+
 
 export const searchedUsersDebounced = query => ({
   type: ActionTypes.SEARCHED_USERS_DEBOUNCED,
@@ -32,13 +34,13 @@ export const requestReposByUser = user => ({
   },
 })
 
-export const receiveUserRepos = (user, repos) => ({
+export const receiveUserRepos = curry((user, repos) => ({
   type: ActionTypes.RECEIVED_USER_REPOS,
   payload: {
     user,
     repos,
   },
-})
+}))
 
 export const checkAdminAccess = _ => ({
   type: ActionTypes.CHECKED_ADMIN_ACCESS,

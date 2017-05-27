@@ -27,28 +27,28 @@ Additionally, make sure the peer dependencies, `redux` and `most`, are also inst
 It uses the same pattern/concept of ["epics"](https://redux-observable.js.org/docs/basics/Epics.html)
 without requiring [`RxJS 5`](http://reactivex.io/rxjs/) as a peer dependency.
 Although `redux-observable` does provide capability for using other stream libraries via adapters,
-`redux-most` allows you to bypass needing to install both `RxJS 5` and `most`. I prefer `most` for
+`redux-most` allows you to bypass needing to install both `RxJS 5` and `Most`. I prefer `Most` for
 working with observables and would rather have minimal dependencies. So, I wrote
 this middleware primarily for my own use.
 
 Please, see `redux-observable`'s [documentation](https://redux-observable.js.org/)
 for details on usage.
 
-### Why most over RxJS?
+### Why Most over RxJS?
 
 `RxJS 5` is great. It's quite a bit faster than `RxJS 4`, and `Rx`, in general, is a
 very useful tool which happens to exist across many different languages.
-Learning it is definitely a good idea. However, `most` is significantly smaller,
+Learning it is definitely a good idea. However, `Most` is significantly smaller,
 less complicated, and faster than `RxJS 5`. I prefer its more minimal set of 
 operators and its focus on performance. Also, like [`Ramda`](http://ramdajs.com/)
-or [`lodash/fp`](https://github.com/lodash/lodash/wiki/FP-Guide), `most`
+or [`lodash/fp`](https://github.com/lodash/lodash/wiki/FP-Guide), `Most`
 supports a functional API in which the data collection (a stream, rather than 
 an array, in this case) gets passed in last. This is important, because it 
 allows you to use functional programming techniques like currying & partial 
 application, which you can't do with `RxJS` without writing your own wrapper 
 functions, because it only offers an OOP/fluent/chaining style API.
 
-### Why integrate `most`/`RxJS` with `redux` instead of recreating it with streams?
+### Why integrate `Most`/`RxJS` with `redux` instead of recreating it with streams?
 
 It's true that it's quite easy to implement the core ideas of `Redux` with
 observables using the `scan` operator. (See my [inferno-most-fp-demo](https://github.com/joshburgess/inferno-most-fp-demo)
@@ -83,12 +83,12 @@ practice in functional programming to prefer a known number of arguments over a 
 of arguments. Therefore, `select` is used when we want to filter by a single action type, and
 `selectArray` is used when we want to filter by multiple action types (via an array) simultaneously.
 
-Additionally, to better align with the `most` API, and because these fucntions take a known number
+Additionally, to better align with the `Most` API, and because these fucntions take a known number
 of arguments, `select` & `selectArray` are curried, which allows them be used in either a
 fluent style or a more functional style which enables the use of further currying, partial
 application, & functional composition.
 
-To use the fluent style, just use most's `thru` operator to pass the stream
+To use the fluent style, just use `Most`'s `thru` operator to pass the stream
 through to `select`/`selectArray` as the 2nd argument.
 
 ```js
@@ -117,7 +117,7 @@ selectArray([ActionTypes.SOME_ACTION_TYPE, ActionTypes.SOME_OTHER_ACTION_TYPE], 
 ### `createEpicMiddleware (rootEpic)`
 
 `createEpicMiddleware(rootEpic)` is used to create an instance of the actual `redux-most` middleware.
-You provide a single, root `Epic`.
+You provide a single root `Epic`.
 
 __Arguments__
 
@@ -140,7 +140,7 @@ const epicMiddleware = createEpicMiddleware(rootEpic)
 export default function configureStore() {
   const store = createStore(
     rootReducer,
-	applyMiddleware(epicMiddleware)
+    applyMiddleware(epicMiddleware)
   )
 
   return store
