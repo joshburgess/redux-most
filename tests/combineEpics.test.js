@@ -4,33 +4,42 @@ import { sync } from 'most-subject'
 import { combineEpics, select } from '../src/'
 
 test('combineEpics should combine an array of epics', t => {
-  const epic1 = (actions$, store) =>
-    map(
-      action => ({ type: 'DELEGATED1', action, store }),
-      select('ACTION1', actions$)
-    )
-  const epic2 = (actions$, store) =>
-    map(
-      action => ({ type: 'DELEGATED2', action, store }),
-      select('ACTION2', actions$)
-    )
+  const ACTION_1 = 'ACTION_1'
+  const ACTION_2 = 'ACTION_2'
+  const DELEGATED_1 = 'DELEGATED_1'
+  const DELEGATED_2 = 'DELEGATED_2'
+  const MOCKED_STORE = { I: 'am', a: 'store' }
+
+
+  const epic1 = (actions$, store) => map(
+    action => ({ type: DELEGATED_1, action, store }),
+    select(ACTION_1, actions$)
+  )
+
+  const epic2 = (actions$, store) => map(
+    action => ({ type: DELEGATED_2, action, store }),
+    select(ACTION_2, actions$)
+  )
+
   const epic = combineEpics([
     epic1,
     epic2,
   ])
-  const store = { I: 'am', a: 'store' }
+
+  const store = MOCKED_STORE
   const actions$ = sync()
   const result$ = epic(actions$, store)
   const emittedActions = []
-  observe(emittedAction => emittedActions.push(emittedAction), result$)
-  actions$.next({ type: 'ACTION1' })
-  actions$.next({ type: 'ACTION2' })
 
-  t.deepEqual(
-    [
-      { type: 'DELEGATED1', action: { type: 'ACTION1' }, store },
-      { type: 'DELEGATED2', action: { type: 'ACTION2' }, store },
-    ],
-    emittedActions
-  )
+  observe(emittedAction => emittedActions.push(emittedAction), result$)
+
+  actions$.next({ type: ACTION_1 })
+  actions$.next({ type: ACTION_2 })
+
+  const mockedEmittedActions = [
+    { type: DELEGATED_1, action: { type: ACTION_1 }, store },
+    { type: DELEGATED_2, action: { type: ACTION_2 }, store },
+  ]
+
+  t.deepEqual(mockedEmittedActions, emittedActions)
 })
