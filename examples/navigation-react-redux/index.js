@@ -1,13 +1,8 @@
 import React from 'react'
 import { render } from 'react-dom'
-import { Provider } from 'react-redux'
-import { Router, Route, browserHistory, IndexRoute } from 'react-router'
-import { syncHistoryWithStore } from 'react-router-redux'
-import configureStore from './configureStore'
-import App from './containers/App'
-import UserSearch from './containers/UserSearch'
-import ReposByUser from './containers/ReposByUser'
-import Admin from './containers/Admin'
+import Root from './containers/Root'
+import store from './store'
+
 // Supply polyfills for new built-ins like Promise, WeakMap, Object.assign, etc.
 import 'babel-polyfill'
 // Overwrite Promise implementation with Creed for best performance
@@ -16,23 +11,34 @@ shim() // eslint-disable-line fp/no-unused-expression
 // Supply polyfill for fetch
 import 'isomorphic-fetch'
 
-const store = configureStore()
-const history = syncHistoryWithStore(
-  browserHistory,
-  store
-)
+const rootEl = document.getElementById('app')
 
 /* eslint-disable fp/no-unused-expression */
-render(
-  <Provider store={store}>
-    <Router history={history}>
-      <Route path='/' component={App}>
-        <IndexRoute component={UserSearch} />
-        <Route path='repos/:user' component={ReposByUser} />
-        <Route path='admin' component={Admin} />
-      </Route>
-    </Router>
-  </Provider>,
-  document.getElementById('app')
-)
+
+render(<Root store={store} />, rootEl)
+
+/******************************************************************************
+  Start development only
+*******************************************************************************/
+
+const replaceRootComponent = () => {
+  // import('./containers/root')
+  //   .then(
+  //     ({ default: NextRoot }) => {
+  //       render(<NextRoot store={store} />, rootEl)
+  //     }
+  //   )
+
+  const NextRoot = require('./containers/Root').default
+  render(<NextRoot store={store} />, rootEl)
+}
+
+if (module.hot) {
+  module.hot.accept('./containers/Root', replaceRootComponent)
+}
+
+/******************************************************************************
+  End development only
+*******************************************************************************/
+
 /* eslint-enable fp/no-unused-expression */

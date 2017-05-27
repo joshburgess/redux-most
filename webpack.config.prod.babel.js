@@ -18,6 +18,9 @@ const config = {
         screw_ie8: true,
         warnings: false,
       },
+      output: {
+        comments: false,
+      },
     }),
   ],
 }

@@ -1,6 +1,6 @@
-import { observe, Stream } from 'most'
+import { observe } from 'most'
 import { async } from 'most-subject'
-import { EPIC_END } from './EPIC_END'
+import { epicBegin, epicEnd } from './actions'
 import { switchMap } from './utils'
 
 export const createEpicMiddleware = epic => {
@@ -9,23 +9,29 @@ export const createEpicMiddleware = epic => {
   }
 
   // it is important that this stream is created here and passed in to each
-  // epic so that all epics act on the same  action$, because this is what
-  // allows debouncing, throttling, etc. to work correctly on  subsequent
+  // epic so that all epics act on the same action$, because this is what
+  // allows debouncing, throttling, etc. to work correctly on subsequent
   // dispatched actions of the same type
-  const input$ = async()
-  const actionsIn$ = new Stream(input$.source)
+  const actionsIn$ = async()
 
-  // epic$ is a Subject, because it facilitates defining replaceEpic
+  // epic$ must be a Subject, because replaceEpic cannot be written without it
   const epic$ = async()
-  // store is mutable in order to capture a reference to the store for replaceEpic
-  let store // eslint-disable-line fp/no-let
 
-  const epicMiddleware = storeToCapture => {
-    store = storeToCapture
+  // storeRef is mutable and defined here in order to capture a reference to the
+  // passed in store argument so that dispatch can be called from within replaceEpic
+  let storeRef // eslint-disable-line fp/no-let
+
+  const epicMiddleware = store => {
+    storeRef = store
 
     return next => {
-      const actionsOut$ = switchMap(epic => epic(actionsIn$, store), epic$)
-      observe(store.dispatch, actionsOut$)
+      const callNextEpic = nextEpic => {
+        storeRef.dispatch(epicBegin())
+        return nextEpic(actionsIn$, storeRef)
+      }
+
+      const actionsOut$ = switchMap(callNextEpic, epic$)
+      observe(storeRef.dispatch, actionsOut$)
 
       // Emit combined epics
       epic$.next(epic)
@@ -33,16 +39,16 @@ export const createEpicMiddleware = epic => {
       return action => {
         // Allow reducers to receive actions before epics
         const result = next(action)
-        input$.next(action)
+        actionsIn$.next(action)
         return result
       }
     }
   }
 
   // can be used for hot reloading, code splitting, etc.
-  epicMiddleware.replaceEpic = epic => {
-    store.dispatch({ type: EPIC_END })
-    epic$.next(epic)
+  epicMiddleware.replaceEpic = nextEpic => {
+    storeRef.dispatch(epicEnd())
+    epic$.next(nextEpic)
   }
 
   return epicMiddleware
