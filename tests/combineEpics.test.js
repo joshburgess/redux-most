@@ -35,10 +35,10 @@ test('combineEpics should combine an array of epics', t => {
   actions$.next({ type: ACTION_1 })
   actions$.next({ type: ACTION_2 })
 
-  const mockedEmittedActions = [
+  const MOCKED_EMITTED_ACTIONS = [
     { type: DELEGATED_1, action: { type: ACTION_1 }, store },
     { type: DELEGATED_2, action: { type: ACTION_2 }, store },
   ]
 
-  t.deepEqual(mockedEmittedActions, emittedActions)
+  t.deepEqual(MOCKED_EMITTED_ACTIONS, emittedActions)
 })
