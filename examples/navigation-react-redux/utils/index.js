@@ -1,14 +1,16 @@
 import compose from 'ramda/src/compose'
 import curry from 'ramda/src/curry'
-
 import {
+  chain,
   debounce,
   delay,
   filter,
   fromPromise,
   map,
-  throttle,
+  merge,
   switchLatest,
+  throttle,
+  until,
 } from 'most'
 
 /******************************************************************************
@@ -37,11 +39,17 @@ export const fetchJsonStream = compose(fromPromise, fetchJson)
   Stream utilities
 *******************************************************************************/
 
+const mapTo = (x, stream) => map(_ => x, stream)
+const switchMap = compose(switchLatest, map)
+
 // prefix with "curried" so things are more obvious in other files
+export const curriedChain = curry(chain)
 export const curriedDebounce = curry(debounce)
 export const curriedDelay = curry(delay)
 export const curriedFilter = curry(filter)
 export const curriedMap = curry(map)
-export const curriedMapTo = curry((x, stream) => map(() => x, stream))
+export const curriedMapTo = curry(mapTo)
+export const curriedMerge = curry(merge)
+export const curriedSwitchMap = curry(switchMap)
 export const curriedThrottle = curry(throttle)
-export const curriedSwitchMap = curry(compose(switchLatest, map))
+export const curriedUntil = curry(until)

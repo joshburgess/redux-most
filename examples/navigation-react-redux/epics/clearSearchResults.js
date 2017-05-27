@@ -2,7 +2,6 @@ import * as ActionTypes from '../ActionTypes'
 import { clearSearchResults } from '../actions'
 import { select } from 'redux-most'
 // import { select } from '../../../src/index'
-// import { map, filter } from 'most'
 import {
   curriedFilter as filter,
   curriedMap as map,

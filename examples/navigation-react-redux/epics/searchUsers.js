@@ -1,9 +1,15 @@
 import { replace } from 'react-router-redux'
 import * as ActionTypes from '../ActionTypes'
 import { receiveUsers } from '../actions'
+import { fromPromise, just, switchLatest } from 'most'
 import {
-  chain, filter, fromPromise, just, map, merge, until, switchLatest,
-} from 'most'
+  curriedChain as chain,
+  curriedFilter as filter,
+  curriedMap as map,
+  curriedMerge as merge,
+  // curriedSwitchMap as switchMap,
+  curriedUntil as until,
+} from '../utils'
 import { select } from 'redux-most'
 // import { select } from '../../../src/index'
 
