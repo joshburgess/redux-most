@@ -116,7 +116,7 @@ selectArray([ActionTypes.SOME_ACTION_TYPE, ActionTypes.SOME_OTHER_ACTION_TYPE], 
 
 ### `createEpicMiddleware (rootEpic)`
 
-`createEpicMiddleware(rootEpic)` is used to create an instance of the actual `redux-most` middleware.
+`createEpicMiddleware` is used to create an instance of the actual `redux-most` middleware.
 You provide a single root `Epic`.
 
 __Arguments__
@@ -149,13 +149,13 @@ export default function configureStore() {
 
 ---
 
-### `combineEpics (...epics)`
+### `combineEpics (epicsArray)`
 
-`combineEpics()`, as the name suggests, allows you to take multiple epics and combine them into a single one.
+`combineEpics`, as the name suggests, allows you to pass in an array of epics and combine them into a single one.
 
 __Arguments__
 
-1. `...epics` _(`Epic[]`)_: The [epics](../basics/Epics.md) to combine.
+1. `epicsArray` _(`Array<Epic>`)_: The array of `epics` to combine into one root epic.
 
 __Returns__
 
@@ -169,10 +169,10 @@ import { combineEpics } from 'redux-most'
 import pingEpic from './ping'
 import fetchUserEpic from './fetchUser'
 
-export default combineEpics(
+export default combineEpics([
   pingEpic,
   fetchUserEpic
-)
+])
 ```
 
 ---
@@ -231,7 +231,7 @@ A helper function for filtering the stream of actions by a  single action type.
 
 __Arguments__
 
-1. `actionType` _(`String`)_: The type of action to filter by.
+1. `actionType` _(`string`)_: The type of action to filter by.
 2. `stream` _(`Stream`)_: The stream of actions you are filtering. Ex: `actions$`.
 
 The `select` operator is curried, allowing you to use a fluent or functional style.
@@ -275,7 +275,7 @@ A helper function for filtering the stream of actions by an array of action type
 
 __Arguments__
 
-1. `actionTypes` _(`Array`)_: An array of action types to filter by.
+1. `actionTypes` _(`Array<string>`)_: An array of action types to filter by.
 2. `stream` _(`Stream`)_: The stream of actions you are filtering. Ex: `actions$`.
 
 The `selectArray` operator is curried, allowing you to use a fluent or functional style.

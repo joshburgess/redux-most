@@ -5,7 +5,7 @@ import { switchMap } from './utils'
 
 export const createEpicMiddleware = epic => {
   if (typeof epic !== 'function') {
-    throw new TypeError('You must provide a root Epic to createEpicMiddleware')
+    throw new TypeError('You must provide an Epic (a function) to createEpicMiddleware')
   }
 
   // it is important that this stream is created here and passed in to each

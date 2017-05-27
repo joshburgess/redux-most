@@ -1,6 +1,6 @@
 {
   "name": "redux-most",
-  "version": "0.4.6",
+  "version": "0.5.0",
   "description": "Most.js based middleware for Redux. Handle async actions with monadic streams and reactive programming.",
   "main": "lib/index.js",
   "module": "es/index.js",
