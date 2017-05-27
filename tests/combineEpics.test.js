@@ -10,7 +10,6 @@ test('combineEpics should combine an array of epics', t => {
   const DELEGATED_2 = 'DELEGATED_2'
   const MOCKED_STORE = { I: 'am', a: 'store' }
 
-
   const epic1 = (actions$, store) => map(
     action => ({ type: DELEGATED_1, action, store }),
     select(ACTION_1, actions$)
