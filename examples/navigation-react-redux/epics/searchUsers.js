@@ -23,17 +23,18 @@ import { select } from 'redux-most'
 
 const toQuery = ({ payload }) => payload.query
 
-const whereTruthy = query => !!query
+const whereNotEmpty = query => !!query
 
 const toItems = ({ items }) => items
 
-const getUsersQueryUrl = q => `https://api.github.com/search/users?q=${q}`
+const getUsersQueryUrl = query =>
+  `https://api.github.com/search/users?q=${query}`
 
 // Fluent style
 // const searchUsers = action$ =>
 //   action$.thru(select(SEARCHED_USERS))
 //     .map(toQuery)
-//     .filter(whereTruthy)
+//     .filter(whereNotEmpty)
 //     .map(q =>
 //       just()
 //       .until(action$.thru(select(CLEARED_SEARCH_RESULTS)))
@@ -54,7 +55,7 @@ const getUsersQueryUrl = q => `https://api.github.com/search/users?q=${q}`
 const searchUsers = action$ => {
   const searchedUsers$ = select(SEARCHED_USERS, action$)
   const maybeEmptyQuery$ = map(toQuery, searchedUsers$)
-  const query$ = filter(whereTruthy, maybeEmptyQuery$)
+  const query$ = filter(whereNotEmpty, maybeEmptyQuery$)
 
   const untilCleared$ = until(
     select(CLEARED_SEARCH_RESULTS, action$),

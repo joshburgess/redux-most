@@ -273,13 +273,15 @@ __Examples__
 ```js
 // Fluent style
 
-import * as ActionTypes from '../ActionTypes'
+import { SEARCHED_USERS_DEBOUNCED } from '../constants/ActionTypes'
 import { clearSearchResults } from '../actions'
 import { select } from 'redux-most'
 
+const whereEmpty = ({ payload: { query } }) => !query
+
 const clear = action$ =>
-  action$.thru(select(ActionTypes.SEARCHED_USERS_DEBOUNCED))
-    .filter(action => !action.payload.query)
+  action$.thru(select(SEARCHED_USERS_DEBOUNCED))
+    .filter(whereEmpty)
     .map(clearSearchResults)
 
 export default clear
@@ -288,13 +290,15 @@ export default clear
 ```js
 // Functional style
 
-import * as ActionTypes from '../ActionTypes'
+import { SEARCHED_USERS_DEBOUNCED } from '../constants/ActionTypes'
 import { clearSearchResults } from '../actions'
 import { select } from 'redux-most'
 
+const whereEmpty = ({ payload: { query } }) => !query
+
 const clear = action$ => {
-  const search$ = select(ActionTypes.SEARCHED_USERS_DEBOUNCED, action$)
-  const emptySearch$ = filter(action => !action.payload.query, search$)
+  const search$ = select(SEARCHED_USERS_DEBOUNCED, action$)
+  const emptySearch$ = filter(whereEmpty, search$)
   return map(clearSearchResults, emptySearch$)
 }
 
@@ -304,7 +308,7 @@ export default clear
 ```js
 // Functional & Pointfree style using functional composition
 
-import * as ActionTypes from '../ActionTypes'
+import { SEARCHED_USERS_DEBOUNCED } from '../constants/ActionTypes'
 import { clearSearchResults } from '../actions'
 import { select } from 'redux-most'
 import {
@@ -313,10 +317,12 @@ import {
 } from '../utils'
 import { compose } from 'ramda'
 
+const whereEmpty = ({ payload: { query } }) => !query
+
 const clear = compose(
   map(clearSearchResults),
-  filter(emptySearch),
-  select(ActionTypes.SEARCHED_USERS_DEBOUNCED)
+  filter(whereEmpty),
+  select(SEARCHED_USERS_DEBOUNCED)
 )
 
 export default clear
@@ -338,13 +344,21 @@ __Examples__
 ```js
 // Fluent style
 
-import * as ActionTypes from '../ActionTypes'
+import {
+  SEARCHED_USERS,
+  SEARCHED_USERS_DEBOUNCED,
+} from '../constants/ActionTypes'
 import { clearSearchResults } from '../actions'
 import { selectArray } from 'redux-most'
 
+const whereEmpty = ({ payload: { query } }) => !query
+
 const clear = action$ =>
-  action$.thru(selectArray([ActionTypes.SEARCHED_USERS_DEBOUNCED, ActionTypes.SOME_OTHER_TYPE]))
-    .filter(action => !action.payload.query)
+  action$.thru(selectArray([
+      SEARCHED_USERS,
+      SEARCHED_USERS_DEBOUNCED,
+    ]))
+    .filter(whereEmpty)
     .map(clearSearchResults)
 
 export default clear
@@ -353,13 +367,21 @@ export default clear
 ```js
 // Functional style
 
-import * as ActionTypes from '../ActionTypes'
+import {
+  SEARCHED_USERS,
+  SEARCHED_USERS_DEBOUNCED,
+} from '../constants/ActionTypes'
 import { clearSearchResults } from '../actions'
 import { selectArray } from 'redux-most'
 
+const whereEmpty = ({ payload: { query } }) => !query
+
 const clear = action$ => {
-  const search$ = selectArray([ActionTypes.SEARCHED_USERS_DEBOUNCED, ActionTypes.SOME_OTHER_TYPE], action$)
-  const emptySearch$ = filter(action => !action.payload.query, search$)
+  const search$ = selectArray([
+    SEARCHED_USERS,
+    SEARCHED_USERS_DEBOUNCED,
+  ], action$)
+  const emptySearch$ = filter(whereEmpty, search$)
   return map(clearSearchResults, emptySearch$)
 }
 
@@ -369,7 +391,10 @@ export default clear
 ```js
 // Functional & Pointfree style using functional composition
 
-import * as ActionTypes from '../ActionTypes'
+import {
+  SEARCHED_USERS,
+  SEARCHED_USERS_DEBOUNCED,
+} from '../constants/ActionTypes'
 import { clearSearchResults } from '../actions'
 import { selectArray } from 'redux-most'
 import {
@@ -378,10 +403,15 @@ import {
 } from '../utils'
 import { compose } from 'ramda'
 
+const whereEmpty = ({ payload: { query } }) => !query
+
 const clear = compose(
   map(clearSearchResults),
-  filter(emptySearch),
-  selectArray([ActionTypes.SEARCHED_USERS_DEBOUNCED, ActionTypes.SOME_OTHER_TYPE])
+  filter(whereEmpty),
+  selectArray([
+    SEARCHED_USERS,
+    SEARCHED_USERS_DEBOUNCED,
+  ])
 )
 
 export default clear

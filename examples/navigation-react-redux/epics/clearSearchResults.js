@@ -8,25 +8,25 @@ import {
 } from '../utils'
 import { compose } from 'ramda'
 
-const emptySearch = ({ payload: { query } }) => !query
+const whereEmpty = ({ payload: { query } }) => !query
 
 // Fluent style
 // const clear = action$ =>
 //    action$.thru(select(SEARCHED_USERS_DEBOUNCED))
-//     .filter(emptySearch)
+//     .filter(whereEmpty)
 //     .map(clearSearchResults)
 
 // Functional style
 // const clear = action$ => {
 //   const search$ = select(SEARCHED_USERS_DEBOUNCED, action$)
-//   const emptySearch$ = filter(emptySearch, search$)
-//   return map(clearSearchResults, emptySearch$)
+//   const whereEmpty$ = filter(whereEmpty, search$)
+//   return map(clearSearchResults, whereEmpty$)
 // }
 
 // Functional & Pointfree style using functional composition
 const clear = compose(
   map(clearSearchResults),
-  filter(emptySearch),
+  filter(whereEmpty),
   select(SEARCHED_USERS_DEBOUNCED)
 )
 
