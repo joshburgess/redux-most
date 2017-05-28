@@ -190,13 +190,22 @@ __Example__
 // epics/index.js
 
 import { combineEpics } from 'redux-most'
-import pingEpic from './ping'
-import fetchUserEpic from './fetchUser'
+import searchUsersDebounced from './searchUsersDebounced'
+import searchUsers from './searchUsers'
+import clearSearchResults from './clearSearchResults'
+import fetchReposByUser from './fetchReposByUser'
+import adminAccess from './adminAccess'
 
-export default combineEpics([
-  pingEpic,
-  fetchUserEpic
+const rootEpic = combineEpics([
+  searchUsersDebounced,
+  searchUsers,
+  clearSearchResults,
+  fetchReposByUser,
+  adminAccess,
 ])
+
+export default rootEpic
+
 ```
 
 ---
@@ -222,7 +231,7 @@ __Example__
 
 ```js
 
-import {createEpicMiddleware} from 'redux-most'
+import { createEpicMiddleware } from 'redux-most'
 import rootEpic from '../epics'
 
 ...
@@ -262,7 +271,7 @@ The `select` operator is curried, allowing you to use a fluent or functional sty
 
 __Examples__
 ```js
-// fluent style
+// Fluent style
 
 import * as ActionTypes from '../ActionTypes'
 import { clearSearchResults } from '../actions'
@@ -277,7 +286,7 @@ export default clear
 ```
 
 ```js
-// functional style
+// Functional style
 
 import * as ActionTypes from '../ActionTypes'
 import { clearSearchResults } from '../actions'
@@ -288,6 +297,27 @@ const clear = action$ => {
   const emptySearch$ = filter(action => !action.payload.query, search$)
   return map(clearSearchResults, emptySearch$)
 }
+
+export default clear
+```
+
+```js
+// Functional & Pointfree style using functional composition
+
+import * as ActionTypes from '../ActionTypes'
+import { clearSearchResults } from '../actions'
+import { select } from 'redux-most'
+import {
+  curriedFilter as filter,
+  curriedMap as map,
+} from '../utils'
+import { compose } from 'ramda'
+
+const clear = compose(
+  map(clearSearchResults),
+  filter(emptySearch),
+  select(ActionTypes.SEARCHED_USERS_DEBOUNCED)
+)
 
 export default clear
 ```
@@ -306,14 +336,14 @@ The `selectArray` operator is curried, allowing you to use a fluent or functiona
 
 __Examples__
 ```js
-// fluent style
+// Fluent style
 
 import * as ActionTypes from '../ActionTypes'
 import { clearSearchResults } from '../actions'
 import { selectArray } from 'redux-most'
 
 const clear = action$ =>
-  action$.thru(selectArray([ActionTypes.SEARCHED_USERS, ActionTypes.SEARCHED_USERS_DEBOUNCED]))
+  action$.thru(selectArray([ActionTypes.SEARCHED_USERS_DEBOUNCED, ActionTypes.SOME_OTHER_TYPE]))
     .filter(action => !action.payload.query)
     .map(clearSearchResults)
 
@@ -321,17 +351,38 @@ export default clear
 ```
 
 ```js
-// functional style
+// Functional style
 
 import * as ActionTypes from '../ActionTypes'
 import { clearSearchResults } from '../actions'
 import { selectArray } from 'redux-most'
 
 const clear = action$ => {
-  const search$ = selectArray([ActionTypes.SEARCHED_USERS, ActionTypes.SEARCHED_USERS_DEBOUNCED], action$)
+  const search$ = selectArray([ActionTypes.SEARCHED_USERS_DEBOUNCED, ActionTypes.SOME_OTHER_TYPE], action$)
   const emptySearch$ = filter(action => !action.payload.query, search$)
   return map(clearSearchResults, emptySearch$)
 }
+
+export default clear
+```
+
+```js
+// Functional & Pointfree style using functional composition
+
+import * as ActionTypes from '../ActionTypes'
+import { clearSearchResults } from '../actions'
+import { selectArray } from 'redux-most'
+import {
+  curriedFilter as filter,
+  curriedMap as map,
+} from '../utils'
+import { compose } from 'ramda'
+
+const clear = compose(
+  map(clearSearchResults),
+  filter(emptySearch),
+  selectArray([ActionTypes.SEARCHED_USERS_DEBOUNCED, ActionTypes.SOME_OTHER_TYPE])
+)
 
 export default clear
 ```
