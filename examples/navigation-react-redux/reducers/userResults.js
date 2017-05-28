@@ -1,12 +1,15 @@
-import * as ActionTypes from '../constants/ActionTypes'
+import {
+  CLEARED_SEARCH_RESULTS,
+  RECEIVED_USERS,
+} from '../constants/ActionTypes'
 
 const initialState = []
 
 const userResults = (state = initialState, action) => {
   switch (action.type) {
-    case ActionTypes.RECEIVED_USERS:
+    case RECEIVED_USERS:
       return action.payload.users
-    case ActionTypes.CLEARED_SEARCH_RESULTS:
+    case CLEARED_SEARCH_RESULTS:
       return initialState
     default:
       return state

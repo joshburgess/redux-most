@@ -1,4 +1,4 @@
-import * as ActionTypes from '../constants/ActionTypes'
+import { SEARCHED_USERS_DEBOUNCED } from '../constants/ActionTypes'
 import { clearSearchResults } from '../actions'
 import { select } from 'redux-most'
 // import { select } from '../../../src/index'
@@ -12,13 +12,13 @@ const emptySearch = ({ payload: { query } }) => !query
 
 // Fluent style
 // const clear = action$ =>
-//    action$.thru(select(ActionTypes.SEARCHED_USERS_DEBOUNCED))
+//    action$.thru(select(SEARCHED_USERS_DEBOUNCED))
 //     .filter(emptySearch)
 //     .map(clearSearchResults)
 
 // Functional style
 // const clear = action$ => {
-//   const search$ = select(ActionTypes.SEARCHED_USERS_DEBOUNCED, action$)
+//   const search$ = select(SEARCHED_USERS_DEBOUNCED, action$)
 //   const emptySearch$ = filter(emptySearch, search$)
 //   return map(clearSearchResults, emptySearch$)
 // }
@@ -27,7 +27,7 @@ const emptySearch = ({ payload: { query } }) => !query
 const clear = compose(
   map(clearSearchResults),
   filter(emptySearch),
-  select(ActionTypes.SEARCHED_USERS_DEBOUNCED)
+  select(SEARCHED_USERS_DEBOUNCED)
 )
 
 export default clear

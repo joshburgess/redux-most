@@ -1,11 +1,15 @@
-import * as ActionTypes from '../constants/ActionTypes'
+import {
+  CLEARED_SEARCH_RESULTS,
+  RECEIVED_USERS,
+  SEARCHED_USERS_DEBOUNCED,
+} from '../constants/ActionTypes'
 
 const searchInFlight = (state = false, action) => {
   switch (action.type) {
-    case ActionTypes.SEARCHED_USERS_DEBOUNCED:
+    case SEARCHED_USERS_DEBOUNCED:
       return true
-    case ActionTypes.RECEIVED_USERS:
-    case ActionTypes.CLEARED_SEARCH_RESULTS:
+    case RECEIVED_USERS:
+    case CLEARED_SEARCH_RESULTS:
       return false
     default:
       return state

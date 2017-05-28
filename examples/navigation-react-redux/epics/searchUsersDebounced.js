@@ -1,4 +1,4 @@
-import * as ActionTypes from '../constants/ActionTypes'
+import { SEARCHED_USERS_DEBOUNCED } from '../constants/ActionTypes'
 import { searchedUsers } from '../actions'
 import { select } from 'redux-most'
 // import { select } from '../../../src/index'
@@ -13,13 +13,13 @@ const toSearchedUsers = ({ payload: { query } }) =>
 
 // Fluent style
 // const searchUsersDebounced = action$ =>
-//    action$.thru(select(ActionTypes.SEARCHED_USERS_DEBOUNCED))
+//    action$.thru(select(SEARCHED_USERS_DEBOUNCED))
 //     .debounce(800)
 //     .map(toSearchedUsers)
 
 // Functional style
 // const searchUsersDebounced = action$ => {
-//   const search$ = select(ActionTypes.SEARCHED_USERS_DEBOUNCED, action$)
+//   const search$ = select(SEARCHED_USERS_DEBOUNCED, action$)
 //   const debouncedSearch$ = debounce(800, search$)
 //   return map(toSearchedUsers, debouncedSearch$)
 // }
@@ -28,7 +28,7 @@ const toSearchedUsers = ({ payload: { query } }) =>
 const searchUsersDebounced = compose(
   map(toSearchedUsers),
   debounce(800),
-  select(ActionTypes.SEARCHED_USERS_DEBOUNCED)
+  select(SEARCHED_USERS_DEBOUNCED)
 )
 
 export default searchUsersDebounced

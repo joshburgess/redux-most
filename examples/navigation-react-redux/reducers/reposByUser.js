@@ -1,12 +1,15 @@
-import * as ActionTypes from '../constants/ActionTypes'
+import {
+  RECEIVED_USER_REPOS,
+  REQUESTED_USER_REPOS,
+} from '../constants/ActionTypes'
 
 const reposByUser = (state = {}, action) => {
   switch (action.type) {
-    case ActionTypes.REQUESTED_USER_REPOS:
+    case REQUESTED_USER_REPOS:
       return Object.assign({}, state, {
         [action.payload.user]: undefined,
       })
-    case ActionTypes.RECEIVED_USER_REPOS:
+    case RECEIVED_USER_REPOS:
       return Object.assign({}, state, {
         [action.payload.user]: action.payload.repos,
       })

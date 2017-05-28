@@ -1,7 +1,14 @@
 import { replace } from 'react-router-redux'
-import * as ActionTypes from '../constants/ActionTypes'
+import {
+  CLEARED_SEARCH_RESULTS,
+  SEARCHED_USERS,
+} from '../constants/ActionTypes'
 import { receiveUsers } from '../actions'
-import { fromPromise, just, switchLatest } from 'most'
+import {
+  // fromPromise,
+  just,
+  switchLatest,
+} from 'most'
 import {
   curriedChain as chain,
   curriedFilter as filter,
@@ -9,26 +16,35 @@ import {
   curriedMerge as merge,
   // curriedSwitchMap as switchMap,
   curriedUntil as until,
+  fetchJsonStream,
 } from '../utils'
 import { select } from 'redux-most'
 // import { select } from '../../../src/index'
 
+const toQuery = ({ payload }) => payload.query
+
+const whereTruthy = query => !!query
+
+const toItems = ({ items }) => items
+
+const getUsersQueryUrl = q => `https://api.github.com/search/users?q=${q}`
+
 // Fluent style
 // const searchUsers = action$ =>
-//   action$.thru(select(ActionTypes.SEARCHED_USERS))
-//     .map(({ payload }) => payload.query)
-//     .filter(q => !!q)
+//   action$.thru(select(SEARCHED_USERS))
+//     .map(toQuery)
+//     .filter(whereTruthy)
 //     .map(q =>
 //       just()
-//       .until(action$.thru(select(ActionTypes.CLEARED_SEARCH_RESULTS)))
+//       .until(action$.thru(select(CLEARED_SEARCH_RESULTS)))
 //       .chain(_ =>
 //         merge(
 //           just(replace(`?q=${q}`)),
 //           fromPromise(
-//             fetch(`https://api.github.com/search/users?q=${q}`)
+//             fetch(getUsersQueryUrl(q))
 //             .then(response => response.json())
 //           )
-//           .map(({ items }) => items)
+//           .map(toItems)
 //           .map(receiveUsers)
 //         )
 //       )
@@ -36,24 +52,26 @@ import { select } from 'redux-most'
 
 // Functional style
 const searchUsers = action$ => {
-  const searchedUsers$ = select(ActionTypes.SEARCHED_USERS, action$)
-  const maybeEmptyQuery$ = map(({ payload }) => payload.query, searchedUsers$)
-  const query$ = filter(q => !!q, maybeEmptyQuery$)
+  const searchedUsers$ = select(SEARCHED_USERS, action$)
+  const maybeEmptyQuery$ = map(toQuery, searchedUsers$)
+  const query$ = filter(whereTruthy, maybeEmptyQuery$)
+
   const untilCleared$ = until(
-    select(ActionTypes.CLEARED_SEARCH_RESULTS, action$),
+    select(CLEARED_SEARCH_RESULTS, action$),
     just()
   )
-  const fetchJson = q => fromPromise(
-    fetch(`https://api.github.com/search/users?q=${q}`)
-    .then(response => response.json())
-  )
-  const parseJsonForUsers = q => map(({ items }) => items, fetchJson(q))
+
+  const parseJsonForUsers = q =>
+    map(toItems, fetchJsonStream(getUsersQueryUrl(q)))
+
   const fetchReplaceReceive = q => merge(
     just(replace(`?q=${q}`)),
     map(receiveUsers, parseJsonForUsers(q))
   )
+
   const fetchReplaceReceiveUntilCleared = q =>
     chain(_ => fetchReplaceReceive(q), untilCleared$)
+
   return switchLatest(map(fetchReplaceReceiveUntilCleared, query$))
 }
 

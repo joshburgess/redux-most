@@ -1,4 +1,4 @@
-import * as ActionTypes from '../constants/ActionTypes'
+import { REQUESTED_USER_REPOS } from '../constants/ActionTypes'
 import { receiveUserRepos } from '../actions'
 // import { fromPromise } from 'most'
 import { select } from 'redux-most'
@@ -12,16 +12,16 @@ import { compose } from 'ramda'
 
 const toUser = ({ payload: { user } }) => user
 
-const getGithubUserRepoUrl = user =>
+const getUserReposUrl = user =>
   `https://api.github.com/users/${user}/repos`
 
 // Fluent style
 // const fetchReposByUser = action$ =>
-//   action$.thru(select(ActionTypes.REQUESTED_USER_REPOS))
+//   action$.thru(select(REQUESTED_USER_REPOS))
 //     .map(toUser)
 //     .map(user =>
 //       fromPromise(
-//         fetch(getGithubUserRepoUrl(user))
+//         fetch(getUserReposUrl(user))
 //         .then(response => response.json())
 //       ).map(receiveUserRepos(user))
 //     ).switch()
@@ -34,12 +34,12 @@ const getGithubUserRepoUrl = user =>
 
 // Functional style
 // const fetchAndReceiveUserRepos = user => {
-//   const repos$ = fetchJsonStream(getGithubUserRepoUrl(user))
+//   const repos$ = fetchJsonStream(getUserReposUrl(user))
 //   return map(receiveUserRepos(user), repos$)
 // }
 
 // const fetchReposByUser = action$ => {
-//   const reqUserRepos$ = select(ActionTypes.REQUESTED_USER_REPOS, action$)
+//   const reqUserRepos$ = select(REQUESTED_USER_REPOS, action$)
 //   const user$ = map(toUser, reqUserRepos$)
 //   return switchMap(fetchAndReceiveUserRepos, user$)
 // }
@@ -48,13 +48,13 @@ const getGithubUserRepoUrl = user =>
 const fetchAndReceiveUserRepos = user => compose(
   map(receiveUserRepos(user)),
   fetchJsonStream,
-  getGithubUserRepoUrl
+  getUserReposUrl
 )(user)
 
 const fetchReposByUser = compose(
   switchMap(fetchAndReceiveUserRepos),
   map(toUser),
-  select(ActionTypes.REQUESTED_USER_REPOS)
+  select(REQUESTED_USER_REPOS)
 )
 
 export default fetchReposByUser

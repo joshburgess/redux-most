@@ -6,14 +6,14 @@ import {
   curriedMerge as merge,
 } from '../utils'
 import { push } from 'react-router-redux'
-import * as ActionTypes from '../constants/ActionTypes'
+import { CHECKED_ADMIN_ACCESS } from '../constants/ActionTypes'
 import { accessDenied } from '../actions'
 import { select } from 'redux-most'
 // import { select } from '../../../src/index'
 
 // Fluent style
 // const adminAccess = action$ =>
-//   action$.thru(select(ActionTypes.CHECKED_ADMIN_ACCESS))
+//   action$.thru(select(CHECKED_ADMIN_ACCESS))
 //     // If you wanted to do an actual access check you
 //     // could do so here and then filter by failed checks.
 //     .delay(800)
@@ -26,7 +26,7 @@ import { select } from 'redux-most'
 
 // Functional style
 const adminAccess = action$ => {
-  const checkedAdminAccess$ = select(ActionTypes.CHECKED_ADMIN_ACCESS, action$)
+  const checkedAdminAccess$ = select(CHECKED_ADMIN_ACCESS, action$)
   // If you wanted to do an actual access check you
   // could do so here and then filter by failed checks.
   const delayedCheckedAdminAccess$ = delay(800, checkedAdminAccess$)
