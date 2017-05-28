@@ -1,4 +1,4 @@
-import * as ActionTypes from '../ActionTypes'
+import * as ActionTypes from '../constants/ActionTypes'
 
 const DENIED = 'DENIED'
 

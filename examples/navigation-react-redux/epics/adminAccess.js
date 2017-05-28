@@ -6,7 +6,7 @@ import {
   curriedMerge as merge,
 } from '../utils'
 import { push } from 'react-router-redux'
-import * as ActionTypes from '../ActionTypes'
+import * as ActionTypes from '../constants/ActionTypes'
 import { accessDenied } from '../actions'
 import { select } from 'redux-most'
 // import { select } from '../../../src/index'

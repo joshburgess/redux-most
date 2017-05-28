@@ -1,4 +1,4 @@
-import * as ActionTypes from '../ActionTypes'
+import * as ActionTypes from '../constants/ActionTypes'
 import { searchedUsers } from '../actions'
 import { select } from 'redux-most'
 // import { select } from '../../../src/index'

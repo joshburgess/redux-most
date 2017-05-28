@@ -1,4 +1,4 @@
-import * as ActionTypes from '../ActionTypes'
+import * as ActionTypes from '../constants/ActionTypes'
 import { receiveUserRepos } from '../actions'
 // import { fromPromise } from 'most'
 import { select } from 'redux-most'

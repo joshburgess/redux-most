@@ -1,5 +1,5 @@
 import { replace } from 'react-router-redux'
-import * as ActionTypes from '../ActionTypes'
+import * as ActionTypes from '../constants/ActionTypes'
 import { receiveUsers } from '../actions'
 import { fromPromise, just, switchLatest } from 'most'
 import {
