@@ -114,17 +114,45 @@ To use the fluent style, just use `Most`'s `thru` operator to pass the stream
 through to `select`/`selectArray` as the 2nd argument.
 
 ```js
-action$.thru(select(SOME_ACTION_TYPE))
-
-action$.thru(selectArray([SOME_ACTION_TYPE, SOME_OTHER_ACTION_TYPE]))
+// Fluent style
+const filteredAction$ = action$.thru(select(SOME_ACTION_TYPE))
+const filteredActions$ = action$.thru(selectArray([SOME_ACTION_TYPE, SOME_OTHER_ACTION_TYPE]))
 ```
 
 Otherwise, simply directly pass the stream as the 2nd argument.
 
 ```js
-select(SOME_ACTION_TYPE, action$)
+//Functional style
+const filteredAction$ = select(SOME_ACTION_TYPE, action$)
+const filteredActions$ = selectArray([SOME_ACTION_TYPE, SOME_OTHER_ACTION_TYPE], action$)
+```
+Alternatively, you can delay passing the 2nd argument while creating functional pipelines
+via functional composition by using `compose` or `pipe` functions, like from `lodash/fp` or `ramda`.
+Again, this is because `select` & `selectArray` are auto-curried.
+```js
+// Functional style using currying & functional composition
+import { compose, curry, pipe } from 'ramda'
 
-selectArray([SOME_ACTION_TYPE, SOME_OTHER_ACTION_TYPE], action$)
+// NOTE: `Most 2.0` will feature auto-curried functions, but right now we must curry them manually.
+const curriedDebounce = curry(debounce)
+const curriedFilter = curry(filter)
+const curriedMap = curry(map)
+
+// someEpic is a new function which is still awaiting one argument, the action$
+const someEpic = compose(
+  curriedMap(someFunction),
+  curriedDebounce(800),
+  select(SOME_ACTION_TYPE)
+)
+
+// pipe is the same as compose, but read from left-to-right rather than right-to-left.
+const someOtherEpic = pipe(
+  select([SOME_ACTION_TYPE, SOME_OTHER_ACTION_TYPE]),
+  curriedFilter(somePredicate),
+  curriedMap(someFunction)
+)
+
+
 ```
 
 ## API Reference
