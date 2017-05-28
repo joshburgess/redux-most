@@ -152,8 +152,6 @@ const someOtherEpic = pipe(
   curriedFilter(somePredicate),
   curriedMap(someFunction)
 )
-
-
 ```
 
 ## API Reference
