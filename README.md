@@ -133,7 +133,7 @@ Again, this is because `select` & `selectArray` are auto-curried.
 // Functional style using currying & functional composition
 import { compose, curry, pipe } from 'ramda'
 
-// NOTE: `Most 2.0` will feature auto-curried functions, but right now we must curry them manually.
+// NOTE: Most 2.0 will feature auto-curried functions, but right now we must curry them manually.
 const curriedDebounce = curry(debounce)
 const curriedFilter = curry(filter)
 const curriedMap = curry(map)
