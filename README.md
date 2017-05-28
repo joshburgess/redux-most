@@ -145,9 +145,10 @@ const someEpic = compose(
   select(SOME_ACTION_TYPE)
 )
 
+// someOtherEpic is a new function which is still awaiting one argument, the action$
 // pipe is the same as compose, but read from left-to-right rather than right-to-left.
 const someOtherEpic = pipe(
-  select([SOME_ACTION_TYPE, SOME_OTHER_ACTION_TYPE]),
+  selectArray([SOME_ACTION_TYPE, SOME_OTHER_ACTION_TYPE]),
   curriedFilter(somePredicate),
   curriedMap(someFunction)
 )
