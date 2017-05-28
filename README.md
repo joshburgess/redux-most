@@ -114,17 +114,17 @@ To use the fluent style, just use `Most`'s `thru` operator to pass the stream
 through to `select`/`selectArray` as the 2nd argument.
 
 ```js
-action$.thru(select(ActionTypes.SOME_ACTION_TYPE))
+action$.thru(select(SOME_ACTION_TYPE))
 
-action$.thru(selectArray([ActionTypes.SOME_ACTION_TYPE, ActionTypes.SOME_OTHER_ACTION_TYPE]))
+action$.thru(selectArray([SOME_ACTION_TYPE, SOME_OTHER_ACTION_TYPE]))
 ```
 
 Otherwise, simply directly pass the stream as the 2nd argument.
 
 ```js
-select(ActionTypes.SOME_ACTION_TYPE, action$)
+select(SOME_ACTION_TYPE, action$)
 
-selectArray([ActionTypes.SOME_ACTION_TYPE, ActionTypes.SOME_OTHER_ACTION_TYPE], action$)
+selectArray([SOME_ACTION_TYPE, SOME_OTHER_ACTION_TYPE], action$)
 ```
 
 ## API Reference
