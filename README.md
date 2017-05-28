@@ -70,11 +70,33 @@ programming.
 
 ### Differences between `redux-most` & `redux-observable`
 
-I chose not to extend the `Observable`/`Stream` type with a custom `ActionsObservable`
+__Summary__
+
+- There are no adapters. `redux-most` is only intended to be used with `Most`.
+- `combineEpics` takes in an array of epics instead of multiple arguments.
+- Standard `Most` streams are used instead of a custom Observable extension.
+- `select` and `selectArray` are available instead of the variadic `ofType`.
+
+__Further Elaboration:__
+
+As the name implies, `redux-most` does not offer adapters for use with other reactive
+programming libraries that implement the Observable type. It's merely an implementation of
+`redux-observable`'s "Epic" pattern exclusively intended for use with `Most`. `Most` is arguably
+the fastest, simplest, most functional, & most elegant reactive programming library in the
+JavaScript ecosystem right now, and `Most 2.0` will be even better, as it will feature an
+auto-curried API like `lodash/fp` and `ramda`, but for working with streams instead of arrays.
+For a preview of what's to come, check out what's going on [here](https://github.com/mostjs/core).
+
+Whereas `comebineEpics` is variadic in `redux-observable`, it's unary in `redux-most`. It takes in
+only one argument, an array of epics, instead of individual epics getting passed in as separate
+arguments.
+
+As for streams, I chose not to extend the `Observable` type with a custom `ActionsObservable`
 type. So, when working with `redux-most`, you will be working with normal `most`
 streams without any special extension methods. However, I have offered something
 similar to `redux-observable`'s `ofType` operator in `redux-most` with the
 `select` and `selectArray` helper functions.
+ 
 
 Like `ofType`, `select` and `selectArray` are convenience utilities for filtering
 actions by a specific type or types. In `redux-observable`, `ofType` can optionally take multiple
@@ -93,6 +115,7 @@ through to `select`/`selectArray` as the 2nd argument.
 
 ```js
 action$.thru(select(ActionTypes.SOME_ACTION_TYPE))
+
 action$.thru(selectArray([ActionTypes.SOME_ACTION_TYPE, ActionTypes.SOME_OTHER_ACTION_TYPE]))
 ```
 
@@ -100,6 +123,7 @@ Otherwise, simply directly pass the stream as the 2nd argument.
 
 ```js
 select(ActionTypes.SOME_ACTION_TYPE, action$)
+
 selectArray([ActionTypes.SOME_ACTION_TYPE, ActionTypes.SOME_OTHER_ACTION_TYPE], action$)
 ```
 
