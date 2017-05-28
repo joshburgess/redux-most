@@ -1,5 +1,4 @@
-import compose from 'ramda/src/compose'
-import curry from 'ramda/src/curry'
+import { compose, curry } from 'ramda'
 import {
   chain,
   debounce,

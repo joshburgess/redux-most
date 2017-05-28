@@ -1,5 +1,5 @@
 import * as ActionTypes from '../constants/ActionTypes'
-import curry from 'ramda/src/curry'
+import { curry } from 'ramda'
 
 
 export const searchedUsersDebounced = query => ({

@@ -10,6 +10,7 @@ class ReposByUser extends React.Component {
 
   componentWillReceiveProps (nextProps) {
     const { user } = this.props.params
+
     if (user !== nextProps.params.user) {
       this.props.requestReposByUser(user)
     }
@@ -20,11 +21,13 @@ class ReposByUser extends React.Component {
       reposByUser,
       user,
     } = this.props
+
     if (!reposByUser[user]) {
       return (
         <p>Loading</p>
       )
     }
+
     return (
       <Repos
         repos={reposByUser[user]}
@@ -34,10 +37,11 @@ class ReposByUser extends React.Component {
   }
 }
 
-export default connect(
-  ({ reposByUser }, ownProps) => ({
-    reposByUser,
-    user: ownProps.params.user,
-  }),
-  { requestReposByUser }
-)(ReposByUser)
+const mapStateToProps = ({ reposByUser }, ownProps) => ({
+  reposByUser,
+  user: ownProps.params.user,
+})
+
+const mapDispatchToProps = { requestReposByUser }
+
+export default connect(mapStateToProps, mapDispatchToProps)(ReposByUser)

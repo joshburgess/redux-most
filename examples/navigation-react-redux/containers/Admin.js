@@ -13,11 +13,13 @@ class Admin extends React.Component {
         <p>Checking access...</p>
       )
     }
+
     if (this.props.adminAccess === 'GRANTED') {
       return (
         <p>Access granted</p>
       )
     }
+
     return (
       <p>
         Access denied. Redirecting back home.
@@ -26,7 +28,8 @@ class Admin extends React.Component {
   }
 }
 
-export default connect(
-  ({ adminAccess }) => ({ adminAccess }),
-  { checkAdminAccess }
-)(Admin)
+const mapStateToProps = ({ adminAccess }) => ({ adminAccess })
+
+const mapDispatchToProps = { checkAdminAccess }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Admin)

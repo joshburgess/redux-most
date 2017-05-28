@@ -8,6 +8,7 @@ import { searchedUsersDebounced } from '../actions'
 class UserSearch extends React.Component {
   constructor (props) {
     super(props)
+
     this.handleUserSearch = this.handleUserSearch.bind(this)
   }
 
@@ -25,6 +26,7 @@ class UserSearch extends React.Component {
       results,
       searchInFlight,
     } = this.props
+
     return (
       <div>
         <Link
@@ -32,7 +34,8 @@ class UserSearch extends React.Component {
           style={{
             display: 'block',
             marginBottom: 10,
-          }}>
+          }}
+        >
           Admin Panel
         </Link>
         <UserSearchInput
@@ -48,11 +51,12 @@ class UserSearch extends React.Component {
   }
 }
 
-export default connect(
-  ({ routing, userResults, searchInFlight }) => ({
-    query: routing.locationBeforeTransitions.query.q,
-    results: userResults,
-    searchInFlight,
-  }),
-  { searchedUsersDebounced }
-)(UserSearch)
+const mapStateToProps = ({ routing, userResults, searchInFlight }) => ({
+  query: routing.locationBeforeTransitions.query.q,
+  results: userResults,
+  searchInFlight,
+})
+
+const mapDispatchToProps = { searchedUsersDebounced }
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserSearch)
