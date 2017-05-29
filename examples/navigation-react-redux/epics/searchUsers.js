@@ -5,9 +5,8 @@ import {
 } from '../constants/ActionTypes'
 import { receiveUsers } from '../actions'
 import {
-  fromPromise,
+  // fromPromise,
   just,
-  switchLatest,
 } from 'most'
 import {
   curriedChain as chain,
@@ -15,10 +14,8 @@ import {
   curriedMap as map,
   curriedMerge as merge,
   curriedSwitchMap as switchMap,
-  curriedTap as tap,
   curriedUntil as until,
   fetchJsonStream,
-  log,
 } from '../utils'
 import { select } from 'redux-most'
 // import { select } from '../../../src/index'
