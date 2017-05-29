@@ -80,7 +80,12 @@ const replaceQuery = query => replace(`?q=${query}`)
 
 // Using functional composition & simplifying where possible
 const searchUsers = action$ => {
-  const toFlattenedOutput = query => chain(
+  const justUntilClearedSearchResults = compose(
+    until(select(CLEARED_SEARCH_RESULTS, action$)),
+    just
+  )
+
+  const getMergeForQuery = query =>
     _ => merge(
       just(replaceQuery(query)),
       compose(
@@ -88,8 +93,11 @@ const searchUsers = action$ => {
         fetchJsonStream,
         getUsersQueryUrl
       )(query)
-    ),
-    until(select(CLEARED_SEARCH_RESULTS, action$), just())
+    )
+
+  const toFlattenedOutput = query => chain(
+    getMergeForQuery(query),
+    justUntilClearedSearchResults()
   )
 
   return compose(
