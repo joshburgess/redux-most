@@ -30,21 +30,21 @@ const toItems = ({ items }) => items
 const getUsersQueryUrl = query =>
   `https://api.github.com/search/users?q=${query}`
 
-const replaceQuery = q => replace(`?q=${q}`)
+const replaceQuery = query => replace(`?q=${query}`)
 
 // Fluent style
 // const searchUsers = action$ =>
 //   action$.thru(select(SEARCHED_USERS))
 //     .map(toQuery)
 //     .filter(whereNotEmpty)
-//     .map(q =>
+//     .map(query =>
 //       just()
 //       .until(action$.thru(select(CLEARED_SEARCH_RESULTS)))
 //       .chain(_ =>
 //         merge(
-//           just(replaceQuery(q)),
+//           just(replaceQuery(query)),
 //           fromPromise(
-//             fetch(getUsersQueryUrl(q))
+//             fetch(getUsersQueryUrl(query))
 //             .then(response => response.json())
 //           )
 //           .map(toItems)
@@ -64,30 +64,30 @@ const replaceQuery = q => replace(`?q=${q}`)
 //     just()
 //   )
 
-//   const parseJsonForUsers = q =>
-//     map(toItems, fetchJsonStream(getUsersQueryUrl(q)))
+//   const parseJsonForUsers = query =>
+//     map(toItems, fetchJsonStream(getUsersQueryUrl(query)))
 
-//   const fetchReplaceReceive = q => merge(
-//     just(replaceQuery(q)),
-//     map(receiveUsers, parseJsonForUsers(q))
+//   const fetchReplaceReceive = query => merge(
+//     just(replaceQuery(query)),
+//     map(receiveUsers, parseJsonForUsers(query))
 //   )
 
-//   const fetchReplaceReceiveUntilCleared = q =>
-//     chain(_ => fetchReplaceReceive(q), untilCleared$)
+//   const fetchReplaceReceiveUntilCleared = query =>
+//     chain(_ => fetchReplaceReceive(query), untilCleared$)
 
 //   return switchMap(fetchReplaceReceiveUntilCleared, query$)
 // }
 
 // Using functional composition & simplifying where possible
-const searchUsers = action$ => {
-  const toFlattenedOutput = q => chain(
+const searchUsers1 = action$ => {
+  const toFlattenedOutput = query => chain(
     _ => merge(
-      just(replaceQuery(q)),
+      just(replaceQuery(query)),
       compose(
         map(compose(receiveUsers, toItems)),
         fetchJsonStream,
         getUsersQueryUrl
-      )(q)
+      )(query)
     ),
     until(select(CLEARED_SEARCH_RESULTS, action$), just())
   )
