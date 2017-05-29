@@ -1,8 +1,8 @@
 import { mergeArray } from 'most'
-import { isArrayLike, map } from '@most/prelude'
+import { map } from '@most/prelude'
 
 export const combineEpics = epicsArray => (actions, store) => {
-  if (!epicsArray || !isArrayLike(epicsArray)) {
+  if (!epicsArray || !Array.isArray(epicsArray)) {
     throw new TypeError('You must provide an array of Epics to combineEpics')
   }
 
