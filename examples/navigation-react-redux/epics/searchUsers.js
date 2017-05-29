@@ -79,7 +79,7 @@ const replaceQuery = query => replace(`?q=${query}`)
 // }
 
 // Using functional composition & simplifying where possible
-const searchUsers1 = action$ => {
+const searchUsers = action$ => {
   const toFlattenedOutput = query => chain(
     _ => merge(
       just(replaceQuery(query)),
