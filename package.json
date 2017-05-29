@@ -16,15 +16,15 @@
   "scripts": {
     "lint": "eslint src",
     "test": "cross-env BABEL_ENV=test ava --tap | tap-diff",
-    "tdd": "cross-env BABEL_ENV=test ava --watch --tap | tap-diff",
-    "safety-check": "yarn run lint && yarn run test",
+    "tdd": "cross-env BABEL_ENV=test ava --watch",
+    "safety-check": "yarn lint && yarn test",
     "build:cjs": "rimraf lib && cross-env BABEL_ENV=cjs babel src --out-dir lib",
     "build:es": "rimraf es && cross-env BABEL_ENV=es babel src --out-dir es",
     "build:umd:dev": "cross-env BABEL_ENV=umd webpack src/index.js dist/redux-most.js --config webpack.config.dev.babel.js",
     "build:umd:prod": "cross-env BABEL_ENV=umd webpack src/index.js dist/redux-most.min.js --config webpack.config.prod.babel.js",
-    "build:umd": "rimraf dist && yarn run build:umd:dev && yarn run build:umd:prod",
-    "build": "yarn run build:cjs && yarn run build:es && yarn run build:umd",
-    "prepublish": "yarn run lint && yarn run build"
+    "build:umd": "rimraf dist && yarn build:umd:dev && yarn build:umd:prod",
+    "build": "yarn build:cjs && yarn build:es && yarn build:umd",
+    "prepublish": "yarn lint && yarn build"
   },
   "repository": "joshburgess/redux-most",
   "keywords": [
