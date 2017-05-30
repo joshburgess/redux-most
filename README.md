@@ -206,7 +206,7 @@ export default function configureStore() {
 
 __Arguments__
 
-1. `epicsArray` _(`Array<Epic>`)_: The array of `epics` to combine into one root epic.
+1. `epicsArray` _(`Epic[]`)_: The array of `epics` to combine into one root epic.
 
 __Returns__
 
@@ -362,7 +362,7 @@ A helper function for filtering the stream of actions by an array of action type
 
 __Arguments__
 
-1. `actionTypes` _(`Array<string>`)_: An array of action types to filter by.
+1. `actionTypes` _(`string[]`)_: An array of action types to filter by.
 2. `stream` _(`Stream`)_: The stream of actions you are filtering. Ex: `actions$`.
 
 The `selectArray` operator is curried, allowing you to use a fluent or functional style.

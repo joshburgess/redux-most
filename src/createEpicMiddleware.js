@@ -4,7 +4,7 @@ import { epicBegin, epicEnd } from './actions'
 
 export const createEpicMiddleware = epic => {
   if (typeof epic !== 'function') {
-    throw new TypeError('You must provide an Epic (a function) to createEpicMiddleware')
+    throw new TypeError('You must provide an Epic (a function) to createEpicMiddleware.')
   }
 
   // it is important that this stream is created here and passed in to each
@@ -16,21 +16,21 @@ export const createEpicMiddleware = epic => {
   // epic$ must be a Subject, because replaceEpic cannot be written without it
   const epic$ = async()
 
-  // storeRef is mutable and defined here in order to capture a reference to the
-  // passed in store argument so that dispatch can be called from within replaceEpic
-  let storeRef // eslint-disable-line fp/no-let
+  // middlewareApi is mutable and defined here in order to capture a reference to the
+  // _middlewareApi argument so that dispatch can be called from within replaceEpic
+  let middlewareApi // eslint-disable-line fp/no-let
 
-  const epicMiddleware = store => {
-    storeRef = store
+  const epicMiddleware = _middlewareApi => {
+    middlewareApi = _middlewareApi
 
     return next => {
       const callNextEpic = nextEpic => {
-        storeRef.dispatch(epicBegin())
-        return nextEpic(actionsIn$, storeRef)
+        middlewareApi.dispatch(epicBegin())
+        return nextEpic(actionsIn$, middlewareApi)
       }
 
       const actionsOut$ = switchLatest(map(callNextEpic, epic$))
-      observe(storeRef.dispatch, actionsOut$)
+      observe(middlewareApi.dispatch, actionsOut$)
 
       // Emit combined epics
       epic$.next(epic)
@@ -46,7 +46,7 @@ export const createEpicMiddleware = epic => {
 
   // can be used for hot reloading, code splitting, etc.
   epicMiddleware.replaceEpic = nextEpic => {
-    storeRef.dispatch(epicEnd())
+    middlewareApi.dispatch(epicEnd())
     epic$.next(nextEpic)
   }
 

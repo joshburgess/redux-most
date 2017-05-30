@@ -8,6 +8,7 @@ import {
   map,
   merge,
   switchLatest,
+  tap,
   throttle,
   until,
 } from 'most'
@@ -50,5 +51,6 @@ export const curriedMap = curry(map)
 export const curriedMapTo = curry(mapTo)
 export const curriedMerge = curry(merge)
 export const curriedSwitchMap = curry(switchMap)
+export const curriedTap = curry(tap)
 export const curriedThrottle = curry(throttle)
 export const curriedUntil = curry(until)
