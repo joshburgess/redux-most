@@ -8,7 +8,7 @@ const baseConfig = {
     rules: [
       {
         test: /\.js$/,
-        use: ['babel-loader'],
+        use: 'babel-loader',
         exclude: /node_modules/,
       },
     ],
@@ -19,7 +19,7 @@ const baseConfig = {
   },
   externals: {
     most: {
-      root: 'Most',
+      root: 'most',
       commonjs2: 'most',
       commonjs: 'most',
       amd: 'most',
