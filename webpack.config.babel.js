@@ -70,4 +70,10 @@ const prodConfig = {
   ],
 }
 
+// This is a not well documented feature of Webpack.
+// When exporting an array Webpack 2 will run
+// multiple times... once for each config in the
+// array (synchronously from first to last). This
+// is what allows us to use multiple configs in
+// a single file.
 module.exports = [devConfig, prodConfig]
