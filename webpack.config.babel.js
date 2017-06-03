@@ -45,7 +45,7 @@ const devConfig = {
   },
   plugins: [
     new webpack.EnvironmentPlugin({
-      'NODE_ENV': 'development'
+      'NODE_ENV': 'development',
     }),
   ],
 }
@@ -58,7 +58,7 @@ const prodConfig = {
   },
   plugins: [
     new webpack.EnvironmentPlugin({
-      'NODE_ENV': 'production'
+      'NODE_ENV': 'production',
     }),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
