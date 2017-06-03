@@ -2,6 +2,10 @@
 
 const webpack = require('webpack')
 
+/******************************************************************************
+  Base config (used in both development & production)
+*******************************************************************************/
+
 const baseConfig = {
   entry: './src/index.js',
   module: {
@@ -37,6 +41,10 @@ const baseConfig = {
   },
 }
 
+/******************************************************************************
+  Development config (Unminified redux-most.js UMD build)
+*******************************************************************************/
+
 const devConfig = {
   ...baseConfig,
   output: {
@@ -49,6 +57,10 @@ const devConfig = {
     }),
   ],
 }
+
+/******************************************************************************
+  Production config (Minified redux-most.min.js UMD build)
+*******************************************************************************/
 
 const prodConfig = {
   ...baseConfig,
@@ -70,10 +82,8 @@ const prodConfig = {
   ],
 }
 
-// This is a not well documented feature of Webpack.
-// When exporting an array Webpack 2 will run
-// multiple times... once for each config in the
-// array (synchronously from first to last). This
-// is what allows us to use multiple configs in
-// a single file.
+// This is a not well documented feature of Webpack. When exporting an array
+// Webpack 2 will run multiple times, once for each config in the array
+// (synchronously, from first to last). This is what allows us to use multiple
+// configs in a single file.
 module.exports = [devConfig, prodConfig]
