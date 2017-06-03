@@ -106,7 +106,7 @@ of arguments. Therefore, `select` is used when we want to filter by a single act
 `selectArray` is used when we want to filter by multiple action types (via an array) simultaneously.
 
 Additionally, to better align with the `Most` API, and because these fucntions take a known number
-of arguments, `select` & `selectArray` are curried, which allows them be used in either a
+of arguments, `select` & `selectArray` are curried, which allows them to be used in either a
 fluent style or a more functional style which enables the use of further currying, partial
 application, & functional composition.
 
@@ -122,15 +122,18 @@ const filteredActions$ = action$.thru(selectArray([SOME_ACTION_TYPE, SOME_OTHER_
 Otherwise, simply directly pass the stream as the 2nd argument.
 
 ```js
-//Functional style
+// Functional style
 const filteredAction$ = select(SOME_ACTION_TYPE, action$)
 const filteredActions$ = selectArray([SOME_ACTION_TYPE, SOME_OTHER_ACTION_TYPE], action$)
 ```
-Alternatively, you can delay passing the 2nd argument while creating functional pipelines
-via functional composition by using `compose` or `pipe` functions, like from `lodash/fp` or `ramda`.
-Again, this is because `select` & `selectArray` are auto-curried.
+Alternatively, you can delay passing the 2nd argument while defining functional pipelines
+via functional composition by using the `compose` or `pipe` functions from your favorite FP library, 
+like `ramda` or `lodash/fp`. Again, this is because `select` & `selectArray` are auto-curried. Being
+able to program in this very functional & Pointfree style is one of the main reasons why someone
+might prefer using redux-most over redux-observable.
+
 ```js
-// Functional style using currying & functional composition
+// Functional & Pointfree style using currying & functional composition
 import { compose, curry, pipe } from 'ramda'
 
 // NOTE: Most 2.0 will feature auto-curried functions, but right now we must curry them manually.
