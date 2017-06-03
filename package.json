@@ -22,7 +22,7 @@
     "build:es": "rimraf es && cross-env BABEL_ENV=es babel src --out-dir es",
     "build:umd": "rimraf dist && cross-env BABEL_ENV=umd webpack --config webpack.config.babel.js",
     "build": "yarn build:cjs && yarn build:es && yarn build:umd",
-    "prepublish": "yarn lint && yarn build"
+    "prepublish": "yarn safety-check && yarn build"
   },
   "repository": "joshburgess/redux-most",
   "keywords": [
