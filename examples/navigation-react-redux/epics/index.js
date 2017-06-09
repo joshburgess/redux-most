@@ -1,5 +1,5 @@
-// import { combineEpics } from 'redux-most'
-import { combineEpics } from '../../../src/index'
+import { combineEpics } from 'redux-most'
+// import { combineEpics } from '../../../src/index'
 import searchUsersDebounced from './searchUsersDebounced'
 import searchUsers from './searchUsers'
 import clearSearchResults from './clearSearchResults'
