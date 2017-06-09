@@ -1,11 +1,15 @@
-import { select } from 'redux-most'
+// import { select } from 'redux-most'
+import {
+  select,
+  withLatestStateArray,
+  // withLatestStateObject,
+} from '../../../src'
 import {
   curriedMap as map,
-  curriedFlippedSample1 as sample,
 } from '../utils'
 import compose from 'ramda/src/compose'
 
-const accessState = ({ state, action }) => ({
+const accessStateFromArray = ([state, action]) => ({
   type: 'ACCESS_STATE',
   payload: {
     latestState: state,
@@ -13,13 +17,20 @@ const accessState = ({ state, action }) => ({
   },
 })
 
-const zipObj = (state, action) => ({ state, action })
-const sampleToZippedObj = sample(zipObj)
+// const accessStateFromObject = ({ state, action }) => ({
+//   type: 'ACCESS_STATE',
+//   payload: {
+//     latestState: state,
+//     accessedByAction: action,
+//   },
+// })
 
 // dispatch { type: 'STATE_STREAM_TEST' } in Redux DevTools to test
 const stateStreamTest = (action$, state$) => compose(
- map(accessState),
- sampleToZippedObj(state$),
+ // map(accessStateFromObject),
+ // withLatestStateObject(state$),
+ map(accessStateFromArray),
+ withLatestStateArray(state$),
  select('STATE_STREAM_TEST')
 )(action$)
 
