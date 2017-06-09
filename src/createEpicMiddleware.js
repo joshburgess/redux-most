@@ -1,6 +1,7 @@
 import { map, observe, switchLatest } from 'most'
 import { async } from 'most-subject'
 import { epicBegin, epicEnd } from './actions'
+import { STATE_STREAM_SYMBOL } from './constants'
 
 export const createEpicMiddleware = epic => {
   if (typeof epic !== 'function') {
@@ -26,7 +27,19 @@ export const createEpicMiddleware = epic => {
     return next => {
       const callNextEpic = nextEpic => {
         middlewareApi.dispatch(epicBegin())
-        return nextEpic(actionsIn$, middlewareApi)
+
+        const state$ = middlewareApi[STATE_STREAM_SYMBOL]
+        const isUsingStateStreamEnhancer = !!state$
+
+        console.log('state$', state$)
+        console.log('isUsingReduxMostApplyMiddleware', isUsingStateStreamEnhancer)
+        window.state$ = state$
+
+        return isUsingStateStreamEnhancer
+          // new style API (declarative only, no dispatch/getState)
+          ? nextEpic(actionsIn$, state$)
+          // redux-observable style Epic API
+          : nextEpic(actionsIn$, middlewareApi)
       }
 
       const actionsOut$ = switchLatest(map(callNextEpic, epic$))
