@@ -1,8 +1,7 @@
-// import { select } from 'redux-most'
+import { select } from 'redux-most'
 import {
-  select,
-  withLatestStateArray,
-  // withLatestStateObject,
+  // select,
+  withLatestState,
 } from '../../../src'
 import {
   curriedMap as map,
@@ -17,20 +16,10 @@ const accessStateFromArray = ([state, action]) => ({
   },
 })
 
-// const accessStateFromObject = ({ state, action }) => ({
-//   type: 'ACCESS_STATE',
-//   payload: {
-//     latestState: state,
-//     accessedByAction: action,
-//   },
-// })
-
 // dispatch { type: 'STATE_STREAM_TEST' } in Redux DevTools to test
 const stateStreamTest = (action$, state$) => compose(
- // map(accessStateFromObject),
- // withLatestStateObject(state$),
  map(accessStateFromArray),
- withLatestStateArray(state$),
+ withLatestState(state$),
  select('STATE_STREAM_TEST')
 )(action$)
 

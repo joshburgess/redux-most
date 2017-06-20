@@ -31,10 +31,6 @@ export const createEpicMiddleware = epic => {
         const state$ = middlewareApi[STATE_STREAM_SYMBOL]
         const isUsingStateStreamEnhancer = !!state$
 
-        console.log('state$', state$)
-        console.log('isUsingReduxMostApplyMiddleware', isUsingStateStreamEnhancer)
-        window.state$ = state$
-
         return isUsingStateStreamEnhancer
           // new style API (declarative only, no dispatch/getState)
           ? nextEpic(actionsIn$, state$)

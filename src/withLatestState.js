@@ -1,11 +1,10 @@
 import { sampleArray } from 'most'
 import { curry3 } from '@most/prelude'
 
-const flippedSample = curry3((f, stateStream, actionStreamSampler) =>
-  sampleArray(f, actionStreamSampler, [stateStream, actionStreamSampler]))
+const flippedSampleState = curry3((f, stateStream, samplerStream) =>
+  sampleArray(f, samplerStream, [stateStream, samplerStream]))
 
-const asArray = (state, action) => [state, action]
-const asObject = (state, action) => ({ state, action })
+const toArray = (state, samplerStreamEvent) => [state, samplerStreamEvent]
 
-export const withLatestStateArray = flippedSample(asArray)
-export const withLatestStateObject = flippedSample(asObject)
+export const withLatestState = flippedSampleState(toArray)
+export const withState = withLatestState
