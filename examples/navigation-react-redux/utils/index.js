@@ -1,7 +1,6 @@
 import { compose, curry } from 'ramda'
 import {
   chain,
-  combineArray,
   debounce,
   delay,
   filter,
