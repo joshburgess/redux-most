@@ -105,7 +105,7 @@ practice in functional programming to prefer a known number of arguments over a 
 of arguments. Therefore, `select` is used when we want to filter by a single action type, and
 `selectArray` is used when we want to filter by multiple action types (via an array) simultaneously.
 
-Additionally, to better align with the `Most` API, and because these fucntions take a known number
+Additionally, to better align with the `Most` API, and because these functions take a known number
 of arguments, `select` & `selectArray` are curried, which allows them to be used in either a
 fluent style or a more functional style which enables the use of further currying, partial
 application, & functional composition.
