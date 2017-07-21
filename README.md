@@ -135,6 +135,7 @@ might prefer using redux-most over redux-observable.
 ```js
 // Functional & Pointfree style using currying & functional composition
 import { compose, curry, pipe } from 'ramda'
+import { debounce, filter, map } from 'most'
 
 // NOTE: Most 2.0 will feature auto-curried functions, but right now we must curry them manually.
 const curriedDebounce = curry(debounce)
