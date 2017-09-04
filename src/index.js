@@ -4,7 +4,4 @@ export { createStateStreamEnhancer } from './createStateStreamEnhancer'
 export { EPIC_END } from './constants'
 export { select } from './select'
 export { selectArray } from './selectArray'
-export {
-  withLatestState,
-  withState,
-} from './withLatestState'
+export { withState } from './withState'
