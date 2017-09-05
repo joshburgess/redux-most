@@ -32,9 +32,18 @@ const config = {
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
-        use: ['babel-loader'],
+        test: /\.js$/,
+        loader: 'babel-loader',
         exclude: /node_modules/,
+        query: {
+          'presets': [
+            ['env', {
+              'modules': false,
+            }],
+            'stage-3',
+            'react',
+          ],
+        },
       },
     ],
   },

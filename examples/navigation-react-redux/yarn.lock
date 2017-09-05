@@ -622,7 +622,7 @@ babel-plugin-transform-flow-strip-types@^6.22.0:
     babel-plugin-syntax-flow "^6.18.0"
     babel-runtime "^6.22.0"
 
-babel-plugin-transform-object-rest-spread@^6.22.0:
+babel-plugin-transform-object-rest-spread@^6.22.0, babel-plugin-transform-object-rest-spread@^6.26.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-transform-object-rest-spread/-/babel-plugin-transform-object-rest-spread-6.26.0.tgz#0f36692d50fef6b7e2d4b3ac1478137a963b7b06"
   dependencies:
@@ -3034,10 +3034,12 @@ redux-logger@^3.0.6:
   dependencies:
     deep-diff "^0.3.5"
 
-redux-most@0.6.0-alpha:
-  version "0.6.0-alpha"
-  resolved "https://registry.yarnpkg.com/redux-most/-/redux-most-0.6.0-alpha.tgz#913486fbac3e076a541f320744b47e1a5aa977e7"
+redux-most@0.6.0-alpha2:
+  version "0.6.0-alpha2"
+  resolved "https://registry.yarnpkg.com/redux-most/-/redux-most-0.6.0-alpha2.tgz#9d842fbe2e9b95ca7c9fa4b59f3955063dd2ffdc"
   dependencies:
+    babel-plugin-transform-es2015-destructuring "^6.23.0"
+    babel-plugin-transform-object-rest-spread "^6.26.0"
     most-subject "^5.3.0"
 
 redux@^3.5.2:
