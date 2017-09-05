@@ -3034,9 +3034,9 @@ redux-logger@^3.0.6:
   dependencies:
     deep-diff "^0.3.5"
 
-redux-most@0.6.0-beta:
-  version "0.6.0-beta"
-  resolved "https://registry.yarnpkg.com/redux-most/-/redux-most-0.6.0-beta.tgz#4357e380a9611526d237eff93b8a0032a86bcb4a"
+redux-most@^0.6.1:
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/redux-most/-/redux-most-0.6.1.tgz#c42b81f1f1d61f3260ec3990a252a0b8b85b958e"
   dependencies:
     most-subject "^5.3.0"
 
