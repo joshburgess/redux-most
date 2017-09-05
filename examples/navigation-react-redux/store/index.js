@@ -2,11 +2,14 @@ import { createStore, applyMiddleware } from 'redux'
 // Use Ramda's compose instead of Redux's compose,
 // because we're already using it elsewhere.
 import compose from 'ramda/src/compose'
-// import { createEpicMiddleware } from 'redux-most'
 import {
   createEpicMiddleware,
   createStateStreamEnhancer,
-} from '../../../src'
+} from 'redux-most'
+// import {
+//   createEpicMiddleware,
+//   createStateStreamEnhancer,
+// } from '../../../src'
 import { createLogger } from 'redux-logger'
 import { browserHistory } from 'react-router'
 import { routerMiddleware } from 'react-router-redux'

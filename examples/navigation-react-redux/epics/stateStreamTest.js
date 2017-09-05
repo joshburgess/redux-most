@@ -1,8 +1,11 @@
-import { select } from 'redux-most'
 import {
-  // select,
+  select,
   withState,
-} from '../../../src'
+} from 'redux-most'
+// import {
+//   select,
+//   withState,
+// } from '../../../src'
 import {
   curriedMap as map,
 } from '../utils'

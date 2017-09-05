@@ -29,18 +29,18 @@
     "react-router-redux": "^4.0.5",
     "redux": "^3.5.2",
     "redux-logger": "^3.0.6",
-    "redux-most": "^0.5.2"
+    "redux-most": "0.6.0-alpha"
   },
   "devDependencies": {
-    "babel-cli": "^6.11.4",
-    "babel-core": "^6.11.4",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
     "babel-eslint": "^7.1.1",
-    "babel-loader": "^7.0.0",
-    "babel-preset-env": "^1.5.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.0",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-3": "^6.22.0",
-    "babel-register": "^6.24.1",
-    "webpack": "^2.5.1",
+    "babel-register": "^6.26.0",
+    "webpack": "^3.5.5",
     "webpack-dev-server": "^2.4.5"
   }
 }
