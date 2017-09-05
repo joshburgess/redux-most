@@ -6,5 +6,4 @@ const flippedSampleState = curry3((f, stateStream, samplerStream) =>
 
 const toArray = (state, samplerStreamEvent) => [state, samplerStreamEvent]
 
-export const withLatestState = flippedSampleState(toArray)
-export const withState = withLatestState
+export const withState = flippedSampleState(toArray)
