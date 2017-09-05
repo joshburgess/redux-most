@@ -29,7 +29,7 @@
     "react-router-redux": "^4.0.5",
     "redux": "^3.5.2",
     "redux-logger": "^3.0.6",
-    "redux-most": "0.6.0-alpha2"
+    "redux-most": "0.6.0-beta"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
