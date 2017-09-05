@@ -74,7 +74,7 @@ export declare function selectArray<A extends Action, T = ActionType> (
 // overloads exist due to withState being a curried function
 export declare function withState<A extends Action, S> (
   stateStream: Stream<S>,
-  samplerStream: Stream<A>
+  actionStream: Stream<A>
 ): Stream<[S, A]>;
 
 export declare function withState<A extends Action, S> (
