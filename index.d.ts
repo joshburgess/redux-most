@@ -9,16 +9,15 @@ import { Stream } from 'most';
 /*****************************************
   Type abbreviations:
   A = Action
-  M = Middleware API (AKA the "Store")
   T = Action Type
   S = App State
 *****************************************/
 
 // for the original, redux-observable style API
-export declare interface Epic<A extends Action, M> {
+export declare interface Epic<A extends Action, S> {
   (
     actionStream: Stream<A>,
-    middlewareApi: MiddlewareAPI<M>
+    middlewareApi: MiddlewareAPI<S>
   ): Stream<A>;
 }
 
@@ -31,24 +30,24 @@ export declare interface Epic<A extends Action, S> {
   ): Stream<A>;
 }
 
-export interface EpicMiddleware<A extends Action, M, S> extends Middleware {
+export interface EpicMiddleware<A extends Action, S> extends Middleware {
   replaceEpic (
-    nextEpic: Epic<A, M, S>
+    nextEpic: Epic<A, S>
   ): void;
 }
 
-export declare function createEpicMiddleware<A extends Action, M, S> (
-  rootEpic: Epic<A, M, S>
-): EpicMiddleware<A, M, S>;
+export declare function createEpicMiddleware<A extends Action, S> (
+  rootEpic: Epic<A, S>
+): EpicMiddleware<A, S>;
 
 
-export declare function createStateStreamEnhancer<A, M, S> (
-  epicMiddleware: EpicMiddleware<A, M, S>
+export declare function createStateStreamEnhancer<A, S> (
+  epicMiddleware: EpicMiddleware<A, S>
 ): StoreEnhancer<S>;
 
-export declare function combineEpics<A extends Action, M, S> (
-  epicsArray: Epic<A, M, S>[]
-): Epic<A, M, S>;
+export declare function combineEpics<A extends Action, S> (
+  epicsArray: Epic<A, S>[]
+): Epic<A, S>;
 
 // overloads exist due to select being a curried function
 export declare function select<A extends Action, T = string> (
