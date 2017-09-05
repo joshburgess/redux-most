@@ -9,8 +9,8 @@ import { Stream } from 'most';
 /*****************************************
   Type abbreviations:
   A = Action
-  T = Action Type
-  S = App State
+  T = ActionType (a string or symbol)
+  S = State
 *****************************************/
 
 // for the original, redux-observable style API
@@ -49,23 +49,25 @@ export declare function combineEpics<A extends Action, S> (
   epicsArray: Epic<A, S>[]
 ): Epic<A, S>;
 
+export declare type ActionType = string | symbol
+
 // overloads exist due to select being a curried function
-export declare function select<A extends Action, T = string> (
+export declare function select<A extends Action, T = ActionType> (
   actionType: T,
   stream: Stream<A>
 ): Stream<A>;
 
-export declare function select<A extends Action, T = string> (
+export declare function select<A extends Action, T = ActionType> (
   actionType: T
 ): (stream: Stream<A>) => Stream<A>;
 
 // overloads exist due to selectArray being a curried function
-export declare function selectArray<A extends Action, T = string> (
+export declare function selectArray<A extends Action, T = ActionType> (
   actionTypes: T[],
   stream: Stream<A>
 ): Stream<A>;
 
-export declare function selectArray<A extends Action, T = string> (
+export declare function selectArray<A extends Action, T = ActionType> (
   actionTypes: T[]
 ): (stream: Stream<A>) => Stream<A>;
 
