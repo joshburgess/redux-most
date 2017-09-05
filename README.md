@@ -73,9 +73,13 @@ programming.
 __Summary__
 
 - There are no adapters. `redux-most` is only intended to be used with `Most`.
+- `redux-most` offers 2 separate APIs: a `redux-observable`-like API, where Epics
+get passed an action stream & a store middleware object containing `dispatch` & `getState`
+methods, and a stricter, more declarative API, where Epics get passed an action stream & a state stream.
 - `combineEpics` takes in an array of epics instead of multiple arguments.
 - Standard `Most` streams are used instead of a custom Observable extension.
 - `select` and `selectArray` are available instead of the variadic `ofType`.
+
 
 __Further Elaboration:__
 
@@ -87,8 +91,23 @@ JavaScript ecosystem right now, and `Most 2.0` will be even better, as it will f
 auto-curried API like `lodash/fp` and `ramda`, but for working with streams instead of arrays.
 For a preview of what's to come, check out what's going on [here](https://github.com/mostjs/core).
 
-Whereas `comebineEpics` is variadic in `redux-observable`, it's unary in `redux-most`. It takes in
-only one argument, an array of epics, instead of individual epics getting passed in as separate
+Initially, `redux-most` offered the same API as `redux-observable`, where Epics received an action
+stream & a store middleware object containing `dispatch` & `getState` methods. However, it now offers
+both that API and another stricter, more declarative API which eliminates the use of `dispatch` &
+`getState`. The reason for this is that I rarely found myself using the imperative `dispatch`
+method. It's not really needed, because you can use `switch`, `merge`, `mergeArray`, etc. to send
+multiple actions through your outgoing stream. This is nice, because it allows you to stay locked into
+the declarative programming style the entire time.
+
+However, using `getState` was still required in epics that needed access to the current state. I
+wanted a nice, convenient way to access the current state, just like I had for dispatching actions.
+So, I created an alternate API where Epics receive a stream of state changes rather than the
+`{ dispatch, getState }` object. This state stream, combined with the new `withState` utility function,
+let's you use streams for both dispatching actions & accessing the current state, allowing you to stay 
+focused & in the zone (the reactive programming mindset).
+
+Moving on, whereas `comebineEpics` is variadic in `redux-observable`, it's unary in `redux-most`. It
+takes in only one argument, an array of epics, instead of individual epics getting passed in as separate
 arguments.
 
 As for streams, I chose not to extend the `Observable` type with a custom `ActionsObservable`
@@ -160,11 +179,13 @@ const someOtherEpic = pipe(
 ## API Reference
 
 - [createEpicMiddleware](https://github.com/joshburgess/redux-most#createepicmiddleware-rootepic)
+- [createStateStreamEnhancer](https://github.com/joshburgess/redux-most#createstatestreamenhancer-epicmiddleware)
 - [combineEpics](https://github.com/joshburgess/redux-most#combineepics-epics)
 - [EpicMiddleware](https://github.com/joshburgess/redux-most#epicmiddleware)
 - [replaceEpic](https://github.com/joshburgess/redux-most#replaceEpic)
 - [select](https://github.com/joshburgess/redux-most#select-actiontype-stream)
 - [selectArray](https://github.com/joshburgess/redux-most#selectArray-actiontypes-stream)
+- [withState](https://github.com/joshburgess/redux-most#withstate-statestream-actionstream)
 
 ---
 
@@ -199,6 +220,44 @@ export default function configureStore() {
 
   return store
 }
+```
+
+---
+
+### `createStateStreamEnhancer (epicMiddleware)`
+
+`createStateStreamEnhancer` is used to access `redux-most`'s alternate API, which passes
+`Epics` a state stream (Ex: `state$`) instead of the `{ dispatch, getState }` store
+`MiddlewareAPI` object. You must provide an instance of the `EpicMiddleware`, and the
+resulting function must be applied AFTER using `redux`'s `applyMiddleware` if also using
+other middleware.
+
+__Arguments__
+
+1. `rootEpic` _(`Epic`)_: The root Epic.
+
+__Returns__
+
+_(`MiddlewareAPI`)_: An enhanced instance of the `redux-most` middleware, exposing a stream
+of state change values.
+
+__Example__
+```js
+import { createStore, applyMiddleware } from 'redux'
+import {
+  createEpicMiddleware,
+  createStateStreamEnhancer,
+} from 'redux-most'
+import rootEpic from '../epics'
+
+const epicMiddleware = createEpicMiddleware(rootEpic)
+const middleware = [...] // other middleware here
+const storeEnhancers = compose(
+  createStateStreamEnhancer(epicMiddleware),
+  applyMiddleware(...middleware)
+)
+
+const store = createStore(rootReducer, storeEnhancers)
 ```
 
 ---
@@ -297,6 +356,11 @@ __Arguments__
 1. `actionType` _(`string`)_: The type of action to filter by.
 2. `stream` _(`Stream`)_: The stream of actions you are filtering. Ex: `actions$`.
 
+__Returns__
+
+_(Stream)_: A new, filtered stream holding only the actions corresponding to the action
+type passed to `select`.
+
 The `select` operator is curried, allowing you to use a fluent or functional style.
 
 __Examples__
@@ -367,6 +431,11 @@ __Arguments__
 
 1. `actionTypes` _(`string[]`)_: An array of action types to filter by.
 2. `stream` _(`Stream`)_: The stream of actions you are filtering. Ex: `actions$`.
+
+__Returns__
+
+_(Stream)_: A new, filtered stream holding only the actions corresponding to the action
+types passed to `selectArray`.
 
 The `selectArray` operator is curried, allowing you to use a fluent or functional style.
 
@@ -446,3 +515,52 @@ const clear = compose(
 
 export default clear
 ```
+---
+
+### `withState (stateStream, actionStream)`
+
+A utility function for use with `redux-most`'s optional state stream API. This
+provides a convenient way to `sample` the latest state change value. Note:
+accessing the alternate API requires using `createStateStreamEnhancer`.
+
+__Arguments__
+
+1. `stateStream` _(`Stream`)_: The state stream provided by `redux-most`'s alternate API.
+2. `actionStream` _(`Stream`)_: The filtered stream of action events used to trigger
+sampling of the latest state. (Ex: `actions$`).
+
+__Returns__
+
+_(`[state, action]`)_: An Array of length 2 (or Tuple) containing the latest
+state value at index 0 and the latest action of the filtered action stream at index 1.
+
+`withState` is curried, allowing you to pass in the state stream & action stream
+together, at the same time, or separately, delaying passing in the action stream.
+This provides the user extra flexibility, allowing it to easily be used within 
+functional composition pipelines.
+
+__Examples__
+```js
+import { select, withState } from 'redux-most'
+import { curriedMap as map } from '../utils'
+import compose from 'ramda/src/compose'
+
+const accessStateFromArray = ([state, action]) => ({
+  type: 'ACCESS_STATE',
+  payload: {
+    latestState: state,
+    accessedByAction: action,
+  },
+})
+
+// dispatch { type: 'STATE_STREAM_TEST' } in Redux DevTools to test
+const stateStreamTest = (action$, state$) => compose(
+ map(accessStateFromArray),
+ withState(state$),
+ select('STATE_STREAM_TEST')
+)(action$)
+
+export default stateStreamTest
+```
+
+---
