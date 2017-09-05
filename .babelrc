@@ -5,40 +5,32 @@
         ["env", {
           "modules": "commonjs"
         }],
-        "stage-3",
-        "react"
-      ],
-      "plugins": []
+        "stage-3"
+      ]
     },
     "es": {
       "presets": [
         ["env", {
           "modules": false
         }],
-        "stage-3",
-        "react"
-      ],
-      "plugins": []
+        "stage-3"
+      ]
     },
     "umd": {
       "presets": [
         ["env", {
           "modules": false
         }],
-        "stage-3",
-        "react"
-      ],
-      "plugins": []
+        "stage-3"
+      ]
     },
     "test": {
       "presets": [
         ["env", {
           "modules": "commonjs"
         }],
-        "stage-3",
-        "react"
-      ],
-      "plugins": []
+        "stage-3"
+      ]
     }
   },
   "comments": false
