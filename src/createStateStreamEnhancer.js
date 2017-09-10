@@ -14,11 +14,8 @@ export const createStateStreamEnhancer = epicMiddleware => createStore =>
 
     dispatch = epicMiddleware(middlewareApi)(store.dispatch)
 
-    // example not currently setup to use Object Spread
     return {
       ...store,
       dispatch,
     }
-
-    // return Object.assign({}, store, { dispatch })
   }
