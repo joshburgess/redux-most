@@ -41,7 +41,7 @@ export declare function createEpicMiddleware<A extends Action, S> (
 ): EpicMiddleware<A, S>;
 
 
-export declare function createStateStreamEnhancer<A, S> (
+export declare function createStateStreamEnhancer<A extends Action, S> (
   epicMiddleware: EpicMiddleware<A, S>
 ): StoreEnhancer<S>;
 
@@ -81,4 +81,4 @@ export declare function withState<A extends Action, S> (
   stateStream: Stream<S>
 ): (actionStream: Stream<A>) => Stream<[S, A]>;
 
-export const EPIC_END = '@@redux-most/EPIC_END'
+export const EPIC_END = '@@redux-most/EPIC_END';
