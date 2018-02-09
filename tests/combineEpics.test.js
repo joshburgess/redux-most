@@ -9,14 +9,15 @@ test('combineEpics should combine an array of epics', t => {
   const DELEGATED_1 = 'DELEGATED_1'
   const DELEGATED_2 = 'DELEGATED_2'
   const MOCKED_STORE = { I: 'am', a: 'store' }
+  const DEPENDENCIES = 'deps'
 
   const epic1 = (actions$, store) => map(
     action => ({ type: DELEGATED_1, action, store }),
     select(ACTION_1, actions$)
   )
 
-  const epic2 = (actions$, store) => map(
-    action => ({ type: DELEGATED_2, action, store }),
+  const epic2 = (actions$, store, deps) => map(
+    action => ({ type: DELEGATED_2, action, store, deps }),
     select(ACTION_2, actions$)
   )
 
@@ -27,7 +28,7 @@ test('combineEpics should combine an array of epics', t => {
 
   const store = MOCKED_STORE
   const actions$ = sync()
-  const result$ = epic(actions$, store)
+  const result$ = epic(actions$, store, DEPENDENCIES)
   const emittedActions = []
 
   observe(emittedAction => emittedActions.push(emittedAction), result$)
@@ -37,7 +38,7 @@ test('combineEpics should combine an array of epics', t => {
 
   const MOCKED_EMITTED_ACTIONS = [
     { type: DELEGATED_1, action: { type: ACTION_1 }, store },
-    { type: DELEGATED_2, action: { type: ACTION_2 }, store },
+    { type: DELEGATED_2, action: { type: ACTION_2 }, store, deps: DEPENDENCIES },
   ]
 
   t.deepEqual(MOCKED_EMITTED_ACTIONS, emittedActions)

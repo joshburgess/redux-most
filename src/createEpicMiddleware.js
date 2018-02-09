@@ -3,7 +3,7 @@ import { async } from 'most-subject'
 import { epicBegin, epicEnd } from './actions'
 import { STATE_STREAM_SYMBOL } from './constants'
 
-export const createEpicMiddleware = epic => {
+export const createEpicMiddleware = (epic, dependencies) => {
   if (typeof epic !== 'function') {
     throw new TypeError('You must provide an Epic (a function) to createEpicMiddleware.')
   }
@@ -33,9 +33,9 @@ export const createEpicMiddleware = epic => {
 
         return isUsingStateStreamEnhancer
           // new style API (declarative only, no dispatch/getState)
-          ? nextEpic(actionsIn$, state$)
+          ? nextEpic(actionsIn$, state$, dependencies)
           // redux-observable style Epic API
-          : nextEpic(actionsIn$, middlewareApi)
+          : nextEpic(actionsIn$, middlewareApi, dependencies)
       }
 
       const actionsOut$ = switchLatest(map(callNextEpic, epic$))
