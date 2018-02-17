@@ -1,5 +1,5 @@
 import { map, observe, switchLatest } from 'most'
-import { async } from 'most-subject'
+import { sync } from 'most-subject'
 import { epicBegin, epicEnd } from './actions'
 import { STATE_STREAM_SYMBOL } from './constants'
 
@@ -12,10 +12,10 @@ export const createEpicMiddleware = epic => {
   // epic so that all epics act on the same action$, because this is what
   // allows debouncing, throttling, etc. to work correctly on subsequent
   // dispatched actions of the same type
-  const actionsIn$ = async()
+  const actionsIn$ = sync()
 
   // epic$ must be a Subject, because replaceEpic cannot be written without it
-  const epic$ = async()
+  const epic$ = sync()
 
   // middlewareApi is mutable and defined here in order to capture a reference to the
   // _middlewareApi argument so that dispatch can be called from within replaceEpic
