@@ -10,7 +10,6 @@ import {
 } from '../constants/ActionTypes'
 import { curry } from 'ramda'
 
-
 export const searchedUsersDebounced = query => ({
   type: SEARCHED_USERS_DEBOUNCED,
   payload: {
@@ -58,3 +57,11 @@ export const checkAdminAccess = _ => ({
 export const accessDenied = _ => ({
   type: ACCESS_DENIED,
 })
+
+export const thunkCompatibilityTest = payload =>
+  (dispatch, getState, api) => {
+    dispatch({
+      type: 'THUNK_COMPATIBILITY_TEST',
+      payload: getState(),
+    })
+  }

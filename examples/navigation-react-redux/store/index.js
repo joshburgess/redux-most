@@ -4,12 +4,13 @@ import { createStore, applyMiddleware } from 'redux'
 import compose from 'ramda/src/compose'
 import {
   createEpicMiddleware,
-  createStateStreamEnhancer,
+  // createStateStreamEnhancer,
 } from 'redux-most'
-// import {
-//   createEpicMiddleware,
-//   createStateStreamEnhancer,
-// } from '../../../src'
+import {
+  // createEpicMiddleware,
+  createStateStreamEnhancer,
+} from '../../../src'
+import thunk from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 import { browserHistory } from 'react-router'
 import { routerMiddleware } from 'react-router-redux'
@@ -26,8 +27,12 @@ const logger = createLogger({
 
 const middleware = [
   logger,
-  // epicMiddleware,
   routerMiddleware(browserHistory),
+]
+
+const asyncMiddleware = [
+  epicMiddleware,
+  thunk,
 ]
 
 const composeEnhancers =
@@ -37,9 +42,14 @@ const composeEnhancers =
     })
     : compose
 
+// const storeEnhancers = composeEnhancers(
+//   createStateStreamEnhancer(epicMiddleware),
+//   applyMiddleware(...middleware)
+// )
+
 const storeEnhancers = composeEnhancers(
-  createStateStreamEnhancer(epicMiddleware),
-  applyMiddleware(...middleware)
+  createStateStreamEnhancer(...[...middleware, ...asyncMiddleware]),
+  // applyMiddleware(...middleware)
 )
 
 const store = createStore(rootReducer, storeEnhancers)

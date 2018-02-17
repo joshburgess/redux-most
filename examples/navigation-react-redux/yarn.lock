@@ -3034,11 +3034,15 @@ redux-logger@^3.0.6:
   dependencies:
     deep-diff "^0.3.5"
 
-redux-most@^0.6.2:
-  version "0.6.2"
-  resolved "https://registry.yarnpkg.com/redux-most/-/redux-most-0.6.2.tgz#0451da1d61f76aabff9adc380d320d3e673b1686"
+redux-most@^0.6.3:
+  version "0.6.3"
+  resolved "https://registry.yarnpkg.com/redux-most/-/redux-most-0.6.3.tgz#24fca0d464585ab24b1f012c8f7e410f3bbe7cdf"
   dependencies:
     most-subject "^5.3.0"
+
+redux-thunk@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/redux-thunk/-/redux-thunk-2.2.0.tgz#e615a16e16b47a19a515766133d1e3e99b7852e5"
 
 redux@^3.5.2:
   version "3.7.2"

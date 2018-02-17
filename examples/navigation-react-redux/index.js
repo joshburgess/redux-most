@@ -10,12 +10,20 @@ import { shim } from 'creed'
 shim() // eslint-disable-line fp/no-unused-expression
 // Supply polyfill for fetch
 import 'isomorphic-fetch'
+import { thunkCompatibilityTest } from './actions'
 
 const rootEl = document.getElementById('app')
 
+const createRenderCallback = store => () => {
+  const { dispatch } = store
+  // dispatching a thunk to make sure redux-thunk
+  // and redux-most play nicely together
+  dispatch(thunkCompatibilityTest())
+}
+
 /* eslint-disable fp/no-unused-expression */
 
-render(<Root store={store} />, rootEl)
+render(<Root store={store} />, rootEl, createRenderCallback(store))
 
 /******************************************************************************
   Start development only
