@@ -17,7 +17,7 @@ import { Stream } from 'most';
 export declare interface Epic<A extends Action, S> {
   (
     actionStream: Stream<A>,
-    middlewareApi: MiddlewareAPI<S>
+    middlewareApi: MiddlewareAPI<Dispatch<AnyAction>, S>
   ): Stream<A>;
 }
 
