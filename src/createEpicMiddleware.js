@@ -1,6 +1,6 @@
 import { map, observe, switchLatest } from 'most'
 import { sync } from 'most-subject'
-import { epicBegin, epicEnd } from './actions'
+import { epicEnd } from './actions'
 import { STATE_STREAM_SYMBOL } from './constants'
 
 export const createEpicMiddleware = epic => {
@@ -26,8 +26,6 @@ export const createEpicMiddleware = epic => {
 
     return next => {
       const callNextEpic = nextEpic => {
-        middlewareApi.dispatch(epicBegin())
-
         const state$ = middlewareApi[STATE_STREAM_SYMBOL]
         const isUsingStateStreamEnhancer = !!state$
 
