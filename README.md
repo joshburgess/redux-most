@@ -177,6 +177,48 @@ const someOtherEpic = pipe(
 )
 ```
 
+## Dependencies
+
+When creating an `EpicMiddleware` object using `createEpicMiddleware` or
+`createStateStreamEnhancer`, you can pass an optional `dependencies` argument which
+will be passed to each of your epics as the third argument. This can then be used
+when testing your epics to avoid a more complex mocking approach.
+
+__Example__
+
+```js
+// redux/configureStore.js
+...
+const fetchJSON = url => fetch(url).then(r => r.json());
+const epicMiddleware = createEpicMiddleware(rootEpic, { fetchJSON })
+...
+
+// epics/user.js
+import { FETCH_USER } from '../constants/ActionTypes'
+import { storeUser } from '../actions'
+import { select } from 'redux-most'
+
+const fetchUserEpic = (action$, store, { fetchJSON }) =>
+  action$.thru(select(FETCH_USER))
+    .chain(({ userId }) => fromPromise(fetchJSON(`/users/${userId}`)))
+    .map(storeUser);
+
+// tests/user.js
+it('fetches a user then emits a STORE_USER action', () => {
+  const mockFetchJSON = jest
+    .fn()
+    .mockReturnValueOnce(Promise.resolve({ username: 'foo' }));
+  const actionsIn = of(fetchUser({ userId: 5 }));
+  return fetchUserEpic(actionsIn, mockStore, { fetchJSON: mockFetchJSON })
+    .reduce(flip(append), [])
+    .then(actionsOut => {
+      expect(actionsOut).toHaveLength(1);
+      expect(actionsOut[0].type).toEqual(STORE_USER);
+    });
+});
+
+```
+
 ## API Reference
 
 - [createEpicMiddleware](https://github.com/joshburgess/redux-most#createepicmiddleware-rootepic)
@@ -190,14 +232,15 @@ const someOtherEpic = pipe(
 
 ---
 
-### `createEpicMiddleware (rootEpic)`
+### `createEpicMiddleware (rootEpic, dependencies)`
 
 `createEpicMiddleware` is used to create an instance of the actual `redux-most` middleware.
-You provide a single root `Epic`.
+You provide a single root `Epic` and optional `dependencies`.
 
 __Arguments__
 
 1. `rootEpic` _(`Epic`)_: The root Epic.
+2. `dependencies` _(`any`)_: Optional dependencies for your epics.
 
 __Returns__
 
@@ -236,6 +279,7 @@ other middleware.
 __Arguments__
 
 1. `rootEpic` _(`Epic`)_: The root Epic.
+2. `dependencies` _(`any`)_: Optional dependencies for your epics.
 
 __Returns__
 
