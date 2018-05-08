@@ -16,7 +16,7 @@ import { Stream } from 'most';
 *****************************************/
 
 // for the original, redux-observable style API
-export declare interface Epic<A extends Action, S> {
+export declare interface Epic<A extends Action = AnyAction, S> {
   (
     actionStream: Stream<A>,
     middlewareApi: MiddlewareAPI<Dispatch<AnyAction>, S>
