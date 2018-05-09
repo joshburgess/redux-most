@@ -1,7 +1,7 @@
 import { mergeArray } from 'most'
 import { findIndex, map } from '@most/prelude'
 
-export const combineEpics = epicsArray => (actions, store) => {
+export const combineEpics = epicsArray => (actions, store, dependencies) => {
   if (!epicsArray || !Array.isArray(epicsArray)) {
     throw new TypeError('You must provide an array of Epics to combineEpics.')
   }
@@ -15,7 +15,7 @@ export const combineEpics = epicsArray => (actions, store) => {
       throw new TypeError('The array passed to combineEpics must contain only Epics (functions).')
     }
 
-    const out = epic(actions, store)
+    const out = epic(actions, store, dependencies)
 
     if (!out || !out.source) {
       const epicIdentifier = epic.name
