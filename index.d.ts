@@ -11,43 +11,47 @@ import { Stream } from 'most';
   A = Action
   T = ActionType (a string or symbol)
   S = State
+  D = Dependency
 *****************************************/
 
 // for the original, redux-observable style API
-export declare interface Epic<A extends Action, S> {
+export declare interface Epic<A extends Action, S, D> {
   (
     actionStream: Stream<A>,
-    middlewareApi: MiddlewareAPI<S>
+    middlewareApi: MiddlewareAPI<S>,
+    dependencies: D
   ): Stream<A>;
 }
 
 // for the newer, declarative only API, which takes in a state stream
 // to sample via the withState utility instead of exposing dispatch/getState
-export declare interface Epic<A extends Action, S> {
+export declare interface Epic<A extends Action, S, D> {
   (
     actionStream: Stream<A>,
-    stateStream: Stream<S>
+    stateStream: Stream<S>,
+    dependencies: D
   ): Stream<A>;
 }
 
-export interface EpicMiddleware<A extends Action, S> extends Middleware {
+export interface EpicMiddleware<A extends Action, S, D> extends Middleware {
   replaceEpic (
-    nextEpic: Epic<A, S>
+    nextEpic: Epic<A, S, D>
   ): void;
 }
 
-export declare function createEpicMiddleware<A extends Action, S> (
-  rootEpic: Epic<A, S>
-): EpicMiddleware<A, S>;
+export declare function createEpicMiddleware<A extends Action, S, D> (
+  rootEpic: Epic<A, S, D>,
+  dependencies: D
+): EpicMiddleware<A, S, D>;
 
 
-export declare function createStateStreamEnhancer<A extends Action, S> (
-  epicMiddleware: EpicMiddleware<A, S>
+export declare function createStateStreamEnhancer<A extends Action, S, D> (
+  epicMiddleware: EpicMiddleware<A, S, D>
 ): StoreEnhancer<S>;
 
-export declare function combineEpics<A extends Action, S> (
-  epicsArray: Epic<A, S>[]
-): Epic<A, S>;
+export declare function combineEpics<A extends Action, S, D> (
+  epicsArray: Epic<A, S, D>[],
+): Epic<A, S, D>;
 
 export declare type ActionType = string | symbol
 
