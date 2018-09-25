@@ -1,4 +1,4 @@
-import { mergeArray } from 'most'
+import { mergeArray } from '@most/core'
 import { findIndex, map } from '@most/prelude'
 
 export const combineEpics = epicsArray => (actions, store) => {

@@ -1,8 +1,8 @@
-import { sampleArray } from 'most'
+import { sample, combineArray } from '@most/core'
 import { curry3 } from '@most/prelude'
 
 const flippedSampleState = curry3((f, stateStream, samplerStream) =>
-  sampleArray(f, samplerStream, [stateStream, samplerStream]))
+  sample(f, samplerStream, combineArray([stateStream, samplerStream])))
 
 const toArray = (state, samplerStreamEvent) => [state, samplerStreamEvent]
 
