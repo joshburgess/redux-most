@@ -1,6 +1,6 @@
 import test from 'ava'
-import { map, observe } from 'most'
-import { sync } from 'most-subject'
+import { map, tap, runEffects, never, MulticastSource } from '@most/core'
+import { newDefaultScheduler } from '@most/scheduler'
 import { combineEpics, select } from '../src/'
 
 test('combineEpics should combine an array of epics', t => {
@@ -26,14 +26,15 @@ test('combineEpics should combine an array of epics', t => {
   ])
 
   const store = MOCKED_STORE
-  const actions$ = sync()
+  const actions$ = new MulticastSource(never())
   const result$ = epic(actions$, store)
+  const scheduler = newDefaultScheduler()
   const emittedActions = []
 
-  observe(emittedAction => emittedActions.push(emittedAction), result$)
+  runEffects(tap(emittedAction => emittedActions.push(emittedAction), result$), scheduler)
 
-  actions$.next({ type: ACTION_1 })
-  actions$.next({ type: ACTION_2 })
+  actions$.event(scheduler.currentTime(), { type: ACTION_1 })
+  actions$.event(scheduler.currentTime(), { type: ACTION_2 })
 
   const MOCKED_EMITTED_ACTIONS = [
     { type: DELEGATED_1, action: { type: ACTION_1 }, store },

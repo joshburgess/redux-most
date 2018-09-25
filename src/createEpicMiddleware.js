@@ -1,4 +1,4 @@
-import { map, observe, switchLatest, runEffects, MulticastSource, never, merge } from '@most/core'
+import { map, switchLatest, runEffects, MulticastSource, never, merge, tap } from '@most/core'
 import { newDefaultScheduler } from '@most/scheduler'
 import { epicEnd } from './actions'
 import { STATE_STREAM_SYMBOL } from './constants'
@@ -10,13 +10,10 @@ export const createEpicMiddleware = epic => {
 
   const scheduler = newDefaultScheduler()
 
-  // it is important that this stream is created here and passed in to each
-  // epic so that all epics act on the same action$, because this is what
-  // allows debouncing, throttling, etc. to work correctly on subsequent
-  // dispatched actions of the same type
+  // Using actionsIn$ as a multicast stream
   const actionsIn$ = new MulticastSource(never())
 
-  // epic$ must be a Subject, because replaceEpic cannot be written without it
+  // Using epic$ as a multicast stream
   const epic$ = new MulticastSource(never())
 
   // middlewareApi is mutable and defined here in order to capture a reference to the
@@ -39,7 +36,7 @@ export const createEpicMiddleware = epic => {
       }
 
       const actionsOut$ = switchLatest(map(callNextEpic, epic$))
-      observe(middlewareApi.dispatch, actionsOut$)
+      runEffects(merge(actionsIn$, tap(middlewareApi.dispatch, actionsOut$)), scheduler)
 
       // Emit combined epics
       epic$.event(scheduler.currentTime(), epic)
@@ -58,7 +55,5 @@ export const createEpicMiddleware = epic => {
     middlewareApi.dispatch(epicEnd())
     epic$.event(scheduler.currentTime(), nextEpic)
   }
-
-  runEffects(scheduler, merge(actionsIn$, epic$))
   return epicMiddleware
 }
