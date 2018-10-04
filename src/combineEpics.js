@@ -15,7 +15,8 @@ export const combineEpics = epicsArray => (actions, store) => {
       throw new TypeError('The array passed to combineEpics must contain only Epics (functions).')
     }
 
-    const out = epic(actions, store)
+    // withState HOC support
+    const out = epic.length === 1 ? epic(actions) : epic(store, actions)
 
     if (!out || !out.source) {
       const epicIdentifier = epic.name
