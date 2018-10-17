@@ -1,17 +1,5 @@
 import { compose, curry } from 'ramda'
-import {
-  chain,
-  debounce,
-  delay,
-  filter,
-  fromPromise,
-  map,
-  merge,
-  switchLatest,
-  tap,
-  throttle,
-  until,
-} from 'most'
+import { fromPromise } from '@most/core'
 
 /******************************************************************************
   General utilities
@@ -39,18 +27,18 @@ export const fetchJsonStream = compose(fromPromise, fetchJson)
   Stream utilities
 *******************************************************************************/
 
-const mapTo = (x, stream) => map(_ => x, stream)
-const switchMap = compose(switchLatest, map)
+// export const mapTo = (x, stream) => map(_ => x, stream)
+// export const switchMap = compose(switchLatest, map)
 
 // prefix with "curried" so things are more obvious in other files
-export const curriedChain = curry(chain)
-export const curriedDebounce = curry(debounce)
-export const curriedDelay = curry(delay)
-export const curriedFilter = curry(filter)
-export const curriedMap = curry(map)
-export const curriedMapTo = curry(mapTo)
-export const curriedMerge = curry(merge)
-export const curriedSwitchMap = curry(switchMap)
-export const curriedTap = curry(tap)
-export const curriedThrottle = curry(throttle)
-export const curriedUntil = curry(until)
+// export const curriedChain = curry(chain)
+// export const curriedDebounce = curry(debounce)
+// export const curriedDelay = curry(delay)
+// export const curriedFilter = curry(filter)
+// export const curriedMap = curry(map)
+// export const curriedMapTo = curry(mapTo)
+// export const curriedMerge = curry(merge)
+// export const curriedSwitchMap = curry(switchMap)
+// export const curriedTap = curry(tap)
+// export const curriedThrottle = curry(throttle)
+// export const curriedUntil = curry(until)
