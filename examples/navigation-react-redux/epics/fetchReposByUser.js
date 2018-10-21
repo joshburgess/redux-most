@@ -1,13 +1,12 @@
 import { REQUESTED_USER_REPOS } from '../constants/ActionTypes'
 import { receiveUserRepos } from '../actions'
 // import { fromPromise } from 'most'
-import { select } from 'redux-most'
-// import { select } from '../../../src/index'
+// import { select } from 'redux-most'
+import { select } from '../../../src/index'
 import {
-  curriedMap as map,
-  curriedSwitchMap as switchMap,
   fetchJsonStream,
 } from '../utils'
+import { map, switchLatest } from '@most/core'
 import { compose } from 'ramda'
 
 const toUser = ({ payload: { user } }) => user
@@ -52,7 +51,8 @@ const fetchAndReceiveUserRepos = user => compose(
 )(user)
 
 const fetchReposByUser = compose(
-  switchMap(fetchAndReceiveUserRepos),
+  switchLatest,
+  map(fetchAndReceiveUserRepos),
   map(toUser),
   select(REQUESTED_USER_REPOS)
 )

@@ -1,11 +1,11 @@
 import { SEARCHED_USERS_DEBOUNCED } from '../constants/ActionTypes'
 import { searchedUsers } from '../actions'
-import { select } from 'redux-most'
-// import { select } from '../../../src/index'
+// import { select } from 'redux-most'
+import { select } from '../../../src/index'
 import {
-  curriedDebounce as debounce,
-  curriedMap as map,
-} from '../utils'
+  debounce,
+  map,
+} from '@most/core'
 import { compose } from 'ramda'
 
 const toSearchedUsers = ({ payload: { query } }) =>

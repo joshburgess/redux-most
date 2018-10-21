@@ -5,20 +5,17 @@ import {
 } from '../constants/ActionTypes'
 import { receiveUsers } from '../actions'
 import {
-  // fromPromise,
-  just,
-} from 'most'
-import {
-  curriedChain as chain,
-  curriedFilter as filter,
-  curriedMap as map,
-  curriedMerge as merge,
-  curriedSwitchMap as switchMap,
-  curriedUntil as until,
-  fetchJsonStream,
-} from '../utils'
-import { select } from 'redux-most'
-// import { select } from '../../../src/index'
+  chain,
+  filter,
+  map,
+  merge,
+  until,
+  switchLatest,
+  now,
+} from '@most/core'
+import { fetchJsonStream } from '../utils'
+// import { select } from 'redux-most'
+import { select } from '../../../src/index'
 import { compose } from 'ramda'
 
 const toQuery = ({ payload }) => payload.query
@@ -82,12 +79,12 @@ const replaceQuery = query => replace(`?q=${query}`)
 const searchUsers = action$ => {
   const justUntilClearedSearchResults = compose(
     until(select(CLEARED_SEARCH_RESULTS, action$)),
-    just
+    now
   )
 
   const getMergeForQuery = query =>
     _ => merge(
-      just(replaceQuery(query)),
+      now(replaceQuery(query)),
       compose(
         map(compose(receiveUsers, toItems)),
         fetchJsonStream,
@@ -101,7 +98,8 @@ const searchUsers = action$ => {
   )
 
   return compose(
-    switchMap(toFlattenedOutput),
+    switchLatest,
+    map(toFlattenedOutput),
     filter(whereNotEmpty),
     map(toQuery),
     select(SEARCHED_USERS)

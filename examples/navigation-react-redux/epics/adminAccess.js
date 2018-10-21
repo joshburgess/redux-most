@@ -1,15 +1,15 @@
-import { just } from 'most'
 import {
-  curriedChain as chain,
-  curriedDelay as delay,
-  curriedMap as map,
-  curriedMerge as merge,
-} from '../utils'
+  chain,
+  delay,
+  map,
+  merge,
+  now,
+} from '@most/core'
 import { push } from 'react-router-redux'
 import { CHECKED_ADMIN_ACCESS } from '../constants/ActionTypes'
 import { accessDenied } from '../actions'
-import { select } from 'redux-most'
-// import { select } from '../../../src/index'
+// import { select } from 'redux-most'
+import { select } from '../../../src/index'
 import { compose } from 'ramda'
 
 const redirectToRoot = _ => push('/')
@@ -42,11 +42,11 @@ const redirectToRoot = _ => push('/')
 const delayedRedirect = compose(
   map(redirectToRoot),
   delay(800),
-  just
+  now
 )
 
 const mergeDeniedRedirect = _ =>
-  merge(just(accessDenied()), delayedRedirect())
+  merge(now(accessDenied()), delayedRedirect())
 
 const adminAccess = compose(
   chain(mergeDeniedRedirect),
