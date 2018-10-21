@@ -1,11 +1,11 @@
 import { SEARCHED_USERS_DEBOUNCED } from '../constants/ActionTypes'
 import { clearSearchResults } from '../actions'
-import { select } from 'redux-most'
-// import { select } from '../../../src/index'
+// import { select } from 'redux-most'
+import { select } from '../../../src/index'
 import {
-  curriedFilter as filter,
-  curriedMap as map,
-} from '../utils'
+  filter,
+  map,
+} from '@most/core'
 import { compose } from 'ramda'
 
 const whereEmpty = ({ payload: { query } }) => !query

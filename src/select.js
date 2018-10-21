@@ -1,4 +1,4 @@
-import { filter } from 'most'
+import { filter } from '@most/core'
 import { curry2 } from '@most/prelude'
 
 export const select = curry2((actionType, stream) =>
