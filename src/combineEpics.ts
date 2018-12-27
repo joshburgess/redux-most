@@ -9,18 +9,7 @@ import {
   StoreEnhancer,
 } from 'redux'
 import { Stream } from '@most/types'
-
-type OriginalApi<S, A extends Action> = (
-  actionStream: Stream<A>,
-  middlewareApi: MiddlewareAPI<Dispatch<Action>, S>,
-) => Stream<A>
-
-type StateStreamApi<S, A extends Action> = (
-  actionStream: Stream<A>,
-  stateStream: Stream<S>,
-) => Stream<A>
-
-type Epic<S, A extends Action> = OriginalApi<S, A> | StateStreamApi<S, A>
+import { Epic } from './types'
 
 export declare function combineEpics_<S, A extends Action>(
   epicsArray: Epic<S, A>[],
@@ -28,7 +17,7 @@ export declare function combineEpics_<S, A extends Action>(
 
 export const combineEpics = <S, A extends Action>(
   epicsArray: Epic<S, A>[],
-): Epic<S, A> => (actions, store) => {
+): Epic<S, A> => (actionsStream, middlewareApiOrStateStream) => {
   if (!epicsArray || !Array.isArray(epicsArray)) {
     throw new TypeError('You must provide an array of Epics to combineEpics.')
   }
@@ -46,7 +35,7 @@ export const combineEpics = <S, A extends Action>(
       )
     }
 
-    const out = epic(actions, store)
+    const out = epic(actionsStream, middlewareApiOrStateStream)
 
     if (!out || !out.source) {
       const epicIdentifier = epic.name

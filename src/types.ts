@@ -6,6 +6,7 @@ import {
   StoreEnhancer,
 } from 'redux'
 import { Stream } from 'most'
+import { EPIC_END } from './constants'
 
 /*****************************************
   Type abbreviations:
@@ -89,5 +90,7 @@ export declare function withState<S, A extends Action = DefaultAction>(
   stateStream: Stream<S>,
 ): (actionStream: Stream<A>) => Stream<[S, A]>
 
-export const EPIC_END = '@@redux-most/EPIC_END'
-export type EPIC_END = typeof EPIC_END
+// export const EPIC_END = '@@redux-most/EPIC_END'
+// export type EPIC_END = typeof EPIC_END
+
+// export type EpicEndAction = { type: EPIC_END }

@@ -1,5 +1,3 @@
-import { EPIC_END } from './constants'
-
-type EpicEndAction = { type: EPIC_END }
+import { EPIC_END, EpicEndAction } from './constants'
 
 export const epicEnd = (): EpicEndAction => ({ type: EPIC_END })
