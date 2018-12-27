@@ -1,7 +1,7 @@
 {
-  "typescript.tsdk": "./node_modules/typescript/lib",
   "prettier.printWidth": 80,
   "prettier.semi": false,
   "prettier.singleQuote": true,
-  "prettier.trailingComma": "all"
+  "prettier.trailingComma": "all",
+  "typescript.tsdk": "node_modules/typescript/lib"
 }
