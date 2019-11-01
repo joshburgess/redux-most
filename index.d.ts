@@ -24,7 +24,7 @@ export interface DefaultAction extends Action<ActionType> {
 // for the original, redux-observable style API
 export type OriginalApiEpic<S, A extends Action = DefaultAction> = (
   actionStream: Stream<A>,
-  middlewareApi: MiddlewareAPI<Dispatch<A>, S>,
+  middlewareApi: MiddlewareAPI<Dispatch<DefaultAction>, S>,
 ) => Stream<A>
 
 // for the newer, declarative only API, which takes in a state stream
