@@ -1,28 +1,50 @@
 import test from 'ava'
-import { observe } from 'most'
-import { sync } from 'most-subject'
+import { runEffects, tap } from '@most/core'
+import { create, event } from 'most-subject'
 import { select } from '../src/'
+import { currentTime, newDefaultScheduler } from '@most/scheduler'
+
+const scheduler = newDefaultScheduler()
 
 test('select should filter by action type', t => {
-  const actions$ = sync()
+  const [actionsSink, actionStream] = create()
   const lulz = []
   const haha = []
 
-  observe(x => lulz.push(x), select('LULZ', actions$))
-  observe(x => haha.push(x), select('HAHA', actions$))
+  runEffects(
+    tap(x => lulz.push(x), select('LULZ', actionStream)),
+    scheduler
+  )
+  runEffects(
+    tap(x => haha.push(x), select('HAHA', actionStream)),
+    scheduler
+  )
+  const next = payload => event(currentTime(scheduler), payload, actionsSink)
 
-  actions$.next({ type: 'LULZ', i: 0 })
+  next({ type: 'LULZ', i: 0 })
 
   t.deepEqual([{ type: 'LULZ', i: 0 }], lulz)
   t.deepEqual([], haha)
 
-  actions$.next({ type: 'LULZ', i: 1 })
+  next({ type: 'LULZ', i: 1 })
 
-  t.deepEqual([{ type: 'LULZ', i: 0 }, { type: 'LULZ', i: 1 }], lulz)
+  t.deepEqual(
+    [
+      { type: 'LULZ', i: 0 },
+      { type: 'LULZ', i: 1 },
+    ],
+    lulz
+  )
   t.deepEqual([], haha)
 
-  actions$.next({ type: 'HAHA', i: 0 })
+  next({ type: 'HAHA', i: 0 })
 
-  t.deepEqual([{ type: 'LULZ', i: 0 }, { type: 'LULZ', i: 1 }], lulz)
+  t.deepEqual(
+    [
+      { type: 'LULZ', i: 0 },
+      { type: 'LULZ', i: 1 },
+    ],
+    lulz
+  )
   t.deepEqual([{ type: 'HAHA', i: 0 }], haha)
 })

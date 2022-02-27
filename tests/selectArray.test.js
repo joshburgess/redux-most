@@ -1,28 +1,56 @@
 import test from 'ava'
-import { observe } from 'most'
-import { sync } from 'most-subject'
+import { runEffects, tap } from '@most/core'
+import { create, event } from 'most-subject'
 import { selectArray } from '../src/'
+import { newDefaultScheduler, currentTime } from '@most/scheduler'
+
+const scheduler = newDefaultScheduler()
 
 test('selectArray should filter by multiple action types', t => {
-  const actions$ = sync()
+  const [sink, stream] = create()
   const lulz = []
   const haha = []
 
-  observe(x => lulz.push(x), selectArray(['LULZ', 'LMFAO'], actions$))
-  observe(x => haha.push(x), selectArray(['HAHA'], actions$))
+  runEffects(
+    tap(x => {
+      // console.log('lulz', x, lulz)
+      return lulz.push(x)
+    }, selectArray(['LULZ', 'LMFAO'], stream)),
+    scheduler
+  )
+  runEffects(
+    tap(x => {
+      // console.log('haha', x, haha)
+      return haha.push(x)
+    }, selectArray(['HAHA'], stream)),
+    scheduler
+  )
 
-  actions$.next({ type: 'LULZ', i: 0 })
+  const next = payload => event(currentTime(scheduler), payload, sink)
+
+  next({ type: 'LULZ', i: 0 })
 
   t.deepEqual([{ type: 'LULZ', i: 0 }], lulz)
   t.deepEqual([], haha)
 
-  actions$.next({ type: 'LMFAO', i: 1 })
-
-  t.deepEqual([{ type: 'LULZ', i: 0 }, { type: 'LMFAO', i: 1 }], lulz)
+  next({ type: 'LMFAO', i: 1 })
+  t.deepEqual(
+    [
+      { type: 'LULZ', i: 0 },
+      { type: 'LMFAO', i: 1 },
+    ],
+    lulz
+  )
   t.deepEqual([], haha)
 
-  actions$.next({ type: 'HAHA', i: 0 })
+  next({ type: 'HAHA', i: 0 })
 
-  t.deepEqual([{ type: 'LULZ', i: 0 }, { type: 'LMFAO', i: 1 }], lulz)
+  t.deepEqual(
+    [
+      { type: 'LULZ', i: 0 },
+      { type: 'LMFAO', i: 1 },
+    ],
+    lulz
+  )
   t.deepEqual([{ type: 'HAHA', i: 0 }], haha)
 })
