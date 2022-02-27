@@ -1,7 +1,10 @@
+import { runEffects, map, tap } from '@most/core'
+import { currentTime, newDefaultScheduler } from '@most/scheduler'
 import test from 'ava'
-import { map, observe } from 'most'
-import { sync } from 'most-subject'
+import { create, event } from 'most-subject'
 import { combineEpics, select } from '../src/'
+
+const scheduler = newDefaultScheduler()
 
 test('combineEpics should combine an array of epics', t => {
   const ACTION_1 = 'ACTION_1'
@@ -10,30 +13,35 @@ test('combineEpics should combine an array of epics', t => {
   const DELEGATED_2 = 'DELEGATED_2'
   const MOCKED_STORE = { I: 'am', a: 'store' }
 
-  const epic1 = (actions$, store) => map(
-    action => ({ type: DELEGATED_1, action, store }),
-    select(ACTION_1, actions$)
-  )
+  const epic1 = (actions$, store) =>
+    map(
+      action => ({ type: DELEGATED_1, action, store }),
+      select(ACTION_1, actions$)
+    )
 
-  const epic2 = (actions$, store) => map(
-    action => ({ type: DELEGATED_2, action, store }),
-    select(ACTION_2, actions$)
-  )
+  const epic2 = (actions$, store) =>
+    map(
+      action => ({ type: DELEGATED_2, action, store }),
+      select(ACTION_2, actions$)
+    )
 
-  const epic = combineEpics([
-    epic1,
-    epic2,
-  ])
+  const epic = combineEpics([epic1, epic2])
 
   const store = MOCKED_STORE
-  const actions$ = sync()
-  const result$ = epic(actions$, store)
+  const [actionsSink, actionsStream] = create()
+  const result$ = epic(actionsStream, store)
   const emittedActions = []
 
-  observe(emittedAction => emittedActions.push(emittedAction), result$)
+  runEffects(
+    tap(emittedAction => emittedActions.push(emittedAction), result$),
+    scheduler
+  )
 
-  actions$.next({ type: ACTION_1 })
-  actions$.next({ type: ACTION_2 })
+  const nextAction = payload =>
+    event(currentTime(scheduler), payload, actionsSink)
+
+  nextAction({ type: ACTION_1 })
+  nextAction({ type: ACTION_2 })
 
   const MOCKED_EMITTED_ACTIONS = [
     { type: DELEGATED_1, action: { type: ACTION_1 }, store },

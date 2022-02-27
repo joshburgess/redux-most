@@ -1,41 +1,39 @@
-import { mergeArray } from 'most'
+import { mergeArray } from '@most/core'
 import { findIndex, map } from '@most/prelude'
 
-export const combineEpics = epicsArray => (
-  actionsStream,
-  middlewareApiOrStateStream,
-) => {
-  if (!epicsArray || !Array.isArray(epicsArray)) {
-    throw new TypeError('You must provide an array of Epics to combineEpics.')
-  }
+export const combineEpics =
+  epicsArray => (actionsStream, middlewareApiOrStateStream) => {
+    if (!epicsArray || !Array.isArray(epicsArray)) {
+      throw new TypeError('You must provide an array of Epics to combineEpics.')
+    }
 
-  if (epicsArray.length < 1) {
-    throw new TypeError(
-      'The array passed to combineEpics must contain at least one Epic.',
-    )
-  }
-
-  const callEpic = epic => {
-    if (typeof epic !== 'function') {
+    if (epicsArray.length < 1) {
       throw new TypeError(
-        'The array passed to combineEpics must contain only Epics (functions).',
+        'The array passed to combineEpics must contain at least one Epic.'
       )
     }
 
-    const out = epic(actionsStream, middlewareApiOrStateStream)
+    const callEpic = epic => {
+      if (typeof epic !== 'function') {
+        throw new TypeError(
+          'The array passed to combineEpics must contain only Epics (functions).'
+        )
+      }
 
-    if (!out || !out.source) {
-      const epicIdentifier = epic.name
-        ? `named ${epic.name}`
-        : `at index ${findIndex(epic, epicsArray)} of the passed in array`
+      const out = epic(actionsStream, middlewareApiOrStateStream)
 
-      throw new TypeError(
-        `All Epics in the array provided to combineEpics must return a stream. Check the return value of the Epic ${epicIdentifier}.`,
-      )
+      if (!out || !out.source) {
+        const epicIdentifier = epic.name
+          ? `named ${epic.name}`
+          : `at index ${findIndex(epic, epicsArray)} of the passed in array`
+
+        throw new TypeError(
+          `All Epics in the array provided to combineEpics must return a stream. Check the return value of the Epic ${epicIdentifier}.`
+        )
+      }
+
+      return out
     }
 
-    return out
+    return mergeArray(map(callEpic, epicsArray))
   }
-
-  return mergeArray(map(callEpic, epicsArray))
-}

@@ -5,7 +5,7 @@ import {
   MiddlewareAPI,
   StoreEnhancer,
 } from 'redux'
-import { Stream } from 'most'
+import { Stream } from '@most/core'
 
 /*****************************************
   Type abbreviations:
@@ -24,14 +24,14 @@ export interface DefaultAction extends Action<ActionType> {
 // for the original, redux-observable style API
 export type OriginalApiEpic<S, A extends Action = DefaultAction> = (
   actionStream: Stream<A>,
-  middlewareApi: MiddlewareAPI<Dispatch<A>, S>,
+  middlewareApi: MiddlewareAPI<Dispatch<A>, S>
 ) => Stream<A>
 
 // for the newer, declarative only API, which takes in a state stream
 // to sample via the withState utility instead of exposing dispatch/getState
 export type DeclarativeApiEpic<S, A extends Action = DefaultAction> = (
   actionStream: Stream<A>,
-  stateStream: Stream<S>,
+  stateStream: Stream<S>
 ) => Stream<A>
 
 export type Epic<S, A extends Action = DefaultAction> =
@@ -54,7 +54,7 @@ export declare function createStateStreamEnhancer<
 >(epicMiddleware: EpicMiddleware<S, A>): StoreEnhancer<S>
 
 export declare function combineEpics<S, A extends Action = DefaultAction>(
-  epicsArray: Epic<S, A>[],
+  epicsArray: Epic<S, A>[]
 ): Epic<S, A>
 
 // overloads exist due to select being a curried function
@@ -82,11 +82,11 @@ export declare function selectArray<
 // overloads exist due to withState being a curried function
 export declare function withState<S, A extends Action = DefaultAction>(
   stateStream: Stream<S>,
-  actionStream: Stream<A>,
+  actionStream: Stream<A>
 ): Stream<[S, A]>
 
 export declare function withState<S, A extends Action = DefaultAction>(
-  stateStream: Stream<S>,
+  stateStream: Stream<S>
 ): (actionStream: Stream<A>) => Stream<[S, A]>
 
 export const EPIC_END = '@@redux-most/EPIC_END'

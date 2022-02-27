@@ -17,12 +17,12 @@
     "lint": "eslint src",
     "test": "cross-env BABEL_ENV=test ava --tap | tap-diff",
     "tdd": "cross-env BABEL_ENV=test ava --watch",
-    "safety-check": "yarn lint && yarn test",
+    "safety-check": "npm run lint && npm run test",
     "build:cjs": "rimraf lib && cross-env BABEL_ENV=cjs babel src --out-dir lib",
     "build:es": "rimraf es && cross-env BABEL_ENV=es babel src --out-dir es",
     "build:umd": "rimraf dist && cross-env BABEL_ENV=umd webpack --config webpack.config.babel.js",
-    "build": "yarn build:cjs && yarn build:es && yarn build:umd",
-    "prepublish": "yarn safety-check && yarn build"
+    "build": "npm run build:cjs && npm run build:es && npm run build:umd",
+    "prepublish": "npm run safety-check && npm run build"
   },
   "repository": "joshburgess/redux-most",
   "keywords": [
@@ -77,9 +77,11 @@
     "redux": "^4.0.1"
   },
   "dependencies": {
-    "most-subject": "^5.3.0"
+    "most-subject": "^6.0.0"
   },
   "devDependencies": {
+    "@most/core": "^1.6.1",
+    "@most/scheduler": "^1.3.0",
     "ava": "^0.22.0",
     "babel-cli": "^6.11.4",
     "babel-eslint": "^7.1.1",
@@ -102,7 +104,7 @@
     "rimraf": "^2.5.4",
     "sinon": "^3.2.1",
     "tap-diff": "^0.1.1",
-    "typescript": "^3.2.2",
+    "typescript": "^3.9.10",
     "typings": "^2.1.0",
     "webpack": "^3.5.5"
   },
@@ -114,5 +116,10 @@
         "*.js"
       ]
     }
-  ]
+  ],
+  "prettier": {
+    "singleQuote": true,
+    "arrowParens": "avoid",
+    "semi": false
+  }
 }

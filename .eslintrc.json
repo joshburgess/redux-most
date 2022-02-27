@@ -12,14 +12,7 @@
     }
   },
 
-  "plugins": [
-    "react",
-    "better",
-    "fp",
-    "import",
-    "promise",
-    "standard"
-  ],
+  "plugins": ["react", "better", "fp", "import", "promise", "standard"],
 
   "extends": ["standard-pure-fp", "standard-react"],
 
@@ -43,6 +36,8 @@
     "fp/no-nil": 0,
     "fp/no-unused-expression": 0,
     "fp/no-mutating-methods": 0,
+    "operator-linebreak": "off",
+    "indent": "off",
 
     // Extra React rules not provided by standard-react
     "react/react-in-jsx-scope": 2,
